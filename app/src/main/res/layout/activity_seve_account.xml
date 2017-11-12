@@ -8,8 +8,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImageView"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="64dp"
             android:src="@drawable/paulding"
@@ -32,6 +32,12 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:typeface="monospace"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/steam_name"
+            android:textSize="12sp"
+            />
 
         <TextView
             android:id="@+id/textView"
