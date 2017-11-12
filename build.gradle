@@ -19,6 +19,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        //seve's layout
+        maven { url "https://jitpack.io" }
     }
 }
 
