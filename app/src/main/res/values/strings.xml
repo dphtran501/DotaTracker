@@ -3,4 +3,10 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="tab_home">Home</string>
     <string name="tab_activity_feed">Activity Feed</string>
+    <string name="user_name">User Name</string>
+    <string name="steam_name">Steam Name</string>
+    <string name="steam_id">Steam ID</string>
+    <string name="win_percentage">Win %</string>
+    <string name="win_percentage_data">0%</string>
+    <string name="most_played_hero">Most Played Heroes</string>
 </resources>
