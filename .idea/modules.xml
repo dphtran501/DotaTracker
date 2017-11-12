@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DotaTracker.iml" filepath="$PROJECT_DIR$/DotaTracker.iml" />
-      <module fileurl="file://C:\Users\Severiano Badajoz\IdeaProjects\DotaTracker\DotaTracker.iml" filepath="C:\Users\Severiano Badajoz\IdeaProjects\DotaTracker\DotaTracker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Severiano Badajoz\IdeaProjects\DotaTracker\app\app.iml" filepath="C:\Users\Severiano Badajoz\IdeaProjects\DotaTracker\app\app.iml" />
     </modules>
   </component>
 </project>
