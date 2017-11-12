@@ -3,4 +3,12 @@
     <color name="colorPrimary">#2E4172</color>
     <color name="colorPrimaryDark">#162955</color>
     <color name="colorAccent">#AA6C39</color>
+
+    <!--Seve's Colors-->
+    <color name="sevePrimary">#7B4BFF</color>
+    <color name="seveDark">#72C1D55</color>
+    <color name="seveBorder">#7039EE</color>
+    <color name="seveText">#1DCF9E</color>
+    <color name="seveAlert">#FF4D11</color>
+
 </resources>
