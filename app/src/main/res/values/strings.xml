@@ -9,4 +9,22 @@
     <string name="win_percentage">Win %</string>
     <string name="win_percentage_data">0%</string>
     <string name="most_played_hero">Most Played Heroes</string>
+
+    <!-- Derek's strings -->
+    <string name="wins_label">WINS</string>
+    <string name="loses_label">LOSSES</string>
+    <string name="win_rate_label">WINRATE</string>
+    <string name="stats_scroll_label">Averages in last %1$d matches</string>
+    <string name="kills_label">KILLS</string>
+    <string name="deaths_label">DEATHS</string>
+    <string name="assists_label">ASSISTS</string>
+    <string name="gpm_label">GOLD PER MIN</string>
+    <string name="xppm_label">XP PER MIN</string>
+    <string name="last_hits_label">LAST HITS</string>
+    <string name="hero_dmg_label">HERO DAMAGE</string>
+    <string name="heal_label">HERO HEALING</string>
+    <string name="tower_dmg_label">TOWER DAMAGE</string>
+    <string name="duration_label">DURATION</string>
+    <string name="recent_matches_label">Recent %1$d Matches</string>
+
 </resources>
