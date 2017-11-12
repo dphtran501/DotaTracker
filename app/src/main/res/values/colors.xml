@@ -6,7 +6,7 @@
 
     <!--Seve's Colors-->
     <color name="sevePrimary">#7B4BFF</color>
-    <color name="seveDark">#72C1D55</color>
+    <color name="seveDark">#2C1D55</color>
     <color name="seveBorder">#7039EE</color>
     <color name="seveText">#1DCF9E</color>
     <color name="seveAlert">#FF4D11</color>
