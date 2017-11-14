@@ -9,6 +9,9 @@
     <string name="win_percentage">Win %</string>
     <string name="win_percentage_data">0%</string>
     <string name="most_played_hero">Most Played Heroes</string>
+    <string name="hero_name">Hero Name</string>
+    <string name="hero_games">0 games</string>
+    <string name="hero_win_percentage">0% Games Won</string>
 
     <!-- Derek's strings -->
     <string name="wins_label">WINS</string>
