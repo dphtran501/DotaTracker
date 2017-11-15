@@ -13,6 +13,8 @@
     <string name="hero_games">0 games</string>
     <string name="hero_win_percentage">0% Games Won</string>
 
+    <string name="tools_placeholder">PLACEHOLDER placeholder</string>
+
     <!-- Derek's strings -->
     <string name="wins_label">WINS</string>
     <string name="loses_label">LOSSES</string>
@@ -29,5 +31,12 @@
     <string name="tower_dmg_label">TOWER DAMAGE</string>
     <string name="duration_label">DURATION</string>
     <string name="recent_matches_label">Recent %1$d Matches</string>
+
+    <!-- Login Activity -->
+    <string name="login_username">Username: </string>
+    <string name="login_password">Password: </string>
+    <string name="login_no_account_hint">Don\'t have an account?</string>
+    <string name="login_button">Log In!</string>
+    <string name="login_sign_up">Sign Up</string>
 
 </resources>

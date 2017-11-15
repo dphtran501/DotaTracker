@@ -9,7 +9,7 @@ public class MainActivity extends AppCompatActivity {
 
     TabLayout mTabs;
     ViewPager mViewPager;
-    TabPagerAdapter mTabPagerAdapter;
+    MainActivityPagerAdapter mMainActivityPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mViewPager = findViewById(R.id.viewPager);
-        mTabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mTabPagerAdapter);
+        mMainActivityPagerAdapter = new MainActivityPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mMainActivityPagerAdapter);
         mTabs = findViewById(R.id.tabLayout);
         mTabs.setupWithViewPager(mViewPager);
 

@@ -5,13 +5,28 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 /**
- * Created by vincenthoang on 10/31/17.
+ * Created by vincenthoang on 11/14/17.
  */
 
-public class TabPagerAdapter extends FragmentPagerAdapter {
+public class LoginActivityPagerAdapter extends FragmentPagerAdapter {
 
-    public TabPagerAdapter(FragmentManager fm) {
+    public LoginActivityPagerAdapter(FragmentManager fm) {
         super(fm);
+    }
+
+    /**
+     * Return the Fragment associated with a specified position.
+     *
+     * @param position
+     */
+    @Override
+    public Fragment getItem(int position) {
+        switch (position) {
+            case 0:
+                return null;
+        }
+
+        return null;
     }
 
     /**
@@ -25,14 +40,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public CharSequence getPageTitle(int position) {
-        String title = null;
-        if (position == 0) {
-            title = "Home";
-        }
-        if (position == 1) {
-            title = "Activity Feed";
-        }
-        return title;
+        return super.getPageTitle(position);
     }
 
     /**
@@ -40,23 +48,6 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 2;
-    }
-
-    /**
-     * Return the Fragment associated with a specified position.
-     *
-     * @param position
-     */
-    @Override
-    public Fragment getItem(int position) {
-        Fragment fragment = null;
-        if (position == 0) {
-            fragment = new HomeActivityFragment();
-        }
-        else if (position == 1) {
-            fragment = new FeedActivityFragment();
-        }
-        return fragment;
+        return 0;
     }
 }
