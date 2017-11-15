@@ -10,6 +10,8 @@
     <color name="seveBorder">#7039EE</color>
     <color name="seveText">#1DCF9E</color>
     <color name="seveAlert">#FF4D11</color>
+    <color name="green">#33cc33</color>
+    <color name="red">#ff5050</color>
 
     <!-- Derek's Colors -->
     <color name="derekPrimary">#1B1E21</color>
