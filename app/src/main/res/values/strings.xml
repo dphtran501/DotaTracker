@@ -6,12 +6,12 @@
     <string name="user_name">User Name</string>
     <string name="steam_name">Steam Name</string>
     <string name="steam_id">Steam ID</string>
-    <string name="win_percentage">Win %</string>
-    <string name="win_percentage_data">0%</string>
+    <string name="win_percentage_title">Win %</string>
+    <string name="win_percentage_data">%f%</string>
     <string name="most_played_hero">Most Played Heroes</string>
     <string name="hero_name">Hero Name</string>
-    <string name="hero_games">0 games</string>
-    <string name="hero_win_percentage">0% Games Won</string>
+    <string name="hero_games">%d games</string>
+    <string name="hero_win_percentage">%f% Games Won</string>
 
     <string name="tools_placeholder">PLACEHOLDER placeholder</string>
 
