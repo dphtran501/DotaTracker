@@ -6,6 +6,7 @@
               android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/heroListImageView"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginBottom="24dp"
@@ -26,6 +27,7 @@
         >
 
         <TextView
+            android:id="@+id/heroNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -36,6 +38,7 @@
             android:textSize="16sp"/>
 
         <TextView
+            android:id="@+id/numGamesWonTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -59,6 +62,7 @@
             />
 
         <TextView
+            android:id="@+id/percentGamesWonTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
