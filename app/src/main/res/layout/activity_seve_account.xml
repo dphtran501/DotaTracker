@@ -7,7 +7,7 @@
                   android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView"
+            android:id="@+id/profilePicture"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
@@ -46,7 +46,7 @@
             android:layout_above="@+id/ringProgressBar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:text="@string/win_percentage"
+            android:text="@string/win_percentage_title"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:typeface="monospace"/>
@@ -96,6 +96,7 @@
             />
 
         <ListView
+            android:id="@+id/mostPlayedHeroesListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="4dp"/>
