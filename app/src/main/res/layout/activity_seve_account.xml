@@ -57,13 +57,22 @@
             android:layout_marginTop="4dp">
 
             <io.netopen.hotbitmapgg.library.view.RingProgressBar
-                android:id="@+id/ringProgressBar"
+                android:id="@+id/winRingProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:max="100"
+                app:ringProgressColor="@color/green"
+                app:ringWidth="7dp"
+                app:style="STROKE"/>
+            <io.netopen.hotbitmapgg.library.view.RingProgressBar
+                android:id="@+id/lossRingProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 app:max="100"
                 app:ringColor="@color/colorPrimaryDark"
-                app:ringProgressColor="@android:color/white"
+                app:ringProgressColor="@color/red"
                 app:ringWidth="7dp"
                 app:style="STROKE"/>
 
