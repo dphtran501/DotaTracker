@@ -12,12 +12,14 @@
         android:id="@+id/playerImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/overview_view_spacing"
+        android:layout_alignLeft="@+id/averagesLabelTextView"
+        android:layout_alignStart="@+id/averagesLabelTextView"
+        android:layout_alignTop="@+id/playerNameTextView"
         android:adjustViewBounds="true"
         android:maxHeight="@dimen/overview_player_image_height"
         android:maxWidth="@dimen/overview_player_image_width"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/paulding"/>
+        app:srcCompat="@drawable/steam_icon"/>
 
     <TextView
         android:id="@+id/playerNameTextView"
