@@ -12,7 +12,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="24dp"
-        android:src="@drawable/paulding_hero"
+        android:src="@drawable/steam_icon"
         app:civ_border_width="3dp"/>
 
     <GridLayout
