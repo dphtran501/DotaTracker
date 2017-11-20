@@ -18,6 +18,7 @@
     <!-- DEREK'S STRINGS -->
     <string name="default_data">N/A</string>
     <!-- activity_overview_derek.xml -->
+    <string name="player_image">%1$s</string>
     <string name="wins_label">W</string>
     <string name="loses_label">L</string>
     <string name="win_rate_label">WR</string>
@@ -33,6 +34,8 @@
     <string name="tower_dmg_label">TD</string>
     <string name="duration_label">DUR</string>
     <string name="recent_matches_label">Recent %1$d Matches</string>
+    <!-- match_list_item.xml -->
+    <string name="hero_image">%1$s</string>
     <!-- activity_match_details_derek.xml -->
     <string name="radiant_tab">Radiant</string>
     <string name="versus_tab">Versus</string>
