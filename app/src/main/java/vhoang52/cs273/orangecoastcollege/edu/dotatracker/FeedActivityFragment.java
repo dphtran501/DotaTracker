@@ -6,14 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * Created by vincenthoang on 11/11/17.
  */
 
 public class FeedActivityFragment extends Fragment {
-    TextView mFeedTextView;
     /**
      * Called to have the fragment instantiate its user interface view.
      * This is optional, and non-graphical fragments can return null (which
@@ -35,8 +33,7 @@ public class FeedActivityFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activityfragment_feed, container, false);
-        mFeedTextView = view.findViewById(R.id.testFeedTextView);
+        View view = inflater.inflate(R.layout.activity_overview_derek, container, false);
         return view;
     }
 }
