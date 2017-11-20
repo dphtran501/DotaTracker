@@ -2,18 +2,15 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@android:id/background"
-        android:height="@dimen/kda_bar_height"
         android:drawable="@android:color/holo_blue_dark"/>
 
     <item
-        android:id="@android:id/secondaryProgress"
-        android:height="@dimen/kda_bar_height">
+        android:id="@android:id/secondaryProgress">
         <clip android:drawable="@android:color/holo_red_dark"/>
     </item>
 
     <item
-        android:id="@android:id/progress"
-        android:height="@dimen/kda_bar_height">
+        android:id="@android:id/progress">
         <clip android:drawable="@android:color/holo_green_dark"/>
     </item>
 </layer-list>
