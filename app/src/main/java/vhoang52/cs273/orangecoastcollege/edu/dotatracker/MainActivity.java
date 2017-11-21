@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         mTabs = findViewById(R.id.tabLayout);
         mTabs.setupWithViewPager(mViewPager);
 
+        mViewPager.setCurrentItem(1);
+
     }
 
     public static Uri getUriFromResource(Context context, int resID) {
