@@ -1,15 +1,20 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AccountActivity extends AppCompatActivity {
+public class AccountActivity extends Fragment {
 
     private CircleImageView profilePicture;
     private TextView userName;
@@ -17,18 +22,23 @@ public class AccountActivity extends AppCompatActivity {
     private RingProgressBar lossRingProgressBar;
     private ListView mostPlayedHeroesListView;
     private MostPlayedHeroesListAdapter listAdapter;
-    private List<Hero> mMostPlayedHeros;
+    private List<Hero> mMMostPlayedHerbs = new ArrayList<>();
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        TODO: populate with actual heros
+        mMMostPlayedHerbs.add(new Hero("Alchemist", (short) 73));
 
-        profilePicture = findViewById(R.id.profilePicture);
-        userName = findViewById(R.id.userName);
-        winRingProgressBar = findViewById(R.id.winRingProgressBar);
-        lossRingProgressBar = findViewById(R.id.lossRingProgressBar);
-        mostPlayedHeroesListView = findViewById(R.id.mostPlayedHeroesListView);
-        listAdapter = new MostPlayedHeroesListAdapter(this, R.layout.hero_list_item, mMostPlayedHeros);
+        View view = inflater.inflate(R.layout.activity_seve_account, container, false);
+        profilePicture = view.findViewById(R.id.profilePicture);
+        userName = view.findViewById(R.id.userName);
+        winRingProgressBar = view.findViewById(R.id.winRingProgressBar);
+        lossRingProgressBar = view.findViewById(R.id.lossRingProgressBar);
+        mostPlayedHeroesListView = view.findViewById(R.id.mostPlayedHeroesListView);
+        listAdapter = new MostPlayedHeroesListAdapter(view.getContext(), R.layout.hero_list_item, mMMostPlayedHerbs);
         mostPlayedHeroesListView.setAdapter(listAdapter);
+
+        return view;
     }
 }
