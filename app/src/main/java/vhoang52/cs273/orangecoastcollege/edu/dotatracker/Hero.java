@@ -6,10 +6,10 @@ public class Hero {
     private short mID;
     private String mFileName;
 
-    public Hero(String heroName, short ID, String fileName) {
+    public Hero(String heroName, short ID) {
         mHeroName = heroName;
         mID = ID;
-        mFileName = "hero_" + ID;
+        mFileName = "hero_" + ID + ".png";
     }
 
     public String getHeroName() {
