@@ -29,8 +29,11 @@ public class MainActivityPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             title = "Home";
         }
-        if (position == 1) {
+        if (position == 2) {
             title = "Activity Feed";
+        }
+        if (position == 1) {
+            title = "Account";
         }
         return title;
     }
@@ -40,7 +43,7 @@ public class MainActivityPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     /**
@@ -55,8 +58,12 @@ public class MainActivityPagerAdapter extends FragmentPagerAdapter {
             fragment = new HomeActivityFragment();
         }
         else if (position == 1) {
+            fragment = new AccountActivity();
+        }
+        else if (position == 2) {
             fragment = new FeedActivityFragment();
         }
+
         return fragment;
     }
 }
