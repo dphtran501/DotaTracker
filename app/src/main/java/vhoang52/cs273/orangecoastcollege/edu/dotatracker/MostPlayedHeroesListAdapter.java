@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,19 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
 
         Hero selectedHero = mHeroList.get(position);
 
-        AssetManager manager = mContext.getAssets();
-        try {
-            InputStream inputStream = manager.open(selectedHero.getFileName());
-            Drawable heroImage = Drawable.createFromStream(inputStream, selectedHero.getHeroName());
-            heroListImageView.setImageDrawable(heroImage);
-        } catch (IOException e) {
-            e.printStackTrace();
-            heroListImageView.setImageResource(R.drawable.paulding_hero);
-        }
+//        AssetManager manager = mContext.getAssets();
+//        try {
+//            InputStream inputStream = manager.open(selectedHero.getFileName());
+//            Drawable heroImage = Drawable.createFromStream(inputStream, selectedHero.getHeroName());
+//            heroListImageView.setImageDrawable(heroImage);
+//        } catch (IOException e) {
+//            Log.e("DotaTracker", e.getMessage());
+//            heroListImageView.setImageResource(R.drawable.paulding_hero);
+//        }
+
+        heroListImageView.setImageResource(
+                mContext.getResources().getIdentifier(selectedHero.getFileName(),
+                        "drawable", mContext.getPackageName()));
         heroNameTextView.setText(selectedHero.getHeroName());
 
         //TODO: Add statistic data
