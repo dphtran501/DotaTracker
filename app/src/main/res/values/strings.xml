@@ -15,22 +15,31 @@
 
     <string name="tools_placeholder">PLACEHOLDER placeholder</string>
 
-    <!-- Derek's strings -->
-    <string name="wins_label">WINS</string>
-    <string name="loses_label">LOSSES</string>
-    <string name="win_rate_label">WINRATE</string>
+    <!-- DEREK'S STRINGS -->
+    <string name="default_data">N/A</string>
+    <!-- activity_overview_derek.xml -->
+    <string name="player_image">%1$s</string>
+    <string name="wins_label">W</string>
+    <string name="loses_label">L</string>
+    <string name="win_rate_label">WR</string>
     <string name="stats_scroll_label">Averages in last %1$d matches</string>
-    <string name="kills_label">KILLS</string>
-    <string name="deaths_label">DEATHS</string>
-    <string name="assists_label">ASSISTS</string>
-    <string name="gpm_label">GOLD PER MIN</string>
-    <string name="xppm_label">XP PER MIN</string>
-    <string name="last_hits_label">LAST HITS</string>
-    <string name="hero_dmg_label">HERO DAMAGE</string>
-    <string name="heal_label">HERO HEALING</string>
-    <string name="tower_dmg_label">TOWER DAMAGE</string>
-    <string name="duration_label">DURATION</string>
+    <string name="kills_label">K</string>
+    <string name="deaths_label">D</string>
+    <string name="assists_label">A</string>
+    <string name="gpm_label">GPM</string>
+    <string name="xppm_label">XPM</string>
+    <string name="last_hits_label">LH</string>
+    <string name="hero_dmg_label">HD</string>
+    <string name="heal_label">HH</string>
+    <string name="tower_dmg_label">TD</string>
+    <string name="duration_label">DUR</string>
     <string name="recent_matches_label">Recent %1$d Matches</string>
+    <!-- match_list_item.xml -->
+    <string name="hero_image">%1$s</string>
+    <!-- activity_match_details_derek.xml -->
+    <string name="radiant_tab">Radiant</string>
+    <string name="versus_tab">Versus</string>
+    <string name="dire_tab">Dire</string>
 
     <!-- Login Activity -->
     <string name="login_username">Username: </string>
