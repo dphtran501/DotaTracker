@@ -40,11 +40,12 @@ public class Match
      * @param radiantScore        Radiant's score.
      * @param direScore           Dire's score.
      */
-    public Match(String ID, int matchSequenceNumber, List<Player> playersList, boolean isRadiantWin, int duration, int startTime, int radiantScore, int direScore)
+    public Match(String ID, int matchSequenceNumber, List<Player> playersList, boolean isRadiantWin,
+                 int duration, int startTime, int radiantScore, int direScore)
     {
         mID = ID;
         mMatchSequenceNumber = matchSequenceNumber;
-        mPlayersList = playersList;
+        mPlayersList = new ArrayList<>(playersList);    // defensive copy
         mIsRadiantWin = isRadiantWin;
         mDuration = duration;
         mStartTime = startTime;
@@ -73,7 +74,7 @@ public class Match
      *
      * @return The list of <code>Player</code>s that were in this match.
      */
-    public List<Player> getPlayersList() { return mPlayersList; }
+    public List<Player> getPlayersList() { return new ArrayList<>(mPlayersList); }  // defensive copy
 
     /**
      * Checks whether Radiant won this match. True if Radiant won; false if Dire won.
