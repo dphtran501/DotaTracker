@@ -33,7 +33,7 @@ public class FeedActivityFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_overview_derek, container, false);
+        View view = inflater.inflate(R.layout.activity_matches_overview, container, false);
         return view;
     }
 }
