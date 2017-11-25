@@ -2,6 +2,8 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.net.Uri;
 
+import java.util.List;
+
 /**
  * This class represents the user signed in to this application.
  *
@@ -15,8 +17,8 @@ public class User
     private long mID;
     private String mUserName;
     private Uri mImageURI;
+    private List<Match> mMatchList;
 
-    // TODO: member variable for list of matches
     // TODO: getters and setters
     // TODO: functions to retrieve game statistics
 

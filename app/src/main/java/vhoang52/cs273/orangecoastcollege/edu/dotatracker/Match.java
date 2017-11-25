@@ -1,7 +1,7 @@
+package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import vhoang52.cs273.orangecoastcollege.edu.dotatracker.Player;
 
 /**
  * This class represents a single DOTA match played by the user.
@@ -28,7 +28,7 @@ public class Match
     private int mDireScore;
 
     /**
-     * Instantiates a <code>Match</code> object given the match's statistics.
+     * Instantiates a <code>vhoang52.cs273.orangecoastcollege.edu.dotatracker.Match</code> object given the match's statistics.
      *
      * @param ID                  The ID of the match.
      * @param matchSequenceNumber The sequence number representing the order in which the match was
