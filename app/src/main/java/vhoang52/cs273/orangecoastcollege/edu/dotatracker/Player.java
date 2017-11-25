@@ -14,7 +14,8 @@ public class Player
 {
     private int mAccountID;
     // TODO: Need to see what's a good data type for receiving 8-bit unsigned integers
-    private byte mPlayerSlot;
+    // TODO: Could store as short since we know we're retrieving 8-bit unsigned ints
+    private int mPlayerSlot;
     // TODO: Check with Seve about hero ID relation table
     private int mHeroID;
     // TODO: List of Items? Make Item Class?
@@ -57,7 +58,7 @@ public class Player
      * @param heroHealing The amount of health the player healed on heroes in the match.
      * @param level       The level of the player at the end of the match.
      */
-    public Player(int accountID, byte playerSlot, int heroID, int kills, int deaths, int assists,
+    public Player(int accountID, int playerSlot, int heroID, int kills, int deaths, int assists,
                   int gold, int lastHits, int denies, int GPM, int XPM, int heroDamage,
                   int towerDamage, int heroHealing, int level)
     {
@@ -91,7 +92,7 @@ public class Player
      *
      * @return The 8-bit unsigned integer of this player.
      */
-    public byte getPlayerSlot() { return mPlayerSlot; }
+    public int getPlayerSlot() { return mPlayerSlot; }
 
     /**
      * Gets the ID of the hero played by this player in the match.
@@ -192,13 +193,24 @@ public class Player
     public boolean isDire()
     {
         // TODO: Change if data type for mPlayerSlot changes
-        // Shifts first bit to right-end of byte, and uses bitwise AND to check if it's set (1) or
-        // clear (0)
+        // Shifts first bit to right-end of byte (shifts by 7), and uses bitwise AND to check if
+        // it's set (1) or clear (0)
+        // (e.g. 11101110 >> 7 = 00000001; 00000001 & 00000001 = 00000001)
         byte firstBit = (byte) ((mPlayerSlot >> 7) & 1);
         // If the first bit is set, then the player is on Dire; if clear, the player is on Radiant
         return firstBit == 1;
     }
 
-    // TODO: Function to retrieve player position (based on mPlayerSlot)
+    /**
+     * Gets this player's position in their team for the match (between 0 and 4, inclusive).
+     *
+     * @return This player's position in their team for the match (between 0 and 4, inclusive).
+     */
+    public int getPosition()
+    {
+        // Uses bitwise AND to retrieve last 3 bits of mPlayerSlot, which represents the position
+        // (e.g. 10001011 & 00000111 = 00000011)
+        return mPlayerSlot & 7;
+    }
 }
 
