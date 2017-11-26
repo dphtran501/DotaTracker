@@ -16,10 +16,12 @@ import java.util.List;
 public class User
 {
     // TODO: long or int?
+    // TODO: accountID?
     private long mID;
     private String mUserName;
     // TODO: password?
     private Uri mImageURI;
+    // TODO: use relationship table instead of matchList?
     private List<Match> mMatchList;
 
     /**

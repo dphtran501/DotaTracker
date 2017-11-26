@@ -16,8 +16,8 @@ import java.util.List;
 public class Match
 {
     // TODO: check if ID is integer or string
-    private String mID;
-    private int mMatchSequenceNumber;
+    private int mID;
+    private int mSequenceNumber;
     private List<Player> mPlayersList;
     private boolean mIsRadiantWin;
     private int mDuration;              // seconds
@@ -28,23 +28,23 @@ public class Match
     private int mDireScore;
 
     /**
-     * Instantiates a <code>vhoang52.cs273.orangecoastcollege.edu.dotatracker.Match</code> object given the match's statistics.
+     * Instantiates a <code>Match</code> object given the match's statistics.
      *
-     * @param ID                  The ID of the match.
-     * @param matchSequenceNumber The sequence number representing the order in which the match was
-     *                            recorded in the match history.
-     * @param playersList         The list of players in the match.
-     * @param isRadiantWin        Truth value of whether Radiant won the match.
-     * @param duration            The length of the match in seconds.
-     * @param startTime           Unix timestamp of when the match began.
-     * @param radiantScore        Radiant's score.
-     * @param direScore           Dire's score.
+     * @param ID             The ID of the match.
+     * @param sequenceNumber The sequence number representing the order in which the match was
+     *                       recorded in the match history.
+     * @param playersList    The list of players in the match.
+     * @param isRadiantWin   Truth value of whether Radiant won the match.
+     * @param duration       The length of the match in seconds.
+     * @param startTime      Unix timestamp of when the match began.
+     * @param radiantScore   Radiant's score.
+     * @param direScore      Dire's score.
      */
-    public Match(String ID, int matchSequenceNumber, List<Player> playersList, boolean isRadiantWin,
+    public Match(int ID, int sequenceNumber, List<Player> playersList, boolean isRadiantWin,
                  int duration, int startTime, int radiantScore, int direScore)
     {
         mID = ID;
-        mMatchSequenceNumber = matchSequenceNumber;
+        mSequenceNumber = sequenceNumber;
         mPlayersList = new ArrayList<>(playersList);    // defensive copy
         mIsRadiantWin = isRadiantWin;
         mDuration = duration;
@@ -54,11 +54,30 @@ public class Match
     }
 
     /**
+     * Instantiates a <code>Match</code> object given the match's statistics.
+     *
+     * @param ID             The ID of the match.
+     * @param sequenceNumber The sequence number representing the order in which the match was
+     *                       recorded in the match history.
+     * @param isRadiantWin   Truth value of whether Radiant won the match.
+     * @param duration       The length of the match in seconds.
+     * @param startTime      Unix timestamp of when the match began.
+     * @param radiantScore   Radiant's score.
+     * @param direScore      Dire's score.
+     */
+    public Match(int ID, int sequenceNumber, boolean isRadiantWin, int duration, int startTime,
+                 int radiantScore, int direScore)
+    {
+        this (ID, sequenceNumber, null, isRadiantWin, duration, startTime, radiantScore,
+                direScore);
+    }
+
+    /**
      * Gets the ID of this match.
      *
      * @return The ID of this match.
      */
-    public String getID() { return mID; }
+    public int getID() { return mID; }
 
     /**
      * Gets the sequence number representing the order in which the match was recorded in the match
@@ -67,7 +86,7 @@ public class Match
      * @return The sequence number representing the order in which the match was recorded in the
      * match history.
      */
-    public int getMatchSequenceNumber() { return mMatchSequenceNumber; }
+    public int getSequenceNumber() { return mSequenceNumber; }
 
     /**
      * Gets the list of <code>Player</code>s that were in this match.
