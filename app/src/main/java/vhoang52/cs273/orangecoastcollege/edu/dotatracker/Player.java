@@ -13,6 +13,7 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 public class Player
 {
     private int mAccountID;
+    private int mMatchID;
     // TODO: Need to see what's a good data type for receiving 8-bit unsigned integers
     // TODO: Could store as short since we know we're retrieving 8-bit unsigned ints
     private int mPlayerSlot;
@@ -42,6 +43,7 @@ public class Player
      * match.
      *
      * @param accountID   The account ID of the player.
+     * @param matchID     The ID of the match that the player played in.
      * @param playerSlot  An 8-bit unsigned integer where the first bit represents the player's team
      *                    and the final three bits represent the player's position in the team.
      * @param heroID      The ID of the hero played by the player in the match.
@@ -58,11 +60,12 @@ public class Player
      * @param heroHealing The amount of health the player healed on heroes in the match.
      * @param level       The level of the player at the end of the match.
      */
-    public Player(int accountID, int playerSlot, int heroID, int kills, int deaths, int assists,
-                  int gold, int lastHits, int denies, int GPM, int XPM, int heroDamage,
+    public Player(int accountID, int matchID, int playerSlot, int heroID, int kills, int deaths,
+                  int assists, int gold, int lastHits, int denies, int GPM, int XPM, int heroDamage,
                   int towerDamage, int heroHealing, int level)
     {
         mAccountID = accountID;
+        mMatchID = matchID;
         mPlayerSlot = playerSlot;
         mHeroID = heroID;
         mKills = kills;
@@ -85,6 +88,13 @@ public class Player
      * @return The account ID of this player.
      */
     public int getAccountID() { return mAccountID; }
+
+    /**
+     * Gets the ID of the match that this player played in.
+     *
+     * @return The ID of the match that this player played in.
+     */
+    public int getMatchID() { return mMatchID; }
 
     /**
      * Gets the 8-bit unsigned integer where the first bit represents this player's team and the
