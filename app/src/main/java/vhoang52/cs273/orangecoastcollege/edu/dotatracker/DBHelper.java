@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+
 /**
  * A model class to manage the SQLite database used to store College data.
  *
@@ -58,8 +60,8 @@ public class DBHelper extends SQLiteOpenHelper
         StringBuilder createSQL = new StringBuilder("CREATE TABLE ");
         createSQL.append(tableName).append("(");
         for (int i = 0; i < fieldNames.length; i++)
-            createSQL.append(fieldNames[i]).append(" ").append(fieldTypes[i])
-                    .append((i < fieldNames.length - 1) ? "," : ")");
+            createSQL.append(fieldNames[i]).append(" ")
+                    .append(fieldTypes[i]).append((i < fieldNames.length - 1) ? "," : ")");
         return createSQL.toString();
     }
 
@@ -81,6 +83,7 @@ public class DBHelper extends SQLiteOpenHelper
 
     /**
      * Adds a new match to the database.
+     *
      * @param match The new <code>Match</code> to add to the database.
      */
     public void addMatch(Match match)
@@ -103,12 +106,13 @@ public class DBHelper extends SQLiteOpenHelper
 
     /**
      * Gets a <code>Match</code> from the database with the specified ID.
+     *
      * @param id The ID of the <code>Match</code> to retrieve from the database.
      * @return The <code>Match</code> with the specified ID in the database.
      */
     public Match getMatch(int id)
     {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(MATCHES_TABLE, MATCHES_FIELD_NAMES,
                 MATCHES_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(id)},
                 null, null, null, null);
@@ -123,6 +127,42 @@ public class DBHelper extends SQLiteOpenHelper
         db.close();
 
         return match;
+    }
+
+    /**
+     * Gets a list of all <code>Match</code>es in the database.
+     *
+     * @return A list of all <code>Match</code>es in the database.
+     */
+    public ArrayList<Match> getAllMatches()
+    {
+        ArrayList<Match> matchesList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(MATCHES_TABLE, MATCHES_FIELD_NAMES, null, null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) do
+        {
+            Match match = new Match(cursor.getInt(0), cursor.getInt(1),
+                    cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4),
+                    cursor.getInt(5), cursor.getInt(6));
+            matchesList.add(match);
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        db.close();
+
+        return matchesList;
+    }
+
+    /**
+     * Deletes all <code>Match</code>es in the database.
+     */
+    public void deleteAllMatches()
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(MATCHES_TABLE, null, null);
+        db.close();
     }
 
 }
