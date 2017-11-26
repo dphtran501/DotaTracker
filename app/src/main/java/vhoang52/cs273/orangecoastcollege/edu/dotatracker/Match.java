@@ -68,8 +68,8 @@ public class Match
     public Match(int ID, int sequenceNumber, boolean isRadiantWin, int duration, int startTime,
                  int radiantScore, int direScore)
     {
-        this (ID, sequenceNumber, null, isRadiantWin, duration, startTime, radiantScore,
-                direScore);
+        this (ID, sequenceNumber, new ArrayList<Player>(), isRadiantWin, duration, startTime,
+                radiantScore, direScore);
     }
 
     /**
@@ -94,6 +94,13 @@ public class Match
      * @return The list of <code>Player</code>s that were in this match.
      */
     public List<Player> getPlayersList() { return new ArrayList<>(mPlayersList); }  // defensive copy
+
+    /**
+     * Sets the list of <code>Player</code>s that were in this match.
+     *
+     * @param playersList The list of <code>Player</code>s that were in this match.
+     */
+    public void setPlayersList(List<Player> playersList) { mPlayersList = new ArrayList<>(playersList); }
 
     /**
      * Checks whether Radiant won this match. True if Radiant won; false if Dire won.

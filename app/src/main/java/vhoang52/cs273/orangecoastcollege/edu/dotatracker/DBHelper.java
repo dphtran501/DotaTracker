@@ -108,7 +108,8 @@ public class DBHelper extends SQLiteOpenHelper
      * Gets a <code>Match</code> from the database with the specified ID.
      *
      * @param id The ID of the <code>Match</code> to retrieve from the database.
-     * @return The <code>Match</code> with the specified ID in the database.
+     * @return The <code>Match</code> with the specified ID in the database. Returns null if no
+     * <code>Match</code> record has the specified ID.
      */
     public Match getMatch(int id)
     {
@@ -117,11 +118,12 @@ public class DBHelper extends SQLiteOpenHelper
                 MATCHES_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(id)},
                 null, null, null, null);
 
-        if (cursor != null) cursor.moveToFirst();
 
-        Match match = new Match(cursor.getInt(0), cursor.getInt(1),
-                cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4),
-                cursor.getInt(5), cursor.getInt(6));
+        Match match = null;
+        if (cursor.moveToFirst())
+            match = new Match(cursor.getInt(0), cursor.getInt(1),
+                    cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4),
+                    cursor.getInt(5), cursor.getInt(6));
 
         cursor.close();
         db.close();
@@ -141,7 +143,8 @@ public class DBHelper extends SQLiteOpenHelper
         Cursor cursor = db.query(MATCHES_TABLE, MATCHES_FIELD_NAMES, null, null,
                 null, null, null, null);
 
-        if (cursor.moveToFirst()) do
+        if (cursor.moveToFirst())
+        do
         {
             Match match = new Match(cursor.getInt(0), cursor.getInt(1),
                     cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4),
