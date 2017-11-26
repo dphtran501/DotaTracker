@@ -13,34 +13,32 @@ import android.net.Uri;
 public class User
 {
     // TODO: long or int?
-    // TODO: accountID?
-    private long mID;
+    private long mAccountID;
     private String mUserName;
     // TODO: password?
     private Uri mImageURI;
-    // TODO: use relationship table instead of matchList?
 
     /**
-     * Instantiates a <code>User</code> object given the user's ID, user name, and URI of the user's
-     * profile picture.
+     * Instantiates a <code>User</code> object given the user's account ID, user name, and URI of
+     * the user's profile picture.
      *
-     * @param ID        The ID of the user.
+     * @param accountID The account ID of the user.
      * @param userName  The user name of the user.
      * @param imageURI  The URI of the user's profile picture.
      */
-    public User(long ID, String userName, Uri imageURI)
+    public User(long accountID, String userName, Uri imageURI)
     {
-        mID = ID;
+        mAccountID = accountID;
         mUserName = userName;
         mImageURI = imageURI;
     }
 
     /**
-     * Gets the ID of this user.
+     * Gets the account ID of this user.
      *
-     * @return The ID of this user.
+     * @return The ID account of this user.
      */
-    public long getID() { return mID; }
+    public long getAccountID() { return mAccountID; }
 
     /**
      * Gets this user's user name.

@@ -32,6 +32,15 @@ public class DBHelper extends SQLiteOpenHelper
     private static final String[] MATCHES_FIELD_TYPES = {"INTEGER PRIMARY KEY", "INTEGER", "INTEGER",
             "INTEGER", "INTEGER", "INTEGER", "INTEGER"};
 
+    // Player table
+    private static final String PLAYERS_TABLE = "Players";
+    private static final String[] PLAYERS_FIELD_NAMES = {"_id", "account_id", "player_slot",
+            "hero_id", "kills", "deaths", "assists", "gold", "last_hits", "denies", "gpm", "xpm",
+            "hero_damage", "tower_damage", "hero_healing", "level"};
+    private static final String[] PLAYERS_FIELD_TYPES = {"INTEGER PRIMARY KEY", "INTEGER", "INTEGER",
+            "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER",
+            "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER"};
+
     /**
      * Instantiates a new <code>DBHelper</code> object with the given context.
      *
@@ -52,6 +61,7 @@ public class DBHelper extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(createTable(MATCHES_TABLE, MATCHES_FIELD_NAMES, MATCHES_FIELD_TYPES));
+        db.execSQL(createTable(PLAYERS_TABLE, PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES));
     }
 
     @NonNull
@@ -76,6 +86,7 @@ public class DBHelper extends SQLiteOpenHelper
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
         db.execSQL("DROP TABLE IF EXISTS " + MATCHES_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + PLAYERS_TABLE);
         onCreate(db);
     }
 
@@ -167,5 +178,10 @@ public class DBHelper extends SQLiteOpenHelper
         db.delete(MATCHES_TABLE, null, null);
         db.close();
     }
+
+    //************** PLAYER TABLE OPERATIONS ****************
+
+    // TODO: figure out how to deal with player primary key
+    // TODO: probably shouldn't be account ID since multiple matches can have same player
 
 }

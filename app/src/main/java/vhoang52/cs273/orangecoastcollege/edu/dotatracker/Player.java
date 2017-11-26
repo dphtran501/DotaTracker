@@ -203,7 +203,6 @@ public class Player
 
     /**
      * Gets this player's position in their team for the match (between 0 and 4, inclusive).
-     *
      * @return This player's position in their team for the match (between 0 and 4, inclusive).
      */
     public int getPosition()
