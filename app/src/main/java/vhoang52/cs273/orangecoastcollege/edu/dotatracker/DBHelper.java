@@ -26,10 +26,10 @@ public class DBHelper extends SQLiteOpenHelper
     private static final String DATABASE_NAME = "DotaTracker";
     private static final int DATABASE_VERSION = 1;
 
-    // TODO: need to check if account ID and match ID are ints or strings
-    // TODO: either can be primary keys, but using string as primary key can cause performance issue
-
-    // TODO: User table
+    // User table
+    private static final String USERS_TABLE = "Users";
+    private static final String[] USERS_FIELD_NAMES = {"_id", "username", "image_uri"};
+    private static final String[] USERS_FIELD_TYPES = {"INTEGER PRIMARY KEY", "TEXT", "TEXT"};
 
     // Match table
     private static final String MATCHES_TABLE = "Matches";
@@ -38,7 +38,6 @@ public class DBHelper extends SQLiteOpenHelper
     private static final String[] MATCHES_FIELD_TYPES = {"INTEGER PRIMARY KEY", "INTEGER", "INTEGER",
             "INTEGER", "INTEGER", "INTEGER", "INTEGER"};
 
-    // TODO: foreign key once user table is done
     // Player table (acts as relationship table between User and Match)
     private static final String PLAYERS_TABLE = "Players";
     private static final String[] PLAYERS_FIELD_NAMES = {"account_id", "match_id", "player_slot",
@@ -47,6 +46,9 @@ public class DBHelper extends SQLiteOpenHelper
     private static final String[] PLAYERS_FIELD_TYPES = {"INTEGER", "INTEGER", "INTEGER",
             "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER",
             "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER"};
+    private static final String[] PLAYERS_FOREIGN_KEYS = {PLAYERS_FIELD_NAMES[0], PLAYERS_FIELD_NAMES[1]};
+    private static final String[] PLAYERS_PARENT_TABLES = {USERS_TABLE, MATCHES_TABLE};
+    private static final String[] PLAYERS_CANDIDATE_KEYS = {USERS_FIELD_NAMES[0], MATCHES_FIELD_NAMES[0]};
 
     /**
      * Instantiates a new <code>DBHelper</code> object with the given context.
@@ -67,8 +69,10 @@ public class DBHelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
+        db.execSQL(createTable(USERS_TABLE, USERS_FIELD_NAMES, USERS_FIELD_TYPES));
         db.execSQL(createTable(MATCHES_TABLE, MATCHES_FIELD_NAMES, MATCHES_FIELD_TYPES));
-        db.execSQL(createTable(PLAYERS_TABLE, PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES));
+        db.execSQL(createTable(PLAYERS_TABLE, PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES,
+                PLAYERS_FOREIGN_KEYS, PLAYERS_PARENT_TABLES, PLAYERS_CANDIDATE_KEYS));
     }
 
     @NonNull
@@ -79,6 +83,24 @@ public class DBHelper extends SQLiteOpenHelper
         for (int i = 0; i < fieldNames.length; i++)
             createSQL.append(fieldNames[i]).append(" ")
                     .append(fieldTypes[i]).append((i < fieldNames.length - 1) ? "," : ")");
+
+        return createSQL.toString();
+    }
+
+    @NonNull
+    private String createTable(String tableName, String[] fieldNames, String[] fieldTypes,
+                               String[] foreignKeys, String[] parentTables, String[] candidateKeys)
+    {
+        StringBuilder createSQL = new StringBuilder("CREATE TABLE ");
+        createSQL.append(tableName).append("(");
+        for (int i = 0; i < fieldNames.length; i++)
+            createSQL.append(fieldNames[i]).append(" ").append(fieldTypes[i]).append(",");
+
+        for (int i = 0; i < foreignKeys.length; i++)
+            createSQL.append("FOREIGN KEY(").append(foreignKeys[i]).append(") REFERENCES ")
+                    .append(parentTables[i]).append("(").append(candidateKeys[i]).append(")")
+                    .append((i < foreignKeys.length - 1) ? "," : ")");
+
         return createSQL.toString();
     }
 
@@ -92,10 +114,14 @@ public class DBHelper extends SQLiteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
+        db.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + MATCHES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + PLAYERS_TABLE);
         onCreate(db);
     }
+
+    //************** USER TABLE OPERATIONS****************
+    // TODO: User table operations
 
     //************** MATCH TABLE OPERATIONS ****************
 
@@ -176,6 +202,7 @@ public class DBHelper extends SQLiteOpenHelper
         return matchesList;
     }
 
+    // TODO: delete player records related to match too?
     /**
      * Deletes all <code>Match</code>es in the database.
      */
@@ -319,39 +346,44 @@ public class DBHelper extends SQLiteOpenHelper
         return matchPlayersList;
     }
 
-    // TODO: getter for all players
-    // TODO: deleters for all players
-    // TODO: deleter for match players and player match statisics? (might not because of foreign keys?)
-
-    /*
-    public ArrayList<Match> getAllMatches()
+    /**
+     * Gets a list of all <code>Player</code>s in the database.
+     *
+     * @return A list of all <code>Player</code>s in the database.
+     */
+    public ArrayList<Player> getAllPlayers()
     {
-        ArrayList<Match> matchesList = new ArrayList<>();
+        ArrayList<Player> playersList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(MATCHES_TABLE, MATCHES_FIELD_NAMES, null, null,
+        Cursor cursor = db.query(PLAYERS_TABLE, PLAYERS_FIELD_NAMES, null, null,
                 null, null, null, null);
 
         if (cursor.moveToFirst())
             do
             {
-                Match match = new Match(cursor.getInt(0), cursor.getInt(1),
-                        cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4),
-                        cursor.getInt(5), cursor.getInt(6));
-                matchesList.add(match);
+                Player player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
+                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+                        cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
+                        cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
+                        cursor.getInt(14), cursor.getInt(15));
+                playersList.add(player);
             } while (cursor.moveToNext());
 
         cursor.close();
         db.close();
 
-        return matchesList;
+        return playersList;
     }
 
-    public void deleteAllMatches()
+    /**
+     * Deletes all <code>Player</code>s in the database.
+     */
+    public void deleteAllPlayers()
     {
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(MATCHES_TABLE, null, null);
+        db.delete(PLAYERS_TABLE, null, null);
         db.close();
     }
-    */
 
+    // TODO: deleter for match players and player match statisics? (might not because of foreign keys?)
 }
