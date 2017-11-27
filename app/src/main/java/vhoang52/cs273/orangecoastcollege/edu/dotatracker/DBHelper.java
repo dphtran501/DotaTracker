@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -121,7 +122,87 @@ public class DBHelper extends SQLiteOpenHelper
     }
 
     //************** USER TABLE OPERATIONS****************
-    // TODO: User table operations
+
+    /**
+     * Adds a new <code>User</code> to the database.
+     *
+     * @param user The new <code>User</code> to add to the database.
+     */
+    public void addUser(User user)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(USERS_FIELD_NAMES[0], user.getAccountID());
+        values.put(USERS_FIELD_NAMES[1], user.getUserName());
+        values.put(USERS_FIELD_NAMES[2], user.getImageURI().toString());
+
+        db.insert(USERS_TABLE, null, values);
+
+        db.close();
+    }
+
+    /**
+     * Gets a <code>User</code> from the database with the specified account ID.
+     *
+     * @param accountID The account ID of the <code>User</code> to retrieve from the database.
+     * @return The <code>User</code> with the specified account ID in the database. Returns null if
+     * no <code>User</code> record has the specified account ID.
+     */
+    public User getUser(int accountID)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(USERS_TABLE, USERS_FIELD_NAMES,
+                USERS_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(accountID)},
+                null, null, null, null);
+
+        User user = null;
+        if (cursor.moveToFirst())
+            user = new User(cursor.getLong(0), cursor.getString(1), Uri.parse(cursor.getString(2)));
+
+        cursor.close();
+        db.close();
+
+        return user;
+    }
+
+    /**
+     * Gets a list of all <code>User</code>s in the database.
+     *
+     * @return A list of all <code>User</code>s in the database.
+     */
+    public ArrayList<User> getAllUsers()
+    {
+        ArrayList<User> usersList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(USERS_TABLE, USERS_FIELD_NAMES, null, null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst())
+            do
+            {
+                User user = new User(cursor.getLong(0), cursor.getString(1), Uri.parse(cursor.getString(2)));
+                usersList.add(user);
+            } while (cursor.moveToNext());
+
+        cursor.close();
+        db.close();
+
+        return usersList;
+    }
+
+    // TODO: delete player records related to user too?
+    // TODO: delete match records related to user too?
+    /**
+     * Deletes all <code>User</code>s in the database.
+     */
+    public void deleteAllUsers()
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(USERS_TABLE, null, null);
+        db.close();
+    }
+
 
     //************** MATCH TABLE OPERATIONS ****************
 
