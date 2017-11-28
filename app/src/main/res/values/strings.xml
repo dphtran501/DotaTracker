@@ -17,6 +17,7 @@
 
     <!-- DEREK'S STRINGS -->
     <string name="default_data">N/A</string>
+    <string name="default_hero_image_content">Hero Image</string>
     <!-- activity_matches_overview.xml -->
     <string name="player_image">%1$s</string>
     <string name="wins_label">W</string>
@@ -40,6 +41,8 @@
     <string name="radiant_tab">Radiant</string>
     <string name="versus_tab">Versus</string>
     <string name="dire_tab">Dire</string>
+    <!-- fragment_match_team.xml -->
+    <string name="players_label">Player</string>
 
     <!-- Login Activity -->
     <string name="login_username">Username: </string>
