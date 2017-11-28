@@ -261,7 +261,7 @@
                     android:textColor="@android:color/darker_gray"/>
 
                 <TextView
-                    android:id="@+id/avgXPPMTextView"
+                    android:id="@+id/avgXPMTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_data"
@@ -328,7 +328,7 @@
                     android:textColor="@android:color/darker_gray"/>
 
                 <TextView
-                    android:id="@+id/avgHealTextView"
+                    android:id="@+id/avgHeroHealTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_data"
