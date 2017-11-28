@@ -66,6 +66,8 @@ public class MatchesOverviewActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches_overview);
 
+        // TODO: Need to retrieve selected user in order to populate data properly
+
         // Connect to database
         db = new DBHelper(this);
 
@@ -91,13 +93,18 @@ public class MatchesOverviewActivity extends AppCompatActivity
         averagesLabelTextView = (TextView) findViewById(R.id.averagesLabelTextView);
         recentMatchesTextView = (TextView) findViewById(R.id.recentMatchesTextView);
         // Connect to ListView
-        matchList = db.getAllMatches();
+        // TODO: matchList will need to have user's matches, not all matches
         matchListAdapter = new MatchListAdapter(this, R.layout.match_list_item, matchList);
         matchListView.setAdapter(matchListAdapter);
 
+        // TODO: Make functions to set image view, player profile, and player stats
+        // TODO: Set values for label textviews
+
         // Set default player profile image
+        /*
         playerImageURI = getURIFromResource(this, R.drawable.steam_icon);
         playerImageView.setImageURI(playerImageURI);
+        */
 
     }
 

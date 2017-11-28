@@ -65,6 +65,7 @@ public class MatchListAdapter extends ArrayAdapter<Match>
         TextView matchListItemAssistsTextView = (TextView) view.findViewById(R.id.matchListItemAssistsTextView);
         ProgressBar matchListItemKDAProgressBar = (ProgressBar) view.findViewById(R.id.matchListItemKDAProgressBar);
 
+        // TODO: might need to use DBHelper here in order to get player stats (getMatchPlayer)
         // Set widgets of list item based on selected item
         Match selectedMatch = mMatchList.get(position);
         // TODO: Get hero image
