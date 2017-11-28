@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".MatchesOverviewActivity">
         </activity>
+        <activity android:name=".MatchDetailsActivity">
+        </activity>
     </application>
 
 </manifest>

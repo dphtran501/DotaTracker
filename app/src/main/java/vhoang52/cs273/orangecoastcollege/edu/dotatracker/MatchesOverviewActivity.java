@@ -108,6 +108,8 @@ public class MatchesOverviewActivity extends AppCompatActivity
 
     }
 
+    // TODO: Launcher function for MatchDetailsActivity
+
     /**
      * Get URI to any resource type within an Android Studio project. Method is public static to
      * allow other classes to use it as a helper function.

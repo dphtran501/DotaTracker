@@ -6,7 +6,4 @@
     android:background="@color/derekPrimary"
     android:orientation="vertical">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 </LinearLayout>
