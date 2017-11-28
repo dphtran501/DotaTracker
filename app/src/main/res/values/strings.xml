@@ -43,6 +43,9 @@
     <string name="dire_tab">Dire</string>
     <!-- fragment_match_team.xml -->
     <string name="players_label">Player</string>
+    <string name="level_label">LVL</string>
+    <string name="denies_label">DN</string>
+    <string name="gold_label">G</string>
 
     <!-- Login Activity -->
     <string name="login_username">Username: </string>
