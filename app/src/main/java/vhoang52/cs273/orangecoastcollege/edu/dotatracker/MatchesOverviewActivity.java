@@ -47,7 +47,7 @@ public class MatchesOverviewActivity extends AppCompatActivity
     private TextView recentMatchesTextView;
     // ListView
     private List<Match> matchList;
-    // TODO: adapter class instantiation
+    private MatchListAdapter matchListAdapter;
     private ListView matchListView;
 
     /**
@@ -62,5 +62,12 @@ public class MatchesOverviewActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches_overview);
+
+        // Connect to database
+        db = new DBHelper(this);
+
+        // Connect to widgets
+        // TODO: add widgets
+
     }
 }
