@@ -18,4 +18,5 @@
     <!-- fragment_match_team.xml -->
     <dimen name="player_list_item_height">50dp</dimen>
     <dimen name="player_list_item_spacing">5dp</dimen>
+    <dimen name="player_list_item_kda_spacing">15dp</dimen>
 </resources>

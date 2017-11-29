@@ -226,6 +226,394 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/player_list_item_spacing"
+                        android:paddingBottom="@dimen/player_list_item_spacing"
+                        android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                        android:paddingStart="@dimen/player_list_item_kda_spacing"
+                        android:paddingRight="@dimen/player_list_item_kda_spacing"
+                        android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                        android:text="@string/kills_label"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/player_list_item_spacing"
+                        android:paddingBottom="@dimen/player_list_item_spacing"
+                        android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                        android:paddingStart="@dimen/player_list_item_kda_spacing"
+                        android:paddingRight="@dimen/player_list_item_kda_spacing"
+                        android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                        android:text="@string/deaths_label"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/player_list_item_spacing"
+                        android:paddingBottom="@dimen/player_list_item_spacing"
+                        android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                        android:paddingStart="@dimen/player_list_item_kda_spacing"
+                        android:paddingRight="@dimen/player_list_item_kda_spacing"
+                        android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                        android:text="@string/assists_label"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/player1KillsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_green_dark"/>
+
+                        <TextView
+                            android:id="@+id/player1DeathsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_red_dark"/>
+
+                        <TextView
+                            android:id="@+id/player1AssistsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_blue_dark"/>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/player1KDAProgressBar"
+                        style="@style/KDAProgressBarHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                        android:paddingStart="@dimen/player_list_item_kda_spacing"
+                        android:paddingRight="@dimen/player_list_item_kda_spacing"
+                        android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                        android:progress="25"
+                        android:progressDrawable="@drawable/kda_progress"
+                        android:secondaryProgress="75"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/player2KillsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_green_dark"/>
+
+                        <TextView
+                            android:id="@+id/player2DeathsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_red_dark"/>
+
+                        <TextView
+                            android:id="@+id/player2AssistsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_blue_dark"/>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/player2KDAProgressBar"
+                        style="@style/KDAProgressBarHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                        android:paddingStart="@dimen/player_list_item_kda_spacing"
+                        android:paddingRight="@dimen/player_list_item_kda_spacing"
+                        android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                        android:progress="25"
+                        android:progressDrawable="@drawable/kda_progress"
+                        android:secondaryProgress="75"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/player3KillsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_green_dark"/>
+
+                        <TextView
+                            android:id="@+id/player3DeathsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_red_dark"/>
+
+                        <TextView
+                            android:id="@+id/player3AssistsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_blue_dark"/>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/player3KDAProgressBar"
+                        style="@style/KDAProgressBarHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                        android:paddingStart="@dimen/player_list_item_kda_spacing"
+                        android:paddingRight="@dimen/player_list_item_kda_spacing"
+                        android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                        android:progress="25"
+                        android:progressDrawable="@drawable/kda_progress"
+                        android:secondaryProgress="75"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/player4KillsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_green_dark"/>
+
+                        <TextView
+                            android:id="@+id/player4DeathsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_red_dark"/>
+
+                        <TextView
+                            android:id="@+id/player4AssistsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_blue_dark"/>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/player4KDAProgressBar"
+                        style="@style/KDAProgressBarHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                        android:paddingStart="@dimen/player_list_item_kda_spacing"
+                        android:paddingRight="@dimen/player_list_item_kda_spacing"
+                        android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                        android:progress="25"
+                        android:progressDrawable="@drawable/kda_progress"
+                        android:secondaryProgress="75"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/player5KillsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_green_dark"/>
+
+                        <TextView
+                            android:id="@+id/player5DeathsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_red_dark"/>
+
+                        <TextView
+                            android:id="@+id/player5AssistsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                            android:paddingStart="@dimen/player_list_item_kda_spacing"
+                            android:paddingRight="@dimen/player_list_item_kda_spacing"
+                            android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                            android:paddingTop="@dimen/player_list_item_spacing"
+                            android:text="@string/default_data"
+                            android:textColor="@android:color/holo_blue_dark"/>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/player5KDAProgressBar"
+                        style="@style/KDAProgressBarHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:paddingLeft="@dimen/player_list_item_kda_spacing"
+                        android:paddingStart="@dimen/player_list_item_kda_spacing"
+                        android:paddingRight="@dimen/player_list_item_kda_spacing"
+                        android:paddingEnd="@dimen/player_list_item_kda_spacing"
+                        android:progress="25"
+                        android:progressDrawable="@drawable/kda_progress"
+                        android:secondaryProgress="75"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
