@@ -16,15 +16,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/player_list_item_spacing"
             android:text="@string/players_label"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/darker_gray"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player1HeroImageView"
@@ -39,15 +42,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/default_data"/>
+                android:text="@string/default_data"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player2HeroImageView"
@@ -62,14 +68,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/default_data"/>
+                android:text="@string/default_data"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player3HeroImageView"
@@ -84,14 +93,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/default_data"/>
+                android:text="@string/default_data"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player4HeroImageView"
@@ -106,15 +118,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/default_data"/>
+                android:text="@string/default_data"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player5HeroImageView"
@@ -129,7 +144,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/default_data"/>
+                android:text="@string/default_data"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -142,93 +159,547 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/level_label"/>
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/level_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/darker_gray"
+                    />
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/kills_label"/>
+                    android:id="@+id/player1LevelTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/deaths_label"/>
+                    android:id="@+id/player2LevelTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/assists_label"/>
+                    android:id="@+id/player3LevelTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/gpm_label"/>
+                    android:id="@+id/player4LevelTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/xppm_label"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/last_hits_label"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/denies_label"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/hero_dmg_label"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/heal_label"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/tower_dmg_label"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/gold_label"/>
-
+                    android:id="@+id/player5LevelTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/default_data"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/gpm_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/player1GPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+
+                <TextView
+                    android:id="@+id/player2GPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+
+                <TextView
+                    android:id="@+id/player3GPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+
+                <TextView
+                    android:id="@+id/player4GPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+
+                <TextView
+                    android:id="@+id/player5GPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/xpm_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/player1XPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player2XPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player3XPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player4XPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player5XPMTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/last_hits_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/player1LastHitsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player2LastHitsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player3LastHitsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player4LastHitsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player5LastHitsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/denies_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/player1DeniesTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player2DeniesTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player3DeniesTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player4DeniesTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player5DeniesTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/hero_dmg_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/player1HeroDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player2HeroDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player3HeroDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player4HeroDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player5HeroDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/heal_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/player1HeroHealTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player2HeroHealTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player3HeroHealTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player4HeroHealTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player5HeroHealTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/tower_dmg_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/player1TowerDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player2TowerDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player3TowerDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player4TowerDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/player5TowerDMGTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/gold_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/player1GoldTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+
+                <TextView
+                    android:id="@+id/player2GoldTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+
+                <TextView
+                    android:id="@+id/player3GoldTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+
+                <TextView
+                    android:id="@+id/player4GoldTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+
+                <TextView
+                    android:id="@+id/player5GoldTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/player_list_item_height"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/player_list_item_spacing"
+                    android:text="@string/default_data"
+                    android:textColor="@android:color/holo_orange_dark"/>
+            </LinearLayout>
 
         </LinearLayout>
     </HorizontalScrollView>

@@ -28,7 +28,7 @@
     <string name="deaths_label">D</string>
     <string name="assists_label">A</string>
     <string name="gpm_label">GPM</string>
-    <string name="xppm_label">XPM</string>
+    <string name="xpm_label">XPM</string>
     <string name="last_hits_label">LH</string>
     <string name="hero_dmg_label">HD</string>
     <string name="heal_label">HH</string>
