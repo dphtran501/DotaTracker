@@ -8,14 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * This fragment displays the single-match statistics of each player in Team Radiant, where the
+ * This fragment displays the single-match statistics of each player in Team Dire, where the
  * match is specified in <code>MatchDetailsActivity</code>.
  *
  * @author Derek Tran
  * @version 1.0
- * @since November 28, 2017
+ * @since November 30, 2017
  */
-public class RadiantMatchDetailsFragment extends Fragment
+
+public class DireMatchDetailsFragment extends Fragment
 {
     // TODO: Might just have one fragment layout for both Radiant and Dire since layouts are similar
 
