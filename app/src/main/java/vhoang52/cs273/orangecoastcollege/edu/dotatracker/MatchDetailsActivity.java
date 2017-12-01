@@ -19,12 +19,21 @@ public class MatchDetailsActivity extends AppCompatActivity
 {
     private TabLayout matchDetailTabLayout;
     private ViewPager matchDetailViewPager;
-    // TODO: adapter class for viewpager
+    private MatchDetailsActivityPagerAdapter matchDetailsActivityPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_details);
+
+        matchDetailViewPager = (ViewPager) findViewById(R.id.matchDetailViewPager);
+        matchDetailsActivityPagerAdapter = new MatchDetailsActivityPagerAdapter(getSupportFragmentManager());
+        matchDetailViewPager.setAdapter(matchDetailsActivityPagerAdapter);
+
+        matchDetailTabLayout = (TabLayout) findViewById(R.id.matchDetailTabLayout);
+        matchDetailTabLayout.setupWithViewPager(matchDetailViewPager);
+
+        matchDetailViewPager.setCurrentItem(1);
     }
 }
