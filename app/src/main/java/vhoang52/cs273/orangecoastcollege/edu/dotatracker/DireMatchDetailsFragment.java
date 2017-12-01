@@ -44,5 +44,7 @@ public class DireMatchDetailsFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_match_team_v2, container, false);
         return view;
+
+        // TODO: Link to widgets and populate fields
     }
 }

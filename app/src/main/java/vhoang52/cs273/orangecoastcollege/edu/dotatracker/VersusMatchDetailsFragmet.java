@@ -8,17 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * This fragment displays the single-match statistics of each player in Team Radiant, where the
+ * This fragment displays the overall match statistics for Team Radiant and Team Dire, where the
  * match is specified in <code>MatchDetailsActivity</code>.
  *
  * @author Derek Tran
  * @version 1.0
- * @since November 28, 2017
+ * @since December 1, 2017
  */
-public class RadiantMatchDetailsFragment extends Fragment
-{
-    // TODO: Might just have one fragment layout for both Radiant and Dire since layouts are similar
 
+public class VersusMatchDetailsFragmet extends Fragment
+{
     /**
      * Called to have the fragment instantiate its user interface view.
      * This is optional, and non-graphical fragments can return null (which
@@ -41,7 +40,7 @@ public class RadiantMatchDetailsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_match_team_v2, container, false);
+        View view = inflater.inflate(R.layout.fragment_match_versus, container, false);
         return view;
 
         // TODO: Link to widgets and populate fields
