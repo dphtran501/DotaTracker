@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/derekPrimary"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/radiantLevelTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantKillsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantDeathsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantAssistsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantGPMTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantXPMTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantLastHitsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantDeniesTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantHeroDMGTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantHeroHealTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantTowerDMGTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+
+        <TextView
+            android:id="@+id/radiantGoldTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewEnd"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/level_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/kills_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/deaths_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/assists_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gpm_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/xpm_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/last_hits_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/denies_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hero_dmg_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/heal_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tower_dmg_label"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gold_label"
+            android:textAlignment="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/direLevelTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direKillsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direDeathsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direAssistsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direGPMTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direXPMTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direLastHitsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direDeniesTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direHeroDMGTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direHeroHealTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direTowerDMGTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/direGoldTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/default_data"
+            android:textAlignment="viewStart"/>
+    </LinearLayout>
+</LinearLayout>
