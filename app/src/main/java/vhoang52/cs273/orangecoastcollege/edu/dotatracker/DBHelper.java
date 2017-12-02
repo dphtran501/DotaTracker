@@ -1,15 +1,9 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A model class to manage the SQLite database used to store College data.
@@ -123,348 +117,348 @@ public class DBHelper extends SQLiteOpenHelper
 
     //************** USER TABLE OPERATIONS****************
 
-    /**
-     * Adds a new <code>User</code> to the database.
-     *
-     * @param user The new <code>User</code> to add to the database.
-     */
-    public void addUser(User user)
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(USERS_FIELD_NAMES[0], user.getAccountID());
-        values.put(USERS_FIELD_NAMES[1], user.getUserName());
-        values.put(USERS_FIELD_NAMES[2], user.getImageURI().toString());
-
-        db.insert(USERS_TABLE, null, values);
-
-        db.close();
-    }
-
-    /**
-     * Gets a <code>User</code> from the database with the specified account ID.
-     *
-     * @param accountID The account ID of the <code>User</code> to retrieve from the database.
-     * @return The <code>User</code> with the specified account ID in the database. Returns null if
-     * no <code>User</code> record has the specified account ID.
-     */
-    public User getUser(int accountID)
-    {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(USERS_TABLE, USERS_FIELD_NAMES,
-                USERS_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(accountID)},
-                null, null, null, null);
-
-        User user = null;
-        if (cursor.moveToFirst())
-            user = new User(cursor.getLong(0), cursor.getString(1), Uri.parse(cursor.getString(2)));
-
-        cursor.close();
-        db.close();
-
-        return user;
-    }
-
-    /**
-     * Gets a list of all <code>User</code>s in the database.
-     *
-     * @return A list of all <code>User</code>s in the database.
-     */
-    public ArrayList<User> getAllUsers()
-    {
-        ArrayList<User> usersList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(USERS_TABLE, USERS_FIELD_NAMES, null, null,
-                null, null, null, null);
-
-        if (cursor.moveToFirst())
-            do
-            {
-                User user = new User(cursor.getLong(0), cursor.getString(1), Uri.parse(cursor.getString(2)));
-                usersList.add(user);
-            } while (cursor.moveToNext());
-
-        cursor.close();
-        db.close();
-
-        return usersList;
-    }
-
-    // TODO: delete player records related to user too?
-    // TODO: delete match records related to user too?
-    /**
-     * Deletes all <code>User</code>s in the database.
-     */
-    public void deleteAllUsers()
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(USERS_TABLE, null, null);
-        db.close();
-    }
-
-
-    //************** MATCH TABLE OPERATIONS ****************
-
-    /**
-     * Adds a new <code>Match</code> to the database.
-     *
-     * @param match The new <code>Match</code> to add to the database.
-     */
-    public void addMatch(Match match)
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(MATCHES_FIELD_NAMES[0], match.getID());
-        values.put(MATCHES_FIELD_NAMES[1], match.getSequenceNumber());
-        values.put(MATCHES_FIELD_NAMES[2], match.isRadiantWin() ? 1 : 0);
-        values.put(MATCHES_FIELD_NAMES[3], match.getDuration());
-        values.put(MATCHES_FIELD_NAMES[4], match.getStartTime());
-        values.put(MATCHES_FIELD_NAMES[5], match.getRadiantScore());
-        values.put(MATCHES_FIELD_NAMES[6], match.getDireScore());
-
-        db.insert(MATCHES_TABLE, null, values);
-
-        db.close();
-    }
-
-    /**
-     * Gets a <code>Match</code> from the database with the specified ID.
-     *
-     * @param id The ID of the <code>Match</code> to retrieve from the database.
-     * @return The <code>Match</code> with the specified ID in the database. Returns null if no
-     * <code>Match</code> record has the specified ID.
-     */
-    public Match getMatch(int id)
-    {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(MATCHES_TABLE, MATCHES_FIELD_NAMES,
-                MATCHES_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(id)},
-                null, null, null, null);
-
-
-        Match match = null;
-        if (cursor.moveToFirst())
-            match = new Match(cursor.getInt(0), cursor.getInt(1),
-                    cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4),
-                    cursor.getInt(5), cursor.getInt(6));
-
-        cursor.close();
-        db.close();
-
-        return match;
-    }
-
-    /**
-     * Gets a list of all <code>Match</code>es in the database.
-     *
-     * @return A list of all <code>Match</code>es in the database.
-     */
-    public ArrayList<Match> getAllMatches()
-    {
-        ArrayList<Match> matchesList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(MATCHES_TABLE, MATCHES_FIELD_NAMES, null, null,
-                null, null, null, null);
-
-        if (cursor.moveToFirst())
-        do
-        {
-            Match match = new Match(cursor.getInt(0), cursor.getInt(1),
-                    cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4),
-                    cursor.getInt(5), cursor.getInt(6));
-            matchesList.add(match);
-        } while (cursor.moveToNext());
-
-        cursor.close();
-        db.close();
-
-        return matchesList;
-    }
-
-    // TODO: delete player records related to match too?
-    /**
-     * Deletes all <code>Match</code>es in the database.
-     */
-    public void deleteAllMatches()
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(MATCHES_TABLE, null, null);
-        db.close();
-    }
-
-    //************** PLAYER TABLE OPERATIONS ****************
-
-    /**
-     * Adds a new player to the database.
-     *
-     * @param player The new <code>Player</code> to add to the database.
-     */
-    public void addPlayer(Player player)
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(PLAYERS_FIELD_NAMES[0], player.getAccountID());
-        values.put(PLAYERS_FIELD_NAMES[1], player.getMatchID());
-        values.put(PLAYERS_FIELD_NAMES[2], player.getPlayerSlot());
-        values.put(PLAYERS_FIELD_NAMES[3], player.getHeroID());
-        values.put(PLAYERS_FIELD_NAMES[4], player.getKills());
-        values.put(PLAYERS_FIELD_NAMES[5], player.getDeaths());
-        values.put(PLAYERS_FIELD_NAMES[6], player.getAssists());
-        values.put(PLAYERS_FIELD_NAMES[7], player.getGold());
-        values.put(PLAYERS_FIELD_NAMES[8], player.getLastHits());
-        values.put(PLAYERS_FIELD_NAMES[9], player.getDenies());
-        values.put(PLAYERS_FIELD_NAMES[10], player.getGPM());
-        values.put(PLAYERS_FIELD_NAMES[11], player.getXPM());
-        values.put(PLAYERS_FIELD_NAMES[12], player.getHeroDamage());
-        values.put(PLAYERS_FIELD_NAMES[13], player.getTowerDamage());
-        values.put(PLAYERS_FIELD_NAMES[14], player.getHeroHealing());
-        values.put(PLAYERS_FIELD_NAMES[15], player.getLevel());
-
-        db.insert(PLAYERS_TABLE, null, values);
-
-        db.close();
-    }
-
-    /**
-     * Gets a <code>Player</code> of a specified match from the database.
-     *
-     * @param accountID The account ID of the <code>Player</code> to retrieve from the database.
-     * @param matchID   The ID of the match that the <code>Player</code> to retrieve from the database
-     *                  played in.
-     * @return The <code>Player</code> in the database with the specified account ID who played in
-     * the match with the specified match ID. Returns null if no <code>Player</code> record has the
-     * specified account ID and match ID.
-     */
-    public Player getMatchPlayer(int accountID, int matchID)
-    {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(PLAYERS_TABLE, PLAYERS_FIELD_NAMES,
-                PLAYERS_FIELD_NAMES[0] + "=? AND " + PLAYERS_FIELD_NAMES[1] + "=?",
-                new String[]{String.valueOf(accountID), String.valueOf(matchID)},
-                null, null, null, null);
-
-        Player player = null;
-        if (cursor.moveToFirst())
-            player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
-                    cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-                    cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
-                    cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
-                    cursor.getInt(14), cursor.getInt(15));
-
-        cursor.close();
-        db.close();
-
-        return player;
-    }
-
-    /**
-     * Gets a <code>Player</code>'s single-match statistics for every match the player has played in
-     * from the database.
-     *
-     * @param accountID The account ID of the <code>Player</code> to query.
-     * @return A list of <code>Player</code>s in the database with the specified account ID. Since
-     * account IDs are unique for each <code>Player</code>, each <code>Player</code> in the list
-     * should represent the single-match statistics of a single player (user).
-     */
-    public List<Player> getPlayerMatchStats(int accountID)
-    {
-        ArrayList<Player> playerMatchStatsList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(PLAYERS_TABLE, PLAYERS_FIELD_NAMES,
-                PLAYERS_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(accountID)},
-                null, null, null, null);
-
-        if (cursor.moveToNext())
-            do
-            {
-                Player player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
-                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-                        cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
-                        cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
-                        cursor.getInt(14), cursor.getInt(15));
-                playerMatchStatsList.add(player);
-            } while (cursor.moveToNext());
-
-        cursor.close();
-        db.close();
-
-        return playerMatchStatsList;
-    }
-
-    /**
-     * Gets a list of <code>Player</code>s in the database that played in a specified match.
-     *
-     * @param matchID The ID of the match that the <code>Player</code>s to retrieve from the database
-     *                played in.
-     * @return A list of <code>Player</code>s in the database that played in the match with the
-     * specified ID.
-     */
-    public List<Player> getMatchPlayers(int matchID)
-    {
-        ArrayList<Player> matchPlayersList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(PLAYERS_TABLE, PLAYERS_FIELD_NAMES,
-                PLAYERS_FIELD_NAMES[1] + "=?", new String[]{String.valueOf(matchID)},
-                null, null, null, null);
-
-        if (cursor.moveToNext())
-            do
-            {
-                Player player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
-                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-                        cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
-                        cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
-                        cursor.getInt(14), cursor.getInt(15));
-                matchPlayersList.add(player);
-            } while (cursor.moveToNext());
-
-        cursor.close();
-        db.close();
-
-        return matchPlayersList;
-    }
-
-    /**
-     * Gets a list of all <code>Player</code>s in the database.
-     *
-     * @return A list of all <code>Player</code>s in the database.
-     */
-    public ArrayList<Player> getAllPlayers()
-    {
-        ArrayList<Player> playersList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(PLAYERS_TABLE, PLAYERS_FIELD_NAMES, null, null,
-                null, null, null, null);
-
-        if (cursor.moveToFirst())
-            do
-            {
-                Player player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
-                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-                        cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
-                        cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
-                        cursor.getInt(14), cursor.getInt(15));
-                playersList.add(player);
-            } while (cursor.moveToNext());
-
-        cursor.close();
-        db.close();
-
-        return playersList;
-    }
-
-    /**
-     * Deletes all <code>Player</code>s in the database.
-     */
-    public void deleteAllPlayers()
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(PLAYERS_TABLE, null, null);
-        db.close();
-    }
-
-    // TODO: deleter for match players and player match statisics? (might not because of foreign keys?)
+//    /**
+//     * Adds a new <code>User</code> to the database.
+//     *
+//     * @param user The new <code>User</code> to add to the database.
+//     */
+//    public void addUser(User user)
+//    {
+//        SQLiteDatabase db = getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//
+//        values.put(USERS_FIELD_NAMES[0], user.getAccountID());
+//        values.put(USERS_FIELD_NAMES[1], user.getUserName());
+//        values.put(USERS_FIELD_NAMES[2], user.getImageURI().toString());
+//
+//        db.insert(USERS_TABLE, null, values);
+//
+//        db.close();
+//    }
+//
+//    /**
+//     * Gets a <code>User</code> from the database with the specified account ID.
+//     *
+//     * @param accountID The account ID of the <code>User</code> to retrieve from the database.
+//     * @return The <code>User</code> with the specified account ID in the database. Returns null if
+//     * no <code>User</code> record has the specified account ID.
+//     */
+//    public User getUser(int accountID)
+//    {
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.query(USERS_TABLE, USERS_FIELD_NAMES,
+//                USERS_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(accountID)},
+//                null, null, null, null);
+//
+//        User user = null;
+//        if (cursor.moveToFirst())
+//            user = new User(cursor.getLong(0), cursor.getString(1), Uri.parse(cursor.getString(2)));
+//
+//        cursor.close();
+//        db.close();
+//
+//        return user;
+//    }
+//
+//    /**
+//     * Gets a list of all <code>User</code>s in the database.
+//     *
+//     * @return A list of all <code>User</code>s in the database.
+//     */
+//    public ArrayList<User> getAllUsers()
+//    {
+//        ArrayList<User> usersList = new ArrayList<>();
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.query(USERS_TABLE, USERS_FIELD_NAMES, null, null,
+//                null, null, null, null);
+//
+//        if (cursor.moveToFirst())
+//            do
+//            {
+//                User user = new User(cursor.getLong(0), cursor.getString(1), Uri.parse(cursor.getString(2)));
+//                usersList.add(user);
+//            } while (cursor.moveToNext());
+//
+//        cursor.close();
+//        db.close();
+//
+//        return usersList;
+//    }
+//
+//    // TODO: delete player records related to user too?
+//    // TODO: delete match records related to user too?
+//    /**
+//     * Deletes all <code>User</code>s in the database.
+//     */
+//    public void deleteAllUsers()
+//    {
+//        SQLiteDatabase db = getWritableDatabase();
+//        db.delete(USERS_TABLE, null, null);
+//        db.close();
+//    }
+//
+//
+//    //************** MATCH TABLE OPERATIONS ****************
+//
+//    /**
+//     * Adds a new <code>Match</code> to the database.
+//     *
+//     * @param match The new <code>Match</code> to add to the database.
+//     */
+//    public void addMatch(Match match)
+//    {
+//        SQLiteDatabase db = getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//
+//        values.put(MATCHES_FIELD_NAMES[0], match.getID());
+//        values.put(MATCHES_FIELD_NAMES[1], match.getSequenceNumber());
+//        values.put(MATCHES_FIELD_NAMES[2], match.isRadiantWin() ? 1 : 0);
+//        values.put(MATCHES_FIELD_NAMES[3], match.getDuration());
+//        values.put(MATCHES_FIELD_NAMES[4], match.getStartTime());
+//        values.put(MATCHES_FIELD_NAMES[5], match.getRadiantScore());
+//        values.put(MATCHES_FIELD_NAMES[6], match.getDireScore());
+//
+//        db.insert(MATCHES_TABLE, null, values);
+//
+//        db.close();
+//    }
+//
+//    /**
+//     * Gets a <code>Match</code> from the database with the specified ID.
+//     *
+//     * @param id The ID of the <code>Match</code> to retrieve from the database.
+//     * @return The <code>Match</code> with the specified ID in the database. Returns null if no
+//     * <code>Match</code> record has the specified ID.
+//     */
+//    public Match getMatch(int id)
+//    {
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.query(MATCHES_TABLE, MATCHES_FIELD_NAMES,
+//                MATCHES_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(id)},
+//                null, null, null, null);
+//
+//
+//        Match match = null;
+//        if (cursor.moveToFirst())
+//            match = new Match(cursor.getInt(0), cursor.getInt(1),
+//                    cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4),
+//                    cursor.getInt(5), cursor.getInt(6));
+//
+//        cursor.close();
+//        db.close();
+//
+//        return match;
+//    }
+//
+//    /**
+//     * Gets a list of all <code>Match</code>es in the database.
+//     *
+//     * @return A list of all <code>Match</code>es in the database.
+//     */
+//    public ArrayList<Match> getAllMatches()
+//    {
+//        ArrayList<Match> matchesList = new ArrayList<>();
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.query(MATCHES_TABLE, MATCHES_FIELD_NAMES, null, null,
+//                null, null, null, null);
+//
+//        if (cursor.moveToFirst())
+//        do
+//        {
+//            Match match = new Match(cursor.getInt(0), cursor.getInt(1),
+//                    cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4),
+//                    cursor.getInt(5), cursor.getInt(6));
+//            matchesList.add(match);
+//        } while (cursor.moveToNext());
+//
+//        cursor.close();
+//        db.close();
+//
+//        return matchesList;
+//    }
+//
+//    // TODO: delete player records related to match too?
+//    /**
+//     * Deletes all <code>Match</code>es in the database.
+//     */
+//    public void deleteAllMatches()
+//    {
+//        SQLiteDatabase db = getWritableDatabase();
+//        db.delete(MATCHES_TABLE, null, null);
+//        db.close();
+//    }
+//
+//    //************** PLAYER TABLE OPERATIONS ****************
+//
+//    /**
+//     * Adds a new player to the database.
+//     *
+//     * @param player The new <code>Player</code> to add to the database.
+//     */
+//    public void addPlayer(Player player)
+//    {
+//        SQLiteDatabase db = getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//
+//        values.put(PLAYERS_FIELD_NAMES[0], player.getAccountID());
+//        values.put(PLAYERS_FIELD_NAMES[1], player.getMatchID());
+//        values.put(PLAYERS_FIELD_NAMES[2], player.getPlayerSlot());
+//        values.put(PLAYERS_FIELD_NAMES[3], player.getHeroID());
+//        values.put(PLAYERS_FIELD_NAMES[4], player.getKills());
+//        values.put(PLAYERS_FIELD_NAMES[5], player.getDeaths());
+//        values.put(PLAYERS_FIELD_NAMES[6], player.getAssists());
+//        values.put(PLAYERS_FIELD_NAMES[7], player.getGold());
+//        values.put(PLAYERS_FIELD_NAMES[8], player.getLastHits());
+//        values.put(PLAYERS_FIELD_NAMES[9], player.getDenies());
+//        values.put(PLAYERS_FIELD_NAMES[10], player.getGPM());
+//        values.put(PLAYERS_FIELD_NAMES[11], player.getXPM());
+//        values.put(PLAYERS_FIELD_NAMES[12], player.getHeroDamage());
+//        values.put(PLAYERS_FIELD_NAMES[13], player.getTowerDamage());
+//        values.put(PLAYERS_FIELD_NAMES[14], player.getHeroHealing());
+//        values.put(PLAYERS_FIELD_NAMES[15], player.getLevel());
+//
+//        db.insert(PLAYERS_TABLE, null, values);
+//
+//        db.close();
+//    }
+//
+//    /**
+//     * Gets a <code>Player</code> of a specified match from the database.
+//     *
+//     * @param accountID The account ID of the <code>Player</code> to retrieve from the database.
+//     * @param matchID   The ID of the match that the <code>Player</code> to retrieve from the database
+//     *                  played in.
+//     * @return The <code>Player</code> in the database with the specified account ID who played in
+//     * the match with the specified match ID. Returns null if no <code>Player</code> record has the
+//     * specified account ID and match ID.
+//     */
+//    public Player getMatchPlayer(int accountID, int matchID)
+//    {
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.query(PLAYERS_TABLE, PLAYERS_FIELD_NAMES,
+//                PLAYERS_FIELD_NAMES[0] + "=? AND " + PLAYERS_FIELD_NAMES[1] + "=?",
+//                new String[]{String.valueOf(accountID), String.valueOf(matchID)},
+//                null, null, null, null);
+//
+//        Player player = null;
+//        if (cursor.moveToFirst())
+//            player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
+//                    cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+//                    cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
+//                    cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
+//                    cursor.getInt(14), cursor.getInt(15));
+//
+//        cursor.close();
+//        db.close();
+//
+//        return player;
+//    }
+//
+//    /**
+//     * Gets a <code>Player</code>'s single-match statistics for every match the player has played in
+//     * from the database.
+//     *
+//     * @param accountID The account ID of the <code>Player</code> to query.
+//     * @return A list of <code>Player</code>s in the database with the specified account ID. Since
+//     * account IDs are unique for each <code>Player</code>, each <code>Player</code> in the list
+//     * should represent the single-match statistics of a single player (user).
+//     */
+//    public List<Player> getPlayerMatchStats(int accountID)
+//    {
+//        ArrayList<Player> playerMatchStatsList = new ArrayList<>();
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.query(PLAYERS_TABLE, PLAYERS_FIELD_NAMES,
+//                PLAYERS_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(accountID)},
+//                null, null, null, null);
+//
+//        if (cursor.moveToNext())
+//            do
+//            {
+//                Player player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
+//                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+//                        cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
+//                        cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
+//                        cursor.getInt(14), cursor.getInt(15));
+//                playerMatchStatsList.add(player);
+//            } while (cursor.moveToNext());
+//
+//        cursor.close();
+//        db.close();
+//
+//        return playerMatchStatsList;
+//    }
+//
+//    /**
+//     * Gets a list of <code>Player</code>s in the database that played in a specified match.
+//     *
+//     * @param matchID The ID of the match that the <code>Player</code>s to retrieve from the database
+//     *                played in.
+//     * @return A list of <code>Player</code>s in the database that played in the match with the
+//     * specified ID.
+//     */
+//    public List<Player> getMatchPlayers(int matchID)
+//    {
+//        ArrayList<Player> matchPlayersList = new ArrayList<>();
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.query(PLAYERS_TABLE, PLAYERS_FIELD_NAMES,
+//                PLAYERS_FIELD_NAMES[1] + "=?", new String[]{String.valueOf(matchID)},
+//                null, null, null, null);
+//
+//        if (cursor.moveToNext())
+//            do
+//            {
+//                Player player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
+//                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+//                        cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
+//                        cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
+//                        cursor.getInt(14), cursor.getInt(15));
+//                matchPlayersList.add(player);
+//            } while (cursor.moveToNext());
+//
+//        cursor.close();
+//        db.close();
+//
+//        return matchPlayersList;
+//    }
+//
+//    /**
+//     * Gets a list of all <code>Player</code>s in the database.
+//     *
+//     * @return A list of all <code>Player</code>s in the database.
+//     */
+//    public ArrayList<Player> getAllPlayers()
+//    {
+//        ArrayList<Player> playersList = new ArrayList<>();
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.query(PLAYERS_TABLE, PLAYERS_FIELD_NAMES, null, null,
+//                null, null, null, null);
+//
+//        if (cursor.moveToFirst())
+//            do
+//            {
+//                Player player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
+//                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+//                        cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
+//                        cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
+//                        cursor.getInt(14), cursor.getInt(15));
+//                playersList.add(player);
+//            } while (cursor.moveToNext());
+//
+//        cursor.close();
+//        db.close();
+//
+//        return playersList;
+//    }
+//
+//    /**
+//     * Deletes all <code>Player</code>s in the database.
+//     */
+//    public void deleteAllPlayers()
+//    {
+//        SQLiteDatabase db = getWritableDatabase();
+//        db.delete(PLAYERS_TABLE, null, null);
+//        db.close();
+//    }
+//
+//    // TODO: deleter for match players and player match statisics? (might not because of foreign keys?)
 }
