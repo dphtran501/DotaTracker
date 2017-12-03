@@ -69,7 +69,7 @@ public class MatchesOverviewActivity extends AppCompatActivity
         // TODO: Need to retrieve selected user in order to populate data properly
 
         // Connect to database
-        db = new DBHelper(this);
+        db = DBHelper.getInstance(this);
 
         // Connect to player profile widgets
         playerImageView = (ImageView) findViewById(R.id.playerImageView);

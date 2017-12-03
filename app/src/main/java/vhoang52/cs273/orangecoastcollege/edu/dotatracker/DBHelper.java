@@ -20,7 +20,7 @@ import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper
 {
-    private Context mContext;
+    private static DBHelper sInstance = null;
 
     // Database name and version
     private static final String DATABASE_NAME = "DotaTracker";
@@ -55,14 +55,22 @@ public class DBHelper extends SQLiteOpenHelper
     private static final boolean[] MATCH_PLAYERS_CASCADE_DELETE = {true, true}; // match, user
 
     /**
-     * Instantiates a new <code>DBHelper</code> object with the given context.
-     *
-     * @param context The activity used to open or create the database.
+     * Gets an instance of the <code>DBHelper</code>.
+     * @param context The context of the activity retrieving the <code>DBHelper</code> instance.
+     * @return An instance of the <code>DBHelper</code>.
      */
-    public DBHelper(Context context)
+    public static synchronized DBHelper getInstance(Context context)
+    {
+        // Use application context to ensure you don't accidentally leak Activity's context
+        // See: https://android-developers.googleblog.com/2009/01/avoiding-memory-leaks.html
+        if (sInstance == null) sInstance = new DBHelper(context.getApplicationContext());
+        return sInstance;
+    }
+
+    // Make private to prevent direct instantiation. Use getInstance() instead.
+    private DBHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        mContext = context;
     }
 
     /**
