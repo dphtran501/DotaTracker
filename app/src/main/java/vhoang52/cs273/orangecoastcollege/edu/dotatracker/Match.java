@@ -155,4 +155,32 @@ public class Match
     {
         return mGameMode;
     }
+
+    /**
+     * Gets the score of team Radiant for this match.
+     *
+     * @return The score of team Radiant for this match.
+     */
+    public int getRadiantScore()
+    {
+        int score = 0;
+        for (MatchPlayer matchPlayer : mMatchPlayerList)
+            if (!matchPlayer.isDire()) score += matchPlayer.getKills();
+
+        return score;
+    }
+
+    /**
+     * Gets the score of team Dire for this match.
+     *
+     * @return The score of team Dire for this match.
+     */
+    public int getDireScore()
+    {
+        int score = 0;
+        for (MatchPlayer matchPlayer : mMatchPlayerList)
+            if (matchPlayer.isDire()) score += matchPlayer.getKills();
+
+        return score;
+    }
 }
