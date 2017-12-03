@@ -51,6 +51,8 @@ public class DBHelper extends SQLiteOpenHelper
     private static final String[] MATCH_PLAYERS_FOREIGN_KEYS = {MATCH_PLAYERS_FIELD_NAMES[0], MATCH_PLAYERS_FIELD_NAMES[1]};
     private static final String[] MATCH_PLAYERS_PARENT_TABLES = {MATCHES_TABLE, USERS_TABLE};
     private static final String[] MATCH_PLAYERS_CANDIDATE_KEYS = {MATCHES_FIELD_NAMES[0], USERS_FIELD_NAMES[0]};
+    //TODO: Delete on cascade when user is deleted?
+    private static final boolean[] MATCH_PLAYERS_CASCADE_DELETE = {true, true}; // match, user
 
     /**
      * Instantiates a new <code>DBHelper</code> object with the given context.
@@ -74,7 +76,8 @@ public class DBHelper extends SQLiteOpenHelper
         db.execSQL(createTable(USERS_TABLE, USERS_FIELD_NAMES, USERS_FIELD_TYPES));
         db.execSQL(createTable(MATCHES_TABLE, MATCHES_FIELD_NAMES, MATCHES_FIELD_TYPES));
         db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES,
-                MATCH_PLAYERS_FOREIGN_KEYS, MATCH_PLAYERS_PARENT_TABLES, MATCH_PLAYERS_CANDIDATE_KEYS));
+                MATCH_PLAYERS_FOREIGN_KEYS, MATCH_PLAYERS_PARENT_TABLES, MATCH_PLAYERS_CANDIDATE_KEYS,
+                MATCH_PLAYERS_CASCADE_DELETE));
     }
 
     @NonNull
@@ -91,7 +94,8 @@ public class DBHelper extends SQLiteOpenHelper
 
     @NonNull
     private String createTable(String tableName, String[] fieldNames, String[] fieldTypes,
-                               String[] foreignKeys, String[] parentTables, String[] candidateKeys)
+                               String[] foreignKeys, String[] parentTables, String[] candidateKeys,
+                               boolean[] hasCascadeDelete)
     {
         StringBuilder createSQL = new StringBuilder("CREATE TABLE ");
         createSQL.append(tableName).append("(");
@@ -101,6 +105,7 @@ public class DBHelper extends SQLiteOpenHelper
         for (int i = 0; i < foreignKeys.length; i++)
             createSQL.append("FOREIGN KEY(").append(foreignKeys[i]).append(") REFERENCES ")
                     .append(parentTables[i]).append("(").append(candidateKeys[i]).append(")")
+                    .append((hasCascadeDelete[i]) ? " ON DELETE CASCADE" : "")
                     .append((i < foreignKeys.length - 1) ? "," : ")");
 
         return createSQL.toString();
@@ -120,6 +125,17 @@ public class DBHelper extends SQLiteOpenHelper
         db.execSQL("DROP TABLE IF EXISTS " + MATCHES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + MATCH_PLAYERS_TABLE);
         onCreate(db);
+    }
+
+    /**
+     * Configures database connection to enable foreign key support.
+     * @param db The database.
+     */
+    @Override
+    public void onConfigure(SQLiteDatabase db)
+    {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     //************** USER TABLE OPERATIONS****************
@@ -202,7 +218,6 @@ public class DBHelper extends SQLiteOpenHelper
         return usersList;
     }
 
-    // TODO: delete player records related to user too?
     // TODO: delete match records related to user too?
     /**
      * Deletes all <code>User</code>s in the database.
@@ -299,7 +314,6 @@ public class DBHelper extends SQLiteOpenHelper
         return matchesList;
     }
 
-    // TODO: delete player records related to match too?
     /**
      * Deletes all <code>Match</code>es in the database.
      */
@@ -483,5 +497,4 @@ public class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
-    // TODO: deleter for match players and player match statisics? (might not because of foreign keys?)
 }
