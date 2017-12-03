@@ -19,6 +19,7 @@ public class Match
     private long mMatchSeqNum;
     private List<MatchPlayer> mMatchPlayerList;
     private boolean mRadiantWin;
+    private long mStartTime;
     private int mDuration;
     //private int mFirstBloodTime;
     //private int mLobbyType;
@@ -46,7 +47,6 @@ public class Match
     // 22 - Ranked Matchmaking
 
     // TODO: Radiant and Dire scores?
-    // TODO: Game start time?
 
 
     /**
@@ -54,19 +54,22 @@ public class Match
      *
      * @param matchID               The ID of the match.
      * @param matchSeqNum           The sequence number representing the order in which the match was recorded.
-     * @param matchPlayerList The list of players who played in the match.
+     * @param matchPlayerList       The list of players who played in the match.
      * @param radiantWin            Truth value of who won the match; true if Radiant won, false if Dire won.
+     * @param startTime             The Unix timestamp of when the match started.
      * @param duration              The length of the match in seconds.
      * @param gameMode              An integer representing the game mode.
      *                              See <a href="https://wiki.teamfortress.com/wiki/WebAPI/GetMatchDetails">WebAPI/GetMatchDetails</a>
      *                              for the list of integers and what game mode each integer represents.
      */
-    public Match(long matchID, long matchSeqNum, List<MatchPlayer> matchPlayerList, boolean radiantWin, int duration, int gameMode)
+    public Match(long matchID, long matchSeqNum, List<MatchPlayer> matchPlayerList, boolean radiantWin,
+                 long startTime, int duration, int gameMode)
     {
         mMatchID = matchID;
         mMatchSeqNum = matchSeqNum;
         mMatchPlayerList = new ArrayList<>(matchPlayerList);    // defensive copy
         mRadiantWin = radiantWin;
+        mStartTime = startTime;
         mDuration = duration;
         mGameMode = gameMode;
     }
@@ -98,7 +101,7 @@ public class Match
      */
     public List<MatchPlayer> getMatchPlayerList()
     {
-        return mMatchPlayerList;
+        return new ArrayList<>(mMatchPlayerList);               // defensive copy
     }
 
     /**
@@ -119,6 +122,16 @@ public class Match
     public boolean isRadiantWin()
     {
         return mRadiantWin;
+    }
+
+    /**
+     * Gets the Unix timestamp of when the match started.
+     *
+     * @return The Unix timestamp of when the match started.
+     */
+    public long getStartTime()
+    {
+        return mStartTime;
     }
 
     /**

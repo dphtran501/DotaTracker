@@ -36,15 +36,15 @@ public class DBHelper extends SQLiteOpenHelper
     // Match table
     private static final String MATCHES_TABLE = "Matches";
     private static final String[] MATCHES_FIELD_NAMES = {"_id", "sequence_number", "radiant_win",
-            "duration", "game_mode"};
+            "start_time", "duration", "game_mode"};
     private static final String[] MATCHES_FIELD_TYPES = {"INTEGER PRIMARY KEY", "INTEGER", "INTEGER",
-            "INTEGER", "INTEGER"};
+            "INTEGER", "INTEGER", "INTEGER"};
 
     // MatchPlayer table (acts as relationship table between User and Match)
     private static final String MATCH_PLAYERS_TABLE = "MatchPlayers";
-    private static final String[] MATCH_PLAYERS_FIELD_NAMES = {"match_id", "steam_id", "hero_id",
-            "kills", "deaths", "assists", "gold", "last_hits", "denies", "gpm", "xpm", "hero_damage",
-            "tower_damage", "hero_healing", "level"};
+    private static final String[] MATCH_PLAYERS_FIELD_NAMES = {"match_id", "steam_id", "player_slot",
+            "hero_id", "kills", "deaths", "assists", "gold", "last_hits", "denies", "gpm", "xpm",
+            "hero_damage", "tower_damage", "hero_healing", "level"};
     private static final String[] PLAYERS_FIELD_TYPES = {"INTEGER", "INTEGER", "INTEGER", "INTEGER",
             "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER",
             "INTEGER", "INTEGER", "INTEGER", "INTEGER"};
@@ -246,8 +246,9 @@ public class DBHelper extends SQLiteOpenHelper
         values.put(MATCHES_FIELD_NAMES[0], match.getMatchID());
         values.put(MATCHES_FIELD_NAMES[1], match.getMatchSeqNum());
         values.put(MATCHES_FIELD_NAMES[2], match.isRadiantWin() ? 1 : 0);
-        values.put(MATCHES_FIELD_NAMES[3], match.getDuration());
-        values.put(MATCHES_FIELD_NAMES[4], match.getGameMode());
+        values.put(MATCHES_FIELD_NAMES[3], match.getStartTime());
+        values.put(MATCHES_FIELD_NAMES[4], match.getDuration());
+        values.put(MATCHES_FIELD_NAMES[5], match.getGameMode());
 
         db.insert(MATCHES_TABLE, null, values);
 
@@ -277,7 +278,8 @@ public class DBHelper extends SQLiteOpenHelper
         Match match = null;
         if (cursor.moveToFirst())
             match = new Match(cursor.getLong(0), cursor.getLong(1), matchPlayers,
-                    cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4));
+                    cursor.getInt(2) == 1, cursor.getLong(3), cursor.getInt(4),
+                    cursor.getInt(5));
 
         cursor.close();
         db.close();
@@ -303,7 +305,8 @@ public class DBHelper extends SQLiteOpenHelper
             {
                 List<MatchPlayer> matchPlayers = getMatchPlayers(cursor.getLong(0));
                 Match match = new Match(cursor.getLong(0), cursor.getLong(1), matchPlayers,
-                        cursor.getInt(2) == 1, cursor.getInt(3), cursor.getInt(4));
+                        cursor.getInt(2) == 1, cursor.getLong(3), cursor.getInt(4),
+                        cursor.getInt(5));
                 matchesList.add(match);
             } while (cursor.moveToNext());
         }
@@ -338,19 +341,20 @@ public class DBHelper extends SQLiteOpenHelper
 
         values.put(MATCH_PLAYERS_FIELD_NAMES[0], player.getMatchId());
         values.put(MATCH_PLAYERS_FIELD_NAMES[1], player.getAccountId());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[2], player.getHeroId());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[3], player.getKills());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[4], player.getDeaths());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[5], player.getAssists());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[6], player.getGold());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[7], player.getLastHits());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[8], player.getDenies());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[9], player.getGPM());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[10], player.getXPM());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[11], player.getHeroDamage());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[12], player.getTowerDamage());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[13], player.getHeroHealing());
-        values.put(MATCH_PLAYERS_FIELD_NAMES[14], player.getLevel());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[2], player.getPlayerSlot());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[3], player.getHeroId());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[4], player.getKills());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[5], player.getDeaths());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[6], player.getAssists());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[7], player.getGold());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[8], player.getLastHits());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[9], player.getDenies());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[10], player.getGPM());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[11], player.getXPM());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[12], player.getHeroDamage());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[13], player.getTowerDamage());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[14], player.getHeroHealing());
+        values.put(MATCH_PLAYERS_FIELD_NAMES[15], player.getLevel());
 
         db.insert(MATCH_PLAYERS_TABLE, null, values);
 
@@ -381,7 +385,7 @@ public class DBHelper extends SQLiteOpenHelper
                     cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
                     cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
                     cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
-                    cursor.getInt(14));
+                    cursor.getInt(14), cursor.getInt(15));
 
         cursor.close();
         db.close();
@@ -413,7 +417,7 @@ public class DBHelper extends SQLiteOpenHelper
                         cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5),
                         cursor.getInt(6), cursor.getInt(7), cursor.getInt(8), cursor.getInt(9),
                         cursor.getInt(10), cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
-                        cursor.getInt(14));
+                        cursor.getInt(14), cursor.getInt(15));
                 matchPlayersList.add(player);
             } while (cursor.moveToNext());
         }
@@ -448,7 +452,7 @@ public class DBHelper extends SQLiteOpenHelper
                         cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5),
                         cursor.getInt(6), cursor.getInt(7), cursor.getInt(8), cursor.getInt(9),
                         cursor.getInt(10), cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
-                        cursor.getInt(14));
+                        cursor.getInt(14), cursor.getInt(15));
                 playerMatchStatsList.add(player);
             } while (cursor.moveToNext());
 
@@ -458,35 +462,6 @@ public class DBHelper extends SQLiteOpenHelper
         return playerMatchStatsList;
     }
 
-//    /**
-//     * Gets a list of all <code>MatchPlayer</code>s in the database.
-//     *
-//     * @return A list of all <code>Player</code>s in the database.
-//     */
-//    public ArrayList<Player> getAllPlayers()
-//    {
-//        ArrayList<Player> playersList = new ArrayList<>();
-//        SQLiteDatabase db = getReadableDatabase();
-//        Cursor cursor = db.query(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, null, null,
-//                null, null, null, null);
-//
-//        if (cursor.moveToFirst())
-//            do
-//            {
-//                Player player = new Player(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
-//                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-//                        cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
-//                        cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
-//                        cursor.getInt(14), cursor.getInt(15));
-//                playersList.add(player);
-//            } while (cursor.moveToNext());
-//
-//        cursor.close();
-//        db.close();
-//
-//        return playersList;
-//    }
-//
     /**
      * Deletes all <code>Player</code>s in the database.
      */
