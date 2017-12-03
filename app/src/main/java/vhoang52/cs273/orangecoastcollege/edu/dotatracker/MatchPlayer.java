@@ -38,6 +38,8 @@ public class MatchPlayer
     private int mLevel;
     //private MatchPlayerUnit mMatchPlayerUnit;
 
+    // TODO: player slot (needed to determine which team each player is in)
+
     /**
      * Instantiates a <code>MatchPlayer</code> object.
      *

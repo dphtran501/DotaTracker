@@ -45,6 +45,9 @@ public class Match
     // 21 - 1v1 Mid Only
     // 22 - Ranked Matchmaking
 
+    // TODO: Radiant and Dire scores?
+    // TODO: Game start time?
+
 
     /**
      * Instantiates a <code>Match</code> object.
