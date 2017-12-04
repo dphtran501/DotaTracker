@@ -28,10 +28,12 @@ import java.util.List;
  */
 public class MatchesOverviewActivity extends AppCompatActivity
 {
+    // User and related matches lists
     private User user;
     private List<Long> matchIDList;
     private List<Long> recentMatchIDList;
-    private int numOfMatchesShown = 25;
+    // TODO: Number of matches shown defaulted to 25 for now; allow choice of number later?
+    private int numOfMatchesShown = 25; // Number of recent matches to show on screen
 
     // Database
     private DBHelper db;
@@ -58,9 +60,11 @@ public class MatchesOverviewActivity extends AppCompatActivity
     private TextView averagesLabelTextView;
     private TextView recentMatchesTextView;
     // ListView
+    private List<MatchPlayer> recentMatchStatsList;
     private List<Match> recentMatchList;
     private MatchListAdapter matchListAdapter;
     private ListView matchListView;
+
 
     /**
      * Initializes <code>MatchesOverviewActivity</code> by inflating its UI.
@@ -106,11 +110,17 @@ public class MatchesOverviewActivity extends AppCompatActivity
         recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
                 matchIDList.size());
         recentMatchList = new ArrayList<>();
-        for (Long matchID : recentMatchIDList) recentMatchList.add(db.getMatch(matchID));
+        recentMatchStatsList = new ArrayList<>();
+        for (Long matchID : recentMatchIDList)
+        {
+            recentMatchList.add(db.getMatch(matchID));
+            recentMatchStatsList.add(db.getMatchPlayer(matchID, user.getSteamId32()));
+        }
         // TODO: Redo adapter code to use convertView and viewholder class
-        matchListAdapter = new MatchListAdapter(this, R.layout.match_list_item, recentMatchList);
+        matchListAdapter = new MatchListAdapter(this, R.layout.match_list_item, recentMatchStatsList);
         matchListView.setAdapter(matchListAdapter);
 
+        // Link widgets to stat data
         // TODO: Make functions to set image view
         // Set default player profile image
         /*
@@ -249,6 +259,8 @@ public class MatchesOverviewActivity extends AppCompatActivity
     }
 
     // TODO: Launcher function for MatchDetailsActivity
+
+    // TODO: Update TextViews when new Matches added
 
     /**
      * Get URI to any resource type within an Android Studio project. Method is public static to

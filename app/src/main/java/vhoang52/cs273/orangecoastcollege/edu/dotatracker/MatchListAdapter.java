@@ -2,6 +2,7 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -23,26 +24,32 @@ import java.util.List;
  * @version 1.0
  * @since November 28, 2017
  */
-public class MatchListAdapter extends ArrayAdapter<Match>
+public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
 {
     private Context mContext;
     private int mResourceID;
-    private List<Match> mMatchList = new ArrayList<>();
+    private List<MatchPlayer> mMatchPlayerList = new ArrayList<>();
+
+    private DBHelper db;
 
     /**
      * Instantiates a new <code>MatchListAdapter</code> given a context, resource ID, and a list of
-     * <code>Match</code>es.
+     * <code>MatchPlayer</code>s with the same Steam account ID (all players represent same user).
      *
-     * @param context  The context for which the adapter is being used (typically an activity).
-     * @param resource The resource ID (typically the layout file name)
-     * @param matches  The list of <code>Match</code>es to display.
+     * @param context       The context for which the adapter is being used (typically an activity).
+     * @param resource      The resource ID (typically the layout file name)
+     * @param matchPlayers  The list of <code>MatchPlayer</code>s with the same 32-bit Steam account ID,
+     *                      which means all the <code>MatchPlayer</code>s in the list are the same
+     *                      user playing in different matches.
      */
-    public MatchListAdapter(@NonNull Context context, int resource, @NonNull List<Match> matches)
+    public MatchListAdapter(@NonNull Context context, int resource, @NonNull List<MatchPlayer> matchPlayers)
     {
-        super(context, resource, matches);
+        super(context, resource, matchPlayers);
         mContext = context;
         mResourceID = resource;
-        mMatchList = matches;
+        mMatchPlayerList = matchPlayers;
+
+        db = DBHelper.getInstance(context);
     }
 
     @NonNull
@@ -51,34 +58,108 @@ public class MatchListAdapter extends ArrayAdapter<Match>
     {
         // Inflates the list item layout for each item in the list
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(mResourceID, null);
 
         // Retrieve widgets of the list item
-        LinearLayout matchListItemLinearLayout = (LinearLayout) view.findViewById(R.id.matchListItemLinearLayout);
-        ImageView matchListItemHeroImageView = (ImageView) view.findViewById(R.id.matchListItemHeroImageView);
-        TextView matchListItemTeamTextView = (TextView) view.findViewById(R.id.matchListItemTeamTextView);
-        TextView matchListItemResultTextView = (TextView) view.findViewById(R.id.matchListItemResultTextView);
-        TextView matchListItemDurationTextView = (TextView) view.findViewById(R.id.matchListItemDurationTextView);
-        TextView matchListItemLastPlayedTextView = (TextView) view.findViewById(R.id.matchListItemLastPlayedTextView);
-        TextView matchListItemKillsTextView = (TextView) view.findViewById(R.id.matchListItemKillsTextView);
-        TextView matchListItemDeathsTextView = (TextView) view.findViewById(R.id.matchListItemDeathsTextView);
-        TextView matchListItemAssistsTextView = (TextView) view.findViewById(R.id.matchListItemAssistsTextView);
-        ProgressBar matchListItemKDAProgressBar = (ProgressBar) view.findViewById(R.id.matchListItemKDAProgressBar);
+        ViewHolder viewHolder = null;
+        if (convertView == null)
+        {
+            convertView = inflater.inflate(mResourceID, null);
+            viewHolder = new ViewHolder();
+            viewHolder.matchListItemLinearLayout = (LinearLayout) convertView.findViewById(R.id.matchListItemLinearLayout);
+            viewHolder.matchListItemHeroImageView = (ImageView) convertView.findViewById(R.id.matchListItemHeroImageView);
+            viewHolder.matchListItemHeroTextView = (TextView) convertView.findViewById(R.id.heroNameTextView);
+            viewHolder.matchListItemTeamTextView = (TextView) convertView.findViewById(R.id.matchListItemTeamTextView);
+            viewHolder.matchListItemResultTextView = (TextView) convertView.findViewById(R.id.matchListItemResultTextView);
+            viewHolder.matchListItemDurationTextView = (TextView) convertView.findViewById(R.id.matchListItemDurationTextView);
+            viewHolder.matchListItemLastPlayedTextView = (TextView) convertView.findViewById(R.id.matchListItemLastPlayedTextView);
+            viewHolder.matchListItemKillsTextView = (TextView) convertView.findViewById(R.id.matchListItemKillsTextView);
+            viewHolder.matchListItemDeathsTextView = (TextView) convertView.findViewById(R.id.matchListItemDeathsTextView);
+            viewHolder.matchListItemAssistsTextView = (TextView) convertView.findViewById(R.id.matchListItemAssistsTextView);
+            viewHolder.matchListItemKDAProgressBar = (ProgressBar) convertView.findViewById(R.id.matchListItemKDAProgressBar);
+            convertView.setTag(viewHolder);
+        }
+        else viewHolder = (ViewHolder) convertView.getTag();
 
-        // TODO: might need to use DBHelper here in order to get player stats (getMatchPlayer)
+        // Retrieve match played by MatchPlayer
+        MatchPlayer selectedPlayer = mMatchPlayerList.get(position);
+        Match selectedMatch = db.getMatch(selectedPlayer.getMatchId());
         // Set widgets of list item based on selected item
-        Match selectedMatch = mMatchList.get(position);
-        // TODO: Get hero image
-        // TODO: Get Team
-        // TODO: Get Result
-        matchListItemDurationTextView.setText(selectedMatch.getDuration());
-        // TODO: Get last played from start time
-        // TODO: Get kills, deaths, and assists
+        // TODO: Get hero image and name
+        viewHolder.matchListItemTeamTextView.setText((selectedPlayer.isDire() ? "Dire" : "Radiant"));
+        if ((selectedMatch.isRadiantWin() && !selectedPlayer.isDire())
+                || (!selectedMatch.isRadiantWin() && selectedPlayer.isDire()))
+        {
+            viewHolder.matchListItemResultTextView.setTextColor(Color.GREEN);
+            viewHolder.matchListItemResultTextView.setText(mContext.getString(R.string.wins_label));
+        }
+        else
+        {
+            viewHolder.matchListItemResultTextView.setTextColor(Color.RED);
+            viewHolder.matchListItemResultTextView.setText(mContext.getString(R.string.loses_label));
+        }
+        viewHolder.matchListItemDurationTextView.setText(durationToString(selectedMatch.getDuration()));
+        viewHolder.matchListItemLastPlayedTextView.setText(getTimeSinceLastPlay(selectedMatch.getStartTime()));
+        viewHolder.matchListItemKillsTextView.setText(String.valueOf(selectedPlayer.getKills()));
+        viewHolder.matchListItemDeathsTextView.setText(String.valueOf(selectedPlayer.getDeaths()));
+        viewHolder.matchListItemAssistsTextView.setText(String.valueOf(selectedPlayer.getAssists()));
+        viewHolder.matchListItemKDAProgressBar.setMax(selectedPlayer.getKills() + selectedPlayer.getDeaths()
+                + selectedPlayer.getAssists());
+        viewHolder.matchListItemKDAProgressBar.setProgress(selectedPlayer.getKills());
+        viewHolder.matchListItemKDAProgressBar.setSecondaryProgress(selectedPlayer.getKills() + selectedPlayer.getDeaths());
 
+        // TODO: remove previous tag if recycle layout?
         // Set tag of list item layout to selected match
-        matchListItemLinearLayout.setTag(selectedMatch);
+        viewHolder.matchListItemLinearLayout.setTag(selectedMatch);
 
-        return view;
+        return convertView;
+    }
 
+    // Helper class to hold component views inside tag of Layout. Increases efficiency by
+    // eliminating need to look up views repeatedly for each list item
+    // See: http://android.amberfog.com/?p=296
+    static class ViewHolder
+    {
+        LinearLayout matchListItemLinearLayout;
+        ImageView matchListItemHeroImageView;
+        TextView matchListItemHeroTextView;
+        TextView matchListItemTeamTextView;
+        TextView matchListItemResultTextView;
+        TextView matchListItemDurationTextView;
+        TextView matchListItemLastPlayedTextView;
+        TextView matchListItemKillsTextView;
+        TextView matchListItemDeathsTextView;
+        TextView matchListItemAssistsTextView;
+        ProgressBar matchListItemKDAProgressBar;
+    }
+
+    // Convert duration values (in seconds) to String for TextViews (e.g. 1230 to 20:30)
+    @NonNull
+    private String durationToString(int duration)
+    {
+        int minutes = duration / 60;
+        int seconds = duration % 60;
+        return String.valueOf(minutes) + ":" + String.valueOf(seconds);
+    }
+
+    // Get length of time since match start as a String
+    private String getTimeSinceLastPlay(long matchStartTime)
+    {
+        String lastPlay = null;
+
+        long secondsSinceLastPlay = System.currentTimeMillis() / 1000L - matchStartTime;
+
+        if (secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) >= 1L)
+            lastPlay = secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) + " years";
+        else if (secondsSinceLastPlay / (30L * 24L * 60L * 60L) >= 1L)
+            lastPlay = secondsSinceLastPlay / (30L * 24L * 60L * 60L) + " months";
+        else if (secondsSinceLastPlay / (24L * 60L * 60L) >= 1L)
+            lastPlay = secondsSinceLastPlay / (24L * 60L * 60L) + " days";
+        else if (secondsSinceLastPlay / (60L * 60L) >= 1L)
+            lastPlay = secondsSinceLastPlay / (60L * 60L) + " hours";
+        else if (secondsSinceLastPlay / 60L >= 1L)
+            lastPlay = secondsSinceLastPlay / 60L + " minutes";
+        else lastPlay = secondsSinceLastPlay + " seconds";
+
+        return lastPlay;
     }
 }
