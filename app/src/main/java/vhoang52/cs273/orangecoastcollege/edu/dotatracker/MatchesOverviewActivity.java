@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +26,11 @@ import java.util.List;
  */
 public class MatchesOverviewActivity extends AppCompatActivity
 {
+    private User user;
+    private List<Long> matchIDList;
+    private List<Long> recentMatchIDList;
+    private int numOfMatchesShown = 25;
+
     // Database
     private DBHelper db;
     // Player profile widgets
@@ -49,7 +56,7 @@ public class MatchesOverviewActivity extends AppCompatActivity
     private TextView averagesLabelTextView;
     private TextView recentMatchesTextView;
     // ListView
-    private List<Match> matchList;
+    private List<Match> recentMatchList;
     private MatchListAdapter matchListAdapter;
     private ListView matchListView;
 
@@ -66,11 +73,10 @@ public class MatchesOverviewActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches_overview);
 
-        // TODO: Need to retrieve selected user in order to populate data properly
-
         // Connect to database
         db = DBHelper.getInstance(this);
 
+        // TODO: Need to retrieve selected user in order to populate data properly
         // Connect to player profile widgets
         playerImageView = (ImageView) findViewById(R.id.playerImageView);
         playerNameTextView = (TextView) findViewById(R.id.playerNameTextView);
@@ -92,19 +98,69 @@ public class MatchesOverviewActivity extends AppCompatActivity
         // Connect to label widgets
         averagesLabelTextView = (TextView) findViewById(R.id.averagesLabelTextView);
         recentMatchesTextView = (TextView) findViewById(R.id.recentMatchesTextView);
+
         // Connect to ListView
-        // TODO: matchList will need to have user's matches, not all matches
-        matchListAdapter = new MatchListAdapter(this, R.layout.match_list_item, matchList);
+        matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
+        recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
+                matchIDList.size());
+        recentMatchList = new ArrayList<>();
+        for (Long matchID : recentMatchIDList) recentMatchList.add(db.getMatch(matchID));
+        // TODO: Redo adapter code to use convertView and viewholder class
+        matchListAdapter = new MatchListAdapter(this, R.layout.match_list_item, recentMatchList);
         matchListView.setAdapter(matchListAdapter);
 
         // TODO: Make functions to set image view, player profile, and player stats
-        // TODO: Set values for label textviews
-
         // Set default player profile image
         /*
         playerImageURI = getURIFromResource(this, R.drawable.steam_icon);
         playerImageView.setImageURI(playerImageURI);
         */
+        playerNameTextView.setText(user.getPersonaName());
+        setOverallStatsWidgets();
+        // TODO: Set values for label textviews
+
+    }
+
+    private void setOverallStatsWidgets()
+    {
+        // Get all user matches (not just recent)
+        List<Match> matchList = new ArrayList<>();
+        for (Long matchID : matchIDList) matchList.add(db.getMatch(matchID));
+
+        // Find overall wins and losses
+        int numOfWins = 0;
+        int numOfLosses = 0;
+        for (Match match : matchList)
+        {
+            int numOfMatchPlayers = match.getMatchPlayerList().size();
+            boolean isUserFound = false;
+            int i = 0;
+            // Search for user in each match's list of players and check if they're part of winning team
+            while(!isUserFound && i < numOfMatchPlayers)
+            {
+                MatchPlayer matchPlayer = match.getMatchPlayerList().get(i);
+                if (matchPlayer.getAccountId() == user.getSteamId32())
+                {
+                    isUserFound = true;
+                    if ((match.isRadiantWin() && !matchPlayer.isDire()) ||
+                            (!match.isRadiantWin() && matchPlayer.isDire()))
+                        numOfWins++;
+                    else numOfLosses++;
+                }
+                else i++;
+            }
+        }
+
+        // Set overall wins, losses, and winrate
+        winsTextView.setText(numOfWins);
+        lossesTextView.setText(numOfLosses);
+        NumberFormat percent = NumberFormat.getPercentInstance();
+        percent.setMaximumFractionDigits(1);
+        winRateTextView.setText(percent.format((double) numOfWins / (numOfWins + numOfLosses)));
+    }
+
+    private void setAverageStatsWidgets()
+    {
 
     }
 

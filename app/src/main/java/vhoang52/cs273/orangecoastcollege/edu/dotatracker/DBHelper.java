@@ -471,6 +471,32 @@ public class DBHelper extends SQLiteOpenHelper
     }
 
     /**
+     * Gets a list of match IDs for matches played by the player with the specified Steam account ID.
+     *
+     * @param steamID32 The 32-bit Steam account ID of the player to query.
+     * @return A list of match IDs for matches played by the player with the specified Steam account ID.
+     */
+    public List<Long> getPlayerMatchIDs(long steamID32)
+    {
+        List<Long> userMatchIDList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(MATCH_PLAYERS_TABLE, new String[]{MATCH_PLAYERS_FIELD_NAMES[0]},
+                MATCH_PLAYERS_FIELD_NAMES[1] + "=?", new String[]{String.valueOf(steamID32)},
+                null, null, null, null);
+
+        if (cursor.moveToNext())
+            do
+            {
+                userMatchIDList.add(cursor.getLong(0));
+            } while (cursor.moveToNext());
+
+        cursor.close();
+        db.close();
+
+        return userMatchIDList;
+    }
+
+    /**
      * Deletes all <code>Player</code>s in the database.
      */
     public void deleteAllPlayers()
