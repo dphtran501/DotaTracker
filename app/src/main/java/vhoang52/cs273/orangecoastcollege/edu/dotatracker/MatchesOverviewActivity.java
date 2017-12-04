@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +111,7 @@ public class MatchesOverviewActivity extends AppCompatActivity
         matchListAdapter = new MatchListAdapter(this, R.layout.match_list_item, recentMatchList);
         matchListView.setAdapter(matchListAdapter);
 
-        // TODO: Make functions to set image view, player profile, and player stats
+        // TODO: Make functions to set image view
         // Set default player profile image
         /*
         playerImageURI = getURIFromResource(this, R.drawable.steam_icon);
@@ -117,7 +119,9 @@ public class MatchesOverviewActivity extends AppCompatActivity
         */
         playerNameTextView.setText(user.getPersonaName());
         setOverallStatsWidgets();
-        // TODO: Set values for label textviews
+        setAverageStatsWidgets();
+        averagesLabelTextView.setText(getString(R.string.average_stats_label, numOfMatchesShown));
+        recentMatchesTextView.setText(getString(R.string.recent_matches_label, numOfMatchesShown));
 
     }
 
@@ -152,16 +156,96 @@ public class MatchesOverviewActivity extends AppCompatActivity
         }
 
         // Set overall wins, losses, and winrate
-        winsTextView.setText(numOfWins);
-        lossesTextView.setText(numOfLosses);
-        NumberFormat percent = NumberFormat.getPercentInstance();
-        percent.setMaximumFractionDigits(1);
-        winRateTextView.setText(percent.format((double) numOfWins / (numOfWins + numOfLosses)));
+        winsTextView.setText(statToString(numOfWins));
+        lossesTextView.setText(statToString(numOfLosses));
+        winRateTextView.setText(percentToString((double) numOfWins / (numOfWins + numOfLosses), 2));
     }
 
     private void setAverageStatsWidgets()
     {
+        int totalWins = 0, totalLosses = 0, totalKills = 0, totalDeaths = 0, totalAssists = 0,
+                totalGPM = 0, totalXPM = 0, totalLH = 0, totalHD = 0, totalHH = 0, totalTD = 0,
+                totalDuration = 0;
 
+        // Retrieve stat totals from all recent user matches
+        for (Match match : recentMatchList)
+        {
+            totalDuration += match.getDuration();
+
+            int numOfMatchPlayers = match.getMatchPlayerList().size();
+            boolean isUserFound = false;
+            int i = 0;
+            // Search for user in each match's list of players
+            while(!isUserFound && i < numOfMatchPlayers)
+            {
+                MatchPlayer matchPlayer = match.getMatchPlayerList().get(i);
+                if (matchPlayer.getAccountId() == user.getSteamId32())
+                {
+                    isUserFound = true;
+                    if ((match.isRadiantWin() && !matchPlayer.isDire()) ||
+                            (!match.isRadiantWin() && matchPlayer.isDire()))
+                        totalWins++;
+                    else totalLosses++;
+
+                    totalKills += matchPlayer.getKills();
+                    totalDeaths += matchPlayer.getDeaths();
+                    totalAssists += matchPlayer.getAssists();
+                    totalGPM += matchPlayer.getGPM();
+                    totalXPM += matchPlayer.getXPM();
+                    totalLH += matchPlayer.getLastHits();
+                    totalHD += matchPlayer.getHeroDamage();
+                    totalHH += matchPlayer.getHeroHealing();
+                    totalTD += matchPlayer.getTowerDamage();
+                }
+                else i++;
+            }
+        }
+
+        // Calculate average stats and set textviews
+        avgWinRateTextView.setText(percentToString((double) totalWins / (totalWins + totalLosses), 2));
+        avgKillsTextView.setText(statToString(Math.round((float) totalKills / recentMatchList.size())));
+        avgDeathsTextView.setText(statToString(Math.round((float) totalDeaths / recentMatchList.size())));
+        avgAssistsTextView.setText(statToString(Math.round((float) totalAssists / recentMatchList.size())));
+        avgGPMTextView.setText(statToString(Math.round((float) totalGPM / recentMatchList.size())));
+        avgXPMTextView.setText(statToString(Math.round((float) totalXPM / recentMatchList.size())));
+        avgLastHitsTextView.setText(statToString(Math.round((float) totalLH / recentMatchList.size())));
+        avgHeroDMGTextView.setText(statToString(Math.round((float) totalHD / recentMatchList.size())));
+        avgHeroHealTextView.setText(statToString(Math.round((float) totalHH / recentMatchList.size())));
+        avgTowerDMGTextView.setText(statToString(Math.round((float) totalTD / recentMatchList.size())));
+        avgDurationTextView.setText(durationToString(Math.round((float) totalDuration / recentMatchList.size())));
+
+    }
+
+    // Convert percent value to String for TextViews (e.g. 0.3158 to 31.58%)
+    private String percentToString(double fractionValue, int maxFractionDigits)
+    {
+        NumberFormat percent = NumberFormat.getPercentInstance();
+        percent.setMaximumFractionDigits(maxFractionDigits);
+        return percent.format(fractionValue);
+    }
+
+    // Convert value to String for TextViews (e.g. 13400 to 13.4k)
+    private String statToString(int statValue)
+    {
+        String textViewString = null;
+        // Converts values over 1000 to shorter strings (e.g. 13400 to 13.4k)
+        if (statValue >= 1000L)
+        {
+            DecimalFormat oneDP = new DecimalFormat("#.#");
+            textViewString = oneDP.format((double) statValue / 1000) + "k";
+        }
+        else textViewString = String.valueOf(statValue);
+
+        return textViewString;
+    }
+
+    // Convert duration values (in seconds) to String for TextViews (e.g. 1230 to 20:30)
+    @NonNull
+    private String durationToString(int duration)
+    {
+        int minutes = duration / 60;
+        int seconds = duration % 60;
+        return String.valueOf(minutes) + ":" + String.valueOf(seconds);
     }
 
     // TODO: Launcher function for MatchDetailsActivity

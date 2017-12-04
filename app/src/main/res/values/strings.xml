@@ -23,7 +23,7 @@
     <string name="wins_label">W</string>
     <string name="loses_label">L</string>
     <string name="win_rate_label">WR</string>
-    <string name="stats_scroll_label">Averages in last %1$d matches</string>
+    <string name="average_stats_label">Averages in last %1$d matches</string>
     <string name="kills_label">K</string>
     <string name="deaths_label">D</string>
     <string name="assists_label">A</string>

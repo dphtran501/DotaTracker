@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/overview_view_spacing"
-        android:text="@string/stats_scroll_label"
+        android:text="@string/average_stats_label"
         android:textColor="@android:color/white"
         />
 
