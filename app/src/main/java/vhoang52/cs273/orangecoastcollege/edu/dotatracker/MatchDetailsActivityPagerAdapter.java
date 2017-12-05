@@ -1,5 +1,6 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,7 +16,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class MatchDetailsActivityPagerAdapter extends FragmentPagerAdapter
 {
-    public MatchDetailsActivityPagerAdapter(FragmentManager fm) { super(fm); }
+    // Will store selected match
+    private Bundle fragmentBundle;
+
+    public MatchDetailsActivityPagerAdapter(FragmentManager fm, Bundle data)
+    {
+        super(fm);
+        fragmentBundle = data;
+    }
 
     /**
      * Return the Fragment associated with a specified position.
@@ -32,12 +40,15 @@ public class MatchDetailsActivityPagerAdapter extends FragmentPagerAdapter
                 fragment = new RadiantMatchDetailsFragment();
                 break;
             case 1:
-                fragment = new VersusMatchDetailsFragmet();
+                fragment = new VersusMatchDetailsFragment();
                 break;
             case 2:
                 fragment = new DireMatchDetailsFragment();
                 break;
         }
+
+        // Pass data (Match) to fragment
+        fragment.setArguments(fragmentBundle);
 
         return fragment;
     }

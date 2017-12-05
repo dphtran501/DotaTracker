@@ -18,7 +18,22 @@ import android.view.ViewGroup;
 
 public class DireMatchDetailsFragment extends Fragment
 {
-    // TODO: Might just have one fragment layout for both Radiant and Dire since layouts are similar
+    /**
+     * Initializes <code>DireMatchDetailsFragment</code> and retrieves <code>Match</code> passed
+     * from <code>MatchDetailsActivity</code>.
+     *
+     * @param savedInstanceState Bundle containing the data it recently supplied in
+     *                           onSaveInstanceState(Bundle) if activity was reinitialized after
+     *                           being previously shut down. Otherwise it is null.
+     */
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        // Retrieve match from MatchDetailsActivity
+        Match match = getArguments().getParcelable("Match");
+    }
 
     /**
      * Called to have the fragment instantiate its user interface view.
@@ -42,7 +57,7 @@ public class DireMatchDetailsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_match_team_v2, container, false);
+        View view = inflater.inflate(R.layout.fragment_match_team, container, false);
         return view;
 
         // TODO: Link to widgets and populate fields

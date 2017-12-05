@@ -16,8 +16,25 @@ import android.view.ViewGroup;
  * @since December 1, 2017
  */
 
-public class VersusMatchDetailsFragmet extends Fragment
+public class VersusMatchDetailsFragment extends Fragment
 {
+    /**
+     * Initializes <code>VersusMatchDetailsFragment</code> and retrieves <code>Match</code> passed
+     * from <code>MatchDetailsActivity</code>.
+     *
+     * @param savedInstanceState Bundle containing the data it recently supplied in
+     *                           onSaveInstanceState(Bundle) if activity was reinitialized after
+     *                           being previously shut down. Otherwise it is null.
+     */
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        // Retrieve match from MatchDetailsActivity
+        Match match = getArguments().getParcelable("Match");
+    }
+
     /**
      * Called to have the fragment instantiate its user interface view.
      * This is optional, and non-graphical fragments can return null (which

@@ -57,7 +57,10 @@ public class MatchDetailsActivity extends AppCompatActivity
 
         // Set up and connect to ViewPager
         matchDetailViewPager = (ViewPager) findViewById(R.id.matchDetailViewPager);
-        matchDetailsActivityPagerAdapter = new MatchDetailsActivityPagerAdapter(getSupportFragmentManager());
+        // Pass selected match to pager adapter
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Match", selectedMatch);
+        matchDetailsActivityPagerAdapter = new MatchDetailsActivityPagerAdapter(getSupportFragmentManager(), bundle);
         matchDetailViewPager.setAdapter(matchDetailsActivityPagerAdapter);
 
         // Set up and connect TabLayout to ViewPager
