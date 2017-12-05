@@ -43,32 +43,9 @@ public class FluffActivity extends AppCompatActivity {
         else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 LocationManager locationManager = ((LocationManager) getSystemService(LOCATION_SERVICE));
-                if(locationManager.registerGnssStatusCallback(GNSS_STATUS_LISTENER))
                     if(locationManager.getAllProviders().size() > 0)
                         Toast.makeText(this, "You're on Earth, congrats", Toast.LENGTH_SHORT).show();
-
             }
         }
     }
-
-    public final GnssStatus.Callback GNSS_STATUS_LISTENER = new GnssStatus.Callback() {
-
-        @Override
-        public void onStarted() {
-            super.onStarted();
-            Toast.makeText(FluffActivity.this, "You're on Earth", Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onSatelliteStatusChanged(GnssStatus status) {
-            super.onSatelliteStatusChanged(status);
-            Toast.makeText(FluffActivity.this, "You're Still on Earth", Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onStopped() {
-            super.onStopped();
-            Toast.makeText(FluffActivity.this, "Can't Tell Where You Are Anymore", Toast.LENGTH_SHORT).show();
-        }
-    };
 }
