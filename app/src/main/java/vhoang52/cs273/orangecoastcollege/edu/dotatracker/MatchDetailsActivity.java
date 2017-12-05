@@ -53,6 +53,7 @@ public class MatchDetailsActivity extends AppCompatActivity
         direScoreTextView = (TextView) findViewById(R.id.matchDetailDireScoreTextView);
         durationTextView = (TextView) findViewById(R.id.matchDetailDurationTextView);
         lastPlayedTextView = (TextView) findViewById(R.id.matchDetailLastPlayedTextView);
+        setScoreBoard();
 
         // Set up and connect to ViewPager
         matchDetailViewPager = (ViewPager) findViewById(R.id.matchDetailViewPager);
