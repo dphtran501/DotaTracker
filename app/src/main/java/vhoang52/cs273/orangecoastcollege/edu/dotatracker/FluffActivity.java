@@ -24,17 +24,6 @@ public class FluffActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fluff);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     public void checkEarthquake(View view) {
@@ -53,7 +42,10 @@ public class FluffActivity extends AppCompatActivity {
         }
         else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                ((LocationManager) getSystemService(LOCATION_SERVICE)).registerGnssStatusCallback(GNSS_STATUS_LISTENER);
+                LocationManager locationManager = ((LocationManager) getSystemService(LOCATION_SERVICE));
+                if(locationManager.registerGnssStatusCallback(GNSS_STATUS_LISTENER))
+                    if(locationManager.getAllProviders().size() > 0)
+                        Toast.makeText(this, "You're on Earth, congrats", Toast.LENGTH_SHORT).show();
 
             }
         }
@@ -71,6 +63,12 @@ public class FluffActivity extends AppCompatActivity {
         public void onSatelliteStatusChanged(GnssStatus status) {
             super.onSatelliteStatusChanged(status);
             Toast.makeText(FluffActivity.this, "You're Still on Earth", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onStopped() {
+            super.onStopped();
+            Toast.makeText(FluffActivity.this, "Can't Tell Where You Are Anymore", Toast.LENGTH_SHORT).show();
         }
     };
 }
