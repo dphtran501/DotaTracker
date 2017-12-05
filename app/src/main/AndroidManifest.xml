@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="vhoang52.cs273.orangecoastcollege.edu.dotatracker">
+          package="vhoang52.cs273.orangecoastcollege.edu.dotatracker">
 
     <application
         android:allowBackup="true"
@@ -27,6 +27,11 @@
         <activity android:name=".MatchesOverviewActivity">
         </activity>
         <activity android:name=".MatchDetailsActivity">
+        </activity>
+        <activity
+            android:name=".FluffActivity"
+            android:label="@string/title_activity_fluff"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 
