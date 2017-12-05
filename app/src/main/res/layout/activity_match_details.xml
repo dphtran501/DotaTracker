@@ -17,10 +17,11 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/radiantScoreTextView"
+            android:id="@+id/matchDetailRadiantScoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_data"
+            android:textAlignment="center"
             android:textSize="@dimen/score_font_size"/>
 
         <LinearLayout
@@ -33,17 +34,18 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/durationTextView"
+                android:id="@+id/matchDetailDurationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/default_data"
+                android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/duration_font_size"
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/lastPlayedTextView"
+                android:id="@+id/matchDetailLastPlayedTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/default_data"
@@ -52,10 +54,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/direScoreTextView"
+            android:id="@+id/matchDetailDireScoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_data"
+            android:textAlignment="center"
             android:textSize="@dimen/score_font_size"/>
     </LinearLayout>
 
