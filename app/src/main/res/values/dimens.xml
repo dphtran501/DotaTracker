@@ -11,6 +11,7 @@
     <dimen name="match_list_item_spacing">5dp</dimen>
     <dimen name="kda_bar_height">5dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="listview_divider_height">1dp</dimen>
     <!-- activity_match_details.xml -->
     <dimen name="score_font_size">30sp</dimen>
     <dimen name="duration_font_size">20sp</dimen>

@@ -52,6 +52,14 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
         db = DBHelper.getInstance(context);
     }
 
+    /**
+     * Gets the view associated with the layout.
+     *
+     * @param position    The position of the <code>MatchPlayer</code> object selected in the list.
+     * @param convertView The converted view.
+     * @param parent      The parent - ArrayAdapter.
+     * @return The new view with all content set.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
@@ -82,7 +90,7 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
 
         // Retrieve match played by MatchPlayer
         MatchPlayer selectedPlayer = mMatchPlayerList.get(position);
-        Match selectedMatch = db.getMatch(selectedPlayer.getMatchId());
+        Match selectedMatch = getMatch(selectedPlayer.getMatchId());
         // Set widgets of list item based on selected item
         // TODO: Get hero image and name
         viewHolder.matchListItemTeamTextView.setText((selectedPlayer.isDire() ? "Dire" : "Radiant"));
@@ -161,5 +169,14 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
         else lastPlay = secondsSinceLastPlay + " seconds";
 
         return lastPlay;
+    }
+
+    // Retrieves the match with the specified match ID from the database. Unlike the DBHelper version,
+    // this method also sets the match's list of players to the list of all players who played in the match.
+    private Match getMatch(long matchID)
+    {
+        Match match = db.getMatch(matchID);
+        match.setMatchPlayerList(db.getMatchPlayers(matchID));
+        return match;
     }
 }

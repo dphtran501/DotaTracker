@@ -113,10 +113,11 @@ public class MatchesOverviewActivity extends AppCompatActivity
         recentMatchStatsList = new ArrayList<>();
         for (Long matchID : recentMatchIDList)
         {
-            recentMatchList.add(db.getMatch(matchID));
+            recentMatchList.add(getMatch(matchID));
             recentMatchStatsList.add(db.getMatchPlayer(matchID, user.getSteamId32()));
         }
         matchListAdapter = new MatchListAdapter(this, R.layout.match_list_item, recentMatchStatsList);
+        matchListView = (ListView) findViewById(R.id.recentMatchesListView);
         matchListView.setAdapter(matchListAdapter);
 
         // Link widgets to stat data
@@ -138,7 +139,7 @@ public class MatchesOverviewActivity extends AppCompatActivity
     {
         // Get all user matches (not just recent)
         List<Match> matchList = new ArrayList<>();
-        for (Long matchID : matchIDList) matchList.add(db.getMatch(matchID));
+        for (Long matchID : matchIDList) matchList.add(getMatch(matchID));
 
         // Find overall wins and losses
         int numOfWins = 0;
@@ -255,6 +256,15 @@ public class MatchesOverviewActivity extends AppCompatActivity
         int minutes = duration / 60;
         int seconds = duration % 60;
         return String.valueOf(minutes) + ":" + String.valueOf(seconds);
+    }
+
+    // Retrieves the match with the specified match ID from the database. Unlike the DBHelper version,
+    // this method also sets the match's list of players to the list of all players who played in the match.
+    private Match getMatch(long matchID)
+    {
+        Match match = db.getMatch(matchID);
+        match.setMatchPlayerList(db.getMatchPlayers(matchID));
+        return match;
     }
 
     // TODO: Launcher function for MatchDetailsActivity
