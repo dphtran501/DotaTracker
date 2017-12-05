@@ -1,5 +1,8 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +16,7 @@ import java.util.List;
  * @since December 1, 2017
  */
 
-public class Match
+public class Match implements Parcelable
 {
     private long mMatchID;
     private long mMatchSeqNum;
@@ -96,6 +99,54 @@ public class Match
         mDuration = duration;
         mGameMode = gameMode;
     }
+
+    /**
+     * Instantiates a <code>Match</code> from a parcel.
+     *
+     * @param parcel The package with all information for the <code>Match</code>.
+     */
+    private Match(Parcel parcel)
+    {
+        // ORDER MATTERS!
+        mMatchID = parcel.readLong();
+        mMatchSeqNum = parcel.readLong();
+        mMatchPlayerList = new ArrayList<>();
+        parcel.readTypedList(mMatchPlayerList, MatchPlayer.CREATOR);
+        mRadiantWin = parcel.readInt() == 1;
+        mStartTime = parcel.readLong();
+        mDuration = parcel.readInt();
+        mGameMode = parcel.readInt();
+    }
+
+    // In order to read a Parcel, we need a CREATOR (STATIC FIELD)
+    /**
+     * Interface that must be implemented and provided as a public CREATOR field that generates
+     * instances of the <code>Game</code> class from a Parcel.
+     */
+    public static final Parcelable.Creator<Match> CREATOR = new Creator<Match>()
+    {
+        /**
+         * This method is used with Intents to create new <code>Match</code> objects.
+         * @param parcel The package with all information for the <code>Match</code>.
+         * @return The new <code>Match</code> object.
+         */
+        @Override
+        public Match createFromParcel(Parcel parcel)
+        {
+            return new Match(parcel);
+        }
+
+        /**
+         * This method is used with JSON to create an array of <code>Match</code> objects.
+         * @param size The size of the JSON array (how many <code>Match</code> objects).
+         * @return New array of <code>Match</code> objects.
+         */
+        @Override
+        public Match[] newArray(int size)
+        {
+            return new Match[size];
+        }
+    };
 
     /**
      * Gets the ID of the match.
@@ -205,5 +256,34 @@ public class Match
             if (matchPlayer.isDire()) score += matchPlayer.getKills();
 
         return score;
+    }
+
+    /**
+     * Returns 0 if it's a standard parcel, else if sending files need to return file descriptors.
+     *
+     * @return 0
+     */
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    /**
+     * Writes all the member variables of the class to the parcel. We specify the data types.
+     *
+     * @param parcel The package with details about the <code>Game</code>.
+     * @param i      Any custom flags (with files)
+     */
+    @Override
+    public void writeToParcel(Parcel parcel, int i)
+    {
+        parcel.writeLong(mMatchID);
+        parcel.writeLong(mMatchSeqNum);
+        parcel.writeTypedList(mMatchPlayerList);
+        parcel.writeInt(mRadiantWin ? 1 : 0);
+        parcel.writeLong(mStartTime);
+        parcel.writeInt(mDuration);
+        parcel.writeInt(mGameMode);
     }
 }

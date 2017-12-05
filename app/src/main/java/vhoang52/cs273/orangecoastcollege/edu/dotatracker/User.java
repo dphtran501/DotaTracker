@@ -1,5 +1,8 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * This class represents the user signed in to this application.
  *
@@ -10,7 +13,7 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
  * @since December 1, 2017
  */
 
-public class User
+public class User implements Parcelable
 {
     private long mSteamId32;
     private int mPrivacy; // 1 - private; 2 - Friends only; 3 - Friends of Friends; 4 - Users Only; 5 - Public
@@ -44,6 +47,53 @@ public class User
         mProfileUrl = profileUrl;
         mAvatarUrl = avatarUrl;
     }
+
+    /**
+     * Instantiates a <code>User</code> from a parcel.
+     *
+     * @param parcel The package with all information for the <code>User</code>.
+     */
+    private User(Parcel parcel)
+    {
+        // ORDER MATTERS!
+        mSteamId32 = parcel.readLong();
+        mPrivacy = parcel.readInt();
+        mProfileState = parcel.readInt();
+        mPersonaName = parcel.readString();
+        mLastLogOff = parcel.readLong();
+        mProfileUrl = parcel.readString();
+        mAvatarUrl = parcel.readString();
+    }
+
+    // In order to read a Parcel, we need a CREATOR (STATIC FIELD)
+    /**
+     * Interface that must be implemented and provided as a public CREATOR field that generates
+     * instances of the <code>User</code> class from a Parcel.
+     */
+    public static final Parcelable.Creator<User> CREATOR = new Creator<User>()
+    {
+        /**
+         * This method is used with Intents to create new <code>User</code> objects.
+         * @param parcel The package with all information for the <code>User</code>.
+         * @return The new <code>User</code> object.
+         */
+        @Override
+        public User createFromParcel(Parcel parcel)
+        {
+            return new User(parcel);
+        }
+
+        /**
+         * This method is used with JSON to create an array of <code>User</code> objects.
+         * @param size The size of the JSON array (how many <code>User</code> objects).
+         * @return New array of <code>User</code> objects.
+         */
+        @Override
+        public User[] newArray(int size)
+        {
+            return new User[size];
+        }
+    };
 
     /**
      * The user's 32-bit Steam ID.
@@ -244,5 +294,34 @@ public class User
                 + ", mProfileState=" + mProfileState + ", mPersonaName='" + mPersonaName + '\''
                 + ", mLastLogOff=" + mLastLogOff + ", mProfileUrl='" + mProfileUrl + '\''
                 + ", mAvatarUrl='" + mAvatarUrl + '\'' + '}';
+    }
+
+    /**
+     * Returns 0 if it's a standard parcel, else if sending files need to return file descriptors.
+     *
+     * @return 0
+     */
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    /**
+     * Writes all the member variables of the class to the parcel. We specify the data types.
+     *
+     * @param parcel The package with details about the <code>User</code>.
+     * @param i      Any custom flags (with files)
+     */
+    @Override
+    public void writeToParcel(Parcel parcel, int i)
+    {
+        parcel.writeLong(mSteamId32);
+        parcel.writeInt(mPrivacy);
+        parcel.writeInt(mProfileState);
+        parcel.writeString(mPersonaName);
+        parcel.writeLong(mLastLogOff);
+        parcel.writeString(mProfileUrl);
+        parcel.writeString(mAvatarUrl);
     }
 }

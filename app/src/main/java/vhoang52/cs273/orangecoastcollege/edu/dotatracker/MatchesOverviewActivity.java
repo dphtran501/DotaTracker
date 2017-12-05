@@ -2,12 +2,15 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -267,7 +270,24 @@ public class MatchesOverviewActivity extends AppCompatActivity
         return match;
     }
 
-    // TODO: Launcher function for MatchDetailsActivity
+    /**
+     * Launches <code>MatchDetailsActivity</code> showing information about the <code>Match</code>
+     * that was clicked in the ListView.
+     *
+     * @param v The view that was called this method.
+     */
+    public void viewMatchDetails(View v)
+    {
+        if (v instanceof LinearLayout)
+        {
+            LinearLayout selectedItem = (LinearLayout) v;
+            Match selectedMatch = (Match) selectedItem.getTag();
+
+            Intent detailsIntent = new Intent(this, MatchDetailsActivity.class);
+            detailsIntent.putExtra("SelectedMatch", selectedMatch);
+            startActivity(detailsIntent);
+        }
+    }
 
     // TODO: Update TextViews when new Matches added
 

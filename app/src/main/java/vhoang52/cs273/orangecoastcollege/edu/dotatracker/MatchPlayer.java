@@ -1,5 +1,8 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * This class represents a player from a DOTA match.
  *
@@ -10,7 +13,7 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
  * @since December 1, 2017
  */
 
-public class MatchPlayer
+public class MatchPlayer implements Parcelable
 {
     private long mMatchId;
     private long mAccountId;
@@ -82,6 +85,62 @@ public class MatchPlayer
         mHeroHealing = heroHealing;
         mLevel = level;
     }
+
+    /**
+     * Instantiates a <code>MatchPlayer/code> from a parcel.
+     *
+     * @param parcel The package with all information for the <code>MatchPlayer</code>.
+     */
+    private MatchPlayer(Parcel parcel)
+    {
+        // ORDER MATTERS!
+        mMatchId = parcel.readLong();
+        mAccountId = parcel.readLong();
+        mPlayerSlot = parcel.readInt();
+        mHeroId = parcel.readInt();
+        mKills = parcel.readInt();
+        mDeaths = parcel.readInt();
+        mAssists = parcel.readInt();
+        mGold = parcel.readInt();
+        mLastHits = parcel.readInt();
+        mDenies = parcel.readInt();
+        mGPM = parcel.readInt();
+        mXPM = parcel.readInt();
+        mHeroDamage = parcel.readInt();
+        mTowerDamage = parcel.readInt();
+        mHeroHealing = parcel.readInt();
+        mLevel = parcel.readInt();
+    }
+
+    // In order to read a Parcel, we need a CREATOR (STATIC FIELD)
+    /**
+     * Interface that must be implemented and provided as a public CREATOR field that generates
+     * instances of the <code>MatchPlayer</code> class from a Parcel.
+     */
+    public static final Parcelable.Creator<MatchPlayer> CREATOR = new Creator<MatchPlayer>()
+    {
+        /**
+         * This method is used with Intents to create new <code>MatchPlayer</code> objects.
+         * @param parcel The package with all information for the <code>MatchPlayer</code>.
+         * @return The new <code>MatchPlayer</code> object.
+         */
+        @Override
+        public MatchPlayer createFromParcel(Parcel parcel)
+        {
+            return new MatchPlayer(parcel);
+        }
+
+        /**
+         * This method is used with JSON to create an array of <code>MatchPlayer</code> objects.
+         * @param size The size of the JSON array (how many <code>MatchPlayer</code> objects).
+         * @return New array of <code>MatchPlayer</code> objects.
+         */
+        @Override
+        public MatchPlayer[] newArray(int size)
+        {
+            return new MatchPlayer[size];
+        }
+    };
 
     /**
      * Gets the ID of the match that the player played in.
@@ -277,4 +336,41 @@ public class MatchPlayer
         return mPlayerSlot & 7;
     }
 
+    /**
+     * Returns 0 if it's a standard parcel, else if sending files need to return file descriptors.
+     *
+     * @return 0
+     */
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    /**
+     * Writes all the member variables of the class to the parcel. We specify the data types.
+     *
+     * @param parcel The package with details about the <code>MatchPlayer</code>.
+     * @param i      Any custom flags (with files)
+     */
+    @Override
+    public void writeToParcel(Parcel parcel, int i)
+    {
+        parcel.writeLong(mMatchId);
+        parcel.writeLong(mAccountId);
+        parcel.writeInt(mPlayerSlot);
+        parcel.writeInt(mHeroId);
+        parcel.writeInt(mKills);
+        parcel.writeInt(mDeaths);
+        parcel.writeInt(mAssists);
+        parcel.writeInt(mGold);
+        parcel.writeInt(mLastHits);
+        parcel.writeInt(mDenies);
+        parcel.writeInt(mGPM);
+        parcel.writeInt(mXPM);
+        parcel.writeInt(mHeroDamage);
+        parcel.writeInt(mTowerDamage);
+        parcel.writeInt(mHeroHealing);
+        parcel.writeInt(mLevel);
+    }
 }

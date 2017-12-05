@@ -115,9 +115,11 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
         viewHolder.matchListItemKDAProgressBar.setProgress(selectedPlayer.getKills());
         viewHolder.matchListItemKDAProgressBar.setSecondaryProgress(selectedPlayer.getKills() + selectedPlayer.getDeaths());
 
-        // TODO: remove previous tag if recycle layout?
         // Set tag of list item layout to selected match
         viewHolder.matchListItemLinearLayout.setTag(selectedMatch);
+
+        // TODO: use setTag with keys? Don't know how setting Tag for match and viewholder affects listview
+        // TODO: https://stackoverflow.com/questions/15911620/how-to-set-multiple-tags-to-a-button
 
         return convertView;
     }

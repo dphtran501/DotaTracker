@@ -62,6 +62,7 @@ public class DBHelper extends SQLiteOpenHelper
     public static synchronized DBHelper getInstance(Context context)
     {
         // Use application context to ensure you don't accidentally leak Activity's context
+        // Application context is a singleton
         // See: https://android-developers.googleblog.com/2009/01/avoiding-memory-leaks.html
         if (sInstance == null) sInstance = new DBHelper(context.getApplicationContext());
         return sInstance;
