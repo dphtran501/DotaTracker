@@ -5,7 +5,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 /**
- * Created by Jeannie on 12/1/2017.
+ * Helper class to represent each page in MatchDetailsActivity's ViewPager as a Fragment that's
+ * persistently kept in the fragment manager as long as the user can return to the page.
+ *
+ * @author Derek Tran
+ * @version 1.0
+ * @since December 1, 2017
  */
 
 public class MatchDetailsActivityPagerAdapter extends FragmentPagerAdapter
