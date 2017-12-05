@@ -237,6 +237,25 @@ public class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Checks if a <code>User</code> with the specified Steam ID exists in the database.
+     *
+     * @param steamID32 The 32-bit Steam account ID of the <code>User</code> to check for.
+     * @return True if the <code>User</code> with the specified Steam ID exists in the database;
+     * otherwise false.
+     */
+    public boolean isUserInDB(long steamID32)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(USERS_TABLE, new String[]{USERS_FIELD_NAMES[0]},
+                USERS_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(steamID32)},
+                null, null, null, null);
+
+        boolean isUserFound = cursor.moveToFirst();
+        cursor.close();
+        return isUserFound;
+    }
+
 
     //************** MATCH TABLE OPERATIONS ****************
 
@@ -260,9 +279,7 @@ public class DBHelper extends SQLiteOpenHelper
 
         db.insert(MATCHES_TABLE, null, values);
 
-        // Add players from match to players table
-        for (MatchPlayer matchPlayer : match.getMatchPlayerList())
-            addPlayer(matchPlayer);
+        // To add MatchPlayers who played in match into database, call addPlayer outside of this class
 
         db.close();
     }
@@ -281,13 +298,12 @@ public class DBHelper extends SQLiteOpenHelper
                 MATCHES_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(matchID)},
                 null, null, null, null);
 
-        List<MatchPlayer> matchPlayers = getMatchPlayers(matchID);
+        // To get MatchPlayers who played in match, call getMatchPlayers outside of this class
 
         Match match = null;
         if (cursor.moveToFirst())
-            match = new Match(cursor.getLong(0), cursor.getLong(1), matchPlayers,
-                    cursor.getInt(2) == 1, cursor.getLong(3), cursor.getInt(4),
-                    cursor.getInt(5));
+            match = new Match(cursor.getLong(0), cursor.getLong(1), cursor.getInt(2) == 1,
+                    cursor.getLong(3), cursor.getInt(4), cursor.getInt(5));
 
         cursor.close();
         db.close();
@@ -311,10 +327,10 @@ public class DBHelper extends SQLiteOpenHelper
         {
             do
             {
-                List<MatchPlayer> matchPlayers = getMatchPlayers(cursor.getLong(0));
-                Match match = new Match(cursor.getLong(0), cursor.getLong(1), matchPlayers,
-                        cursor.getInt(2) == 1, cursor.getLong(3), cursor.getInt(4),
-                        cursor.getInt(5));
+                // To get MatchPlayers who played in match, call getMatchPlayers outside of this class
+
+                Match match = new Match(cursor.getLong(0), cursor.getLong(1), cursor.getInt(2) == 1,
+                        cursor.getLong(3), cursor.getInt(4), cursor.getInt(5));
                 matchesList.add(match);
             } while (cursor.moveToNext());
         }
@@ -333,6 +349,25 @@ public class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MATCHES_TABLE, null, null);
         db.close();
+    }
+
+    /**
+     * Checks if a <code>Match</code> with the specified match ID exists in the database.
+     *
+     * @param matchID The ID of the <code>Match</code> to check for.
+     * @return True if the <code>Match</code> with the specified match ID exists in the database;
+     * otherwise false.
+     */
+    public boolean isMatchInDB(long matchID)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(MATCHES_TABLE, new String[]{MATCHES_FIELD_NAMES[0]},
+                MATCHES_FIELD_NAMES[0] + "=?", new String[]{String.valueOf(matchID)},
+                null, null, null, null);
+
+        boolean isMatchFound = cursor.moveToFirst();
+        cursor.close();
+        return isMatchFound;
     }
 
     //************** MATCHPLAYER TABLE OPERATIONS ****************
@@ -504,6 +539,28 @@ public class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MATCH_PLAYERS_TABLE, null, null);
         db.close();
+    }
+
+    /**
+     * Checks if a <code>MatchPlayer</code> with the specified match ID and Steam ID exists in the
+     * database.
+     *
+     * @param matchID   The ID of the match played by the <code>MatchPlayer</code> to check for.
+     * @param steamID32 The 32-bit Steam account ID of the <code>MatchPlayer</code> to check for.
+     * @return True if the <code>MatchPlayer</code> with the specified match ID and Steam ID exists
+     * in the database; otherwise false.
+     */
+    public boolean isMatchPlayerInDB(long matchID, long steamID32)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(MATCH_PLAYERS_TABLE, new String[]{MATCH_PLAYERS_FIELD_NAMES[0], MATCH_PLAYERS_FIELD_NAMES[1]},
+                MATCH_PLAYERS_FIELD_NAMES[0] + "=? AND " + MATCH_PLAYERS_FIELD_NAMES[1] + "=?",
+                new String[]{String.valueOf(matchID), String.valueOf(steamID32)},
+                null, null, null, null);
+
+        boolean isMatchPlayerFound = cursor.moveToFirst();
+        cursor.close();
+        return isMatchPlayerFound;
     }
 
 }

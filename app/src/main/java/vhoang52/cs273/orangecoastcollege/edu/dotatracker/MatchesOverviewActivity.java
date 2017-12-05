@@ -116,7 +116,6 @@ public class MatchesOverviewActivity extends AppCompatActivity
             recentMatchList.add(db.getMatch(matchID));
             recentMatchStatsList.add(db.getMatchPlayer(matchID, user.getSteamId32()));
         }
-        // TODO: Redo adapter code to use convertView and viewholder class
         matchListAdapter = new MatchListAdapter(this, R.layout.match_list_item, recentMatchStatsList);
         matchListView.setAdapter(matchListAdapter);
 

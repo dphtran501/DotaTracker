@@ -75,6 +75,29 @@ public class Match
     }
 
     /**
+     * Instantiates a <code>Match</code> object with no players.
+     *
+     * @param matchID               The ID of the match.
+     * @param matchSeqNum           The sequence number representing the order in which the match was recorded.
+     * @param radiantWin            Truth value of who won the match; true if Radiant won, false if Dire won.
+     * @param startTime             The Unix timestamp of when the match started.
+     * @param duration              The length of the match in seconds.
+     * @param gameMode              An integer representing the game mode.
+     *                              See <a href="https://wiki.teamfortress.com/wiki/WebAPI/GetMatchDetails">WebAPI/GetMatchDetails</a>
+     *                              for the list of integers and what game mode each integer represents.
+     */
+    public Match(long matchID, long matchSeqNum, boolean radiantWin, long startTime, int duration, int gameMode)
+    {
+        mMatchID = matchID;
+        mMatchSeqNum = matchSeqNum;
+        mMatchPlayerList = new ArrayList<>();
+        mRadiantWin = radiantWin;
+        mStartTime = startTime;
+        mDuration = duration;
+        mGameMode = gameMode;
+    }
+
+    /**
      * Gets the ID of the match.
      *
      * @return The ID of the match.
