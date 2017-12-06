@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "UserID from sharedPreferences->" + mCurrentUserId);
         mService.setmCurrentUserId(mCurrentUserId);
 
-        checkCurrentUser();
 
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mMainActivityPagerAdapter = new MainActivityPagerAdapter(getSupportFragmentManager());
@@ -68,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        checkCurrentUser();
+
+
         mTabs = (TabLayout) findViewById(R.id.tabLayout);
         mTabs.setupWithViewPager(mViewPager);
         mViewPager.setCurrentItem(1);
@@ -85,9 +87,11 @@ public class MainActivity extends AppCompatActivity {
     private void checkCurrentUser() {
         mCurrentUserId = mService.getmCurrentUserId();
         mCurrentUser = mDBHelper.getUser(mCurrentUserId);
+        Log.i(TAG, "is mCurrentUser null->" + (mCurrentUser == null));
         if (mCurrentUser != null) {
             mService.setmCurrentUserId(mCurrentUserId);
             mService.setmCurrentUser(mCurrentUser);
+            Log.i(TAG, "mCurrentUserTest->" + mCurrentUser.toString());
         } else {
             HTTPRequestService.getUserSummaries(mCurrentUserId, new HTTPRequestService.JSONStringCallback() {
                 @Override
@@ -95,11 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "Successfully retrieved user->" + mCurrentUserId);
                     mCurrentUser = mService.getmCurrentUser();
                     mCurrentUserId = mService.getmCurrentUserId();
-                    Log.i(TAG, "CurrentUserTest->" + mCurrentUser.toString());
+                    Log.i(TAG, "mCurrentUserTest->" + mCurrentUser.toString());
                     mDBHelper.addUser(mCurrentUser);
-                    mMainActivityPagerAdapter.notifyDataSetChanged();
-
-                    Log.i(TAG, "mMainActivityPagerAdapter notified");
                 }
 
                 @Override
@@ -109,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+
+        mMainActivityPagerAdapter.notifyDataSetChanged();
+        Log.i(TAG, "mMainActivityPagerAdapter notified");
     }
 
     public void tapProfilePicture(View view) {
