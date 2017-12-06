@@ -1,22 +1,18 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.GnssStatus;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.dvoiss.literallytoast.LitToast;
 
 public class FluffActivity extends AppCompatActivity {
@@ -28,7 +24,7 @@ public class FluffActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fluff);
-        locationButton = findViewById(R.id.locationButton);
+        locationButton = (Button) findViewById(R.id.locationButton);
     }
 
     public void checkEarthquake(View view) {
