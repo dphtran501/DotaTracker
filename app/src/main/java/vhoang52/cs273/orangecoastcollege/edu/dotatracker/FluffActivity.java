@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import com.dvoiss.literallytoast.LitToast;
 
 public class FluffActivity extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 420;
@@ -56,5 +57,10 @@ public class FluffActivity extends AppCompatActivity {
         } else {
             startActivity(new Intent(this, MapsActivity.class));
         }
+    }
+
+    public void toast(View view) {
+        LitToast.create(this, "Toast!", 5000).setPlayToasterSound(true).show();
+
     }
 }

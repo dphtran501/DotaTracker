@@ -23,6 +23,13 @@
         android:text="Is there currently an earthquake?"
         android:onClick="checkEarthquake"
         />
+    <Button
+        android:id="@+id/toastButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toast?"
+        android:onClick="toast"
+        />
 
 
 </LinearLayout>
