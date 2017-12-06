@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         if (success) {
             SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong("currentUserId", steamId);
+            editor.putString("currentUserId", String.valueOf(steamId));
             Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
             finish();
             Intent intent = new Intent(this, MainActivity.class);
