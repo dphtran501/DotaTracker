@@ -27,51 +27,96 @@ public class HTTPRequestService
     private static Gson gson = new Gson();
     private static String BASE_URL = "http://68.4.78.45:8080/dotaweb/";
 
-    // User objects
+    private static HTTPRequestService mService;
+    private static long mCurrentUserId;
+    private static User mCurrentUser;
 
-    public static boolean postUserID(long steamId64) {
+    public HTTPRequestService() {}
+
+    public static HTTPRequestService getInstance() {
+        if (mService == null) {
+            mService = new HTTPRequestService();
+        }
+
+        return mService;
+    }
+
+    // User objects
+    public interface UserRegistrationCallback {
+        void onSuccess();
+        void onFailure();
+    }
+
+    public long getmCurrentUserId() {
+        return mCurrentUserId;
+    }
+
+    public void setmCurrentUserId(long mCurrentUserId) {
+        HTTPRequestService.mCurrentUserId = mCurrentUserId;
+    }
+
+    public User getmCurrentUser() {
+        return mCurrentUser;
+    }
+
+    public void setmCurrentUser(User mCurrentUser) {
+        HTTPRequestService.mCurrentUser = mCurrentUser;
+    }
+
+    public static void postUserID(final long steamId64, final UserRegistrationCallback callback) {
         String url = BASE_URL + "register?steamId64=" + steamId64;
+        Log.i(TAG, "POST url->" + url);
+
         AsyncHttpClient client = new AsyncHttpClient();
         final List<Integer> whyAmIDoingItThisWay = new ArrayList<>();
         client.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                whyAmIDoingItThisWay.add(1);
+                Log.i(TAG, "onSuccess callback received. mCurrentUser->" + steamId64);
+                mService.setmCurrentUserId(steamId64);
+                callback.onSuccess();
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                whyAmIDoingItThisWay.clear();
+                Log.d(TAG, "Failed to register id->" + steamId64 + "; Current user is still->" + mService.getmCurrentUserId());
+                callback.onFailure();
             }
         });
-
-        return (whyAmIDoingItThisWay.size() > 0);
     }
 
-    public static List<User> getUserSummaries(long steamId64) {
+    public interface JSONStringCallback {
+        void onSuccess();
+        void onFailure();
+    }
+
+    public static void getUserSummaries(long steamId64, final JSONStringCallback callback) {
         String url = BASE_URL + "fetch/playersummary?steamId64=" + steamId64;
-        final List<User> userList = new ArrayList<>();
+        Log.i(TAG, "GET url->" + url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                List<User> tempList = gson.fromJson(new String(bytes), new TypeToken<List<User>>(){}.getType());
-                userList.addAll(tempList);
+                String response = new String(bytes);
+                List<User> userList = gson.fromJson(response, new TypeToken<List<User>>() {}.getType());
+                mService.setmCurrentUser(userList.get(0));
+                Log.i(TAG, "Successfully retrieved a response; mCurrentUser->" + mCurrentUser.toString());
+                callback.onSuccess();
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
                 Log.d(TAG, "Error retrieving user json", throwable);
+                callback.onFailure();
             }
         });
-
-        return userList;
     }
 
     // Match objects
 
     public static List<Match> getMatchDetails(long steamId32) {
         String url = BASE_URL + "fetch/refresh?steamId32=" + steamId32;
+        Log.i(TAG, "GET url->" + url);
 
         final List<Match> matchList = new ArrayList<>();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -90,5 +135,5 @@ public class HTTPRequestService
 
         return matchList;
     }
-    
+
 }

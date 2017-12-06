@@ -13,8 +13,7 @@ import android.os.Parcelable;
  * @since December 1, 2017
  */
 
-public class User implements Parcelable
-{
+public class User implements Parcelable {
     private long mSteamId32;
     private int mPrivacy; // 1 - private; 2 - Friends only; 3 - Friends of Friends; 4 - Users Only; 5 - Public
     private int mProfileState; // 0 - profile not configured; 1 - user has configured profile
@@ -37,8 +36,7 @@ public class User implements Parcelable
      * @param profileUrl   The URL to the user's Steam Community profile.
      * @param avatarUrl    The URL to the user's avatar image.
      */
-    public User(long steamId32, int privacy, int profileState, String personaName, long lastLogOff, String profileUrl, String avatarUrl)
-    {
+    public User(long steamId32, int privacy, int profileState, String personaName, long lastLogOff, String profileUrl, String avatarUrl) {
         mSteamId32 = steamId32;
         mPrivacy = privacy;
         mProfileState = profileState;
@@ -53,8 +51,7 @@ public class User implements Parcelable
      *
      * @param parcel The package with all information for the <code>User</code>.
      */
-    private User(Parcel parcel)
-    {
+    private User(Parcel parcel) {
         // ORDER MATTERS!
         mSteamId32 = parcel.readLong();
         mPrivacy = parcel.readInt();
@@ -70,16 +67,14 @@ public class User implements Parcelable
      * Interface that must be implemented and provided as a public CREATOR field that generates
      * instances of the <code>User</code> class from a Parcel.
      */
-    public static final Parcelable.Creator<User> CREATOR = new Creator<User>()
-    {
+    public static final Parcelable.Creator<User> CREATOR = new Creator<User>() {
         /**
          * This method is used with Intents to create new <code>User</code> objects.
          * @param parcel The package with all information for the <code>User</code>.
          * @return The new <code>User</code> object.
          */
         @Override
-        public User createFromParcel(Parcel parcel)
-        {
+        public User createFromParcel(Parcel parcel) {
             return new User(parcel);
         }
 
@@ -89,8 +84,7 @@ public class User implements Parcelable
          * @return New array of <code>User</code> objects.
          */
         @Override
-        public User[] newArray(int size)
-        {
+        public User[] newArray(int size) {
             return new User[size];
         }
     };
@@ -100,8 +94,7 @@ public class User implements Parcelable
      *
      * @return The user's 32-bit Steam ID.
      */
-    public long getSteamId32()
-    {
+    public long getSteamId32() {
         return mSteamId32;
     }
 
@@ -110,8 +103,7 @@ public class User implements Parcelable
      *
      * @return The user's 64-bit Steam ID.
      */
-    public long getSteamId64()
-    {
+    public long getSteamId64() {
         return mSteamId32 + 76561197960265728L;
     }
 
@@ -121,8 +113,7 @@ public class User implements Parcelable
      * @return 1 if the profile is private, 2 if it's friends only, 3 if it allows access to
      * friends of friends, 4 if it's users only, or 5 if it's public.
      */
-    public int getPrivacy()
-    {
+    public int getPrivacy() {
         return mPrivacy;
     }
 
@@ -133,8 +124,7 @@ public class User implements Parcelable
      *                2 if it's friends only, 3 if it allows access to friends of friends, 4 if it's
      *                users only, or 5 if it's public.
      */
-    public void setPrivacy(int privacy)
-    {
+    public void setPrivacy(int privacy) {
         mPrivacy = privacy;
     }
 
@@ -143,8 +133,7 @@ public class User implements Parcelable
      *
      * @return 0 if it's not configured or 1 if it has been configured.
      */
-    public int getProfileState()
-    {
+    public int getProfileState() {
         return mProfileState;
     }
 
@@ -154,8 +143,7 @@ public class User implements Parcelable
      * @param profileState Integer describing the user's profile state. 0 if it's not configured or
      *                     1 if it has been configured.
      */
-    public void setProfileState(int profileState)
-    {
+    public void setProfileState(int profileState) {
         mProfileState = profileState;
     }
 
@@ -164,8 +152,7 @@ public class User implements Parcelable
      *
      * @return The user's display name.
      */
-    public String getPersonaName()
-    {
+    public String getPersonaName() {
         return mPersonaName;
     }
 
@@ -174,8 +161,7 @@ public class User implements Parcelable
      *
      * @param personaName The user's display name.
      */
-    public void setPersonaName(String personaName)
-    {
+    public void setPersonaName(String personaName) {
         mPersonaName = personaName;
     }
 
@@ -184,8 +170,7 @@ public class User implements Parcelable
      *
      * @return The Unix timestamp of when the user was last online.
      */
-    public long getLastLogOff()
-    {
+    public long getLastLogOff() {
         return mLastLogOff;
     }
 
@@ -194,8 +179,7 @@ public class User implements Parcelable
      *
      * @param lastLogOff The Unix timestamp of when the user was last online.
      */
-    public void setLastLogOff(long lastLogOff)
-    {
+    public void setLastLogOff(long lastLogOff) {
         mLastLogOff = lastLogOff;
     }
 
@@ -204,8 +188,7 @@ public class User implements Parcelable
      *
      * @return The URL to the user's Steam Community profile.
      */
-    public String getProfileUrl()
-    {
+    public String getProfileUrl() {
         return mProfileUrl;
     }
 
@@ -214,8 +197,7 @@ public class User implements Parcelable
      *
      * @param profileUrl The URL to the user's Steam Community profile.
      */
-    public void setProfileUrl(String profileUrl)
-    {
+    public void setProfileUrl(String profileUrl) {
         mProfileUrl = profileUrl;
     }
 
@@ -224,8 +206,7 @@ public class User implements Parcelable
      *
      * @return The URL to the user's avatar image.
      */
-    public String getAvatarUrl()
-    {
+    public String getAvatarUrl() {
         return mAvatarUrl;
     }
 
@@ -234,8 +215,7 @@ public class User implements Parcelable
      *
      * @param avatarUrl The URL to the user's avatar image.
      */
-    public void setAvatarUrl(String avatarUrl)
-    {
+    public void setAvatarUrl(String avatarUrl) {
         mAvatarUrl = avatarUrl;
     }
 
@@ -246,8 +226,7 @@ public class User implements Parcelable
      * @return True if the argument <code>User</code> is the same as this <code>User</code>, else false.
      */
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -264,14 +243,14 @@ public class User implements Parcelable
         return mAvatarUrl != null ? mAvatarUrl.equals(user.mAvatarUrl) : user.mAvatarUrl == null;
     }
 
+
     /**
      * Generates a hash code for this <code>User</code>.
      *
      * @return The hash code for this <code>User</code>.
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int result = (int) (mSteamId32 ^ (mSteamId32 >>> 32));
         result = 31 * result + mPrivacy;
         result = 31 * result + mProfileState;
@@ -282,19 +261,6 @@ public class User implements Parcelable
         return result;
     }
 
-    /**
-     * Generates a String representation of this <code>User</code>.
-     *
-     * @return String representation of this <code>User</code>.
-     */
-    @Override
-    public String toString()
-    {
-        return "User{" + "mSteamId32=" + mSteamId32 + ", mPrivacy=" + mPrivacy
-                + ", mProfileState=" + mProfileState + ", mPersonaName='" + mPersonaName + '\''
-                + ", mLastLogOff=" + mLastLogOff + ", mProfileUrl='" + mProfileUrl + '\''
-                + ", mAvatarUrl='" + mAvatarUrl + '\'' + '}';
-    }
 
     /**
      * Returns 0 if it's a standard parcel, else if sending files need to return file descriptors.
@@ -302,8 +268,7 @@ public class User implements Parcelable
      * @return 0
      */
     @Override
-    public int describeContents()
-    {
+    public int describeContents() {
         return 0;
     }
 
@@ -314,8 +279,7 @@ public class User implements Parcelable
      * @param i      Any custom flags (with files)
      */
     @Override
-    public void writeToParcel(Parcel parcel, int i)
-    {
+    public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(mSteamId32);
         parcel.writeInt(mPrivacy);
         parcel.writeInt(mProfileState);
@@ -324,4 +288,24 @@ public class User implements Parcelable
         parcel.writeString(mProfileUrl);
         parcel.writeString(mAvatarUrl);
     }
+
+    /**
+     * Generates a String representation of this <code>User</code>.
+     *
+     * @return String representation of this <code>User</code>.
+     */
+    @Override
+    public String toString() {
+        return "User{" +
+                "mSteamId32=" + mSteamId32 +
+                ", mPrivacy=" + mPrivacy +
+                ", mProfileState=" + mProfileState +
+                ", mPersonaName='" + mPersonaName + '\'' +
+                ", mLastLogOff=" + mLastLogOff +
+                ", mProfileUrl='" + mProfileUrl + '\'' +
+                ", mAvatarUrl='" + mAvatarUrl + '\'' +
+                '}';
+    }
+
+
 }

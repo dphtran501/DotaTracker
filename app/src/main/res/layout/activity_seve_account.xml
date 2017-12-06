@@ -33,12 +33,6 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:typeface="monospace"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/steam_name"
-            android:textSize="12sp"
-            />
 
         <TextView
             android:id="@+id/textView"

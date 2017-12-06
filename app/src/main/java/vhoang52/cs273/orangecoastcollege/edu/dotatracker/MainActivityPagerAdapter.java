@@ -1,5 +1,6 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -27,7 +28,7 @@ public class MainActivityPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         String title = null;
         if (position == 0) {
-            title = "Home";
+            title = "Change User";
         }
         if (position == 2) {
             title = "Activity Feed";
@@ -53,17 +54,23 @@ public class MainActivityPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
+
         if (position == 0) {
-            fragment = new HomeActivityFragment();
-        }
-        else if (position == 1) {
-            fragment = new AccountActivity();
-        }
-        else if (position == 2) {
-            fragment = new FeedActivityFragment();
+            Fragment fragment = new LoginActivity();
+            return fragment;
+        } else if (position == 1) {
+            AccountActivity fragment = new AccountActivity();
+            return fragment;
+        } else if (position == 2) {
+            Fragment fragment = new FeedActivityFragment();
+            return fragment;
         }
 
-        return fragment;
+        return null;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }
