@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#162955</color>
     <color name="colorAccent">#AA6C39</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
 
     <!--Seve's Colors-->
     <color name="sevePrimary">#7B4BFF</color>
