@@ -19,6 +19,9 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.dvoiss.literallytoast.LitToast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class FluffActivity extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 420;
 
@@ -50,17 +53,39 @@ public class FluffActivity extends AppCompatActivity {
                     LocationManager locationManager = ((LocationManager) getSystemService(LOCATION_SERVICE));
                     if (locationManager.getAllProviders().size() > 0) {
                         Toast.makeText(this, "You're on Earth, congrats", Toast.LENGTH_SHORT).show();
-                        locationButton.setText("Are you sure?");
+                        new Timer().schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        locationButton.setText("Are you sure?");
+                                    }
+                                });
+                            }
+                        }, 1 * 1000);
+
                     }
                 }
             }
         } else {
             startActivity(new Intent(this, MapsActivity.class));
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            locationButton.setText("Where Am I Now?");                        }
+                    });
+                }
+            }, 1 * 1000);
+
         }
     }
 
     public void toast(View view) {
-        LitToast.create(this, "Toast!", 5000).setPlayToasterSound(true).show();
+        LitToast.create(this, "Toast!", 2 * 1000).setPlayToasterSound(true).show();
 
     }
 }
