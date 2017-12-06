@@ -1,5 +1,11 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -7,6 +13,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -37,10 +44,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //Suppressed because it will be impossible to open this activity without first checking for location permissions
+        @SuppressLint("MissingPermission") Location userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        LatLng latLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+
+        mMap.addMarker(new MarkerOptions().position(latLng).title("Earth"));
+
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(13.0f).build();
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 }
