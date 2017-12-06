@@ -11,11 +11,13 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="vhoang52.cs273.orangecoastcollege.edu.dotatracker.FluffActivity">
     <Button
+        android:id="@+id/locationButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Where am I?"
         android:onClick="checkLocation"/>
     <Button
+        android:id="@+id/earthquakeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Is there currently an earthquake?"
