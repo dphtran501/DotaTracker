@@ -8,10 +8,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by vincenthoang on 11/11/17.
+ * This fragment displays the overall match statistics for Team Radiant and Team Dire, where the
+ * match is specified in <code>MatchDetailsActivity</code>.
+ *
+ * @author Derek Tran
+ * @version 1.0
+ * @since December 1, 2017
  */
 
-public class FeedActivityFragment extends Fragment {
+public class VersusMatchDetailsFragment extends Fragment
+{
+    /**
+     * Initializes <code>VersusMatchDetailsFragment</code> and retrieves <code>Match</code> passed
+     * from <code>MatchDetailsActivity</code>.
+     *
+     * @param savedInstanceState Bundle containing the data it recently supplied in
+     *                           onSaveInstanceState(Bundle) if activity was reinitialized after
+     *                           being previously shut down. Otherwise it is null.
+     */
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        // Retrieve match from MatchDetailsActivity
+        Match match = getArguments().getParcelable("Match");
+    }
+
     /**
      * Called to have the fragment instantiate its user interface view.
      * This is optional, and non-graphical fragments can return null (which
@@ -32,8 +55,11 @@ public class FeedActivityFragment extends Fragment {
      */
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_matches_overview, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_match_versus, container, false);
         return view;
+
+        // TODO: Link to widgets and populate fields
     }
 }

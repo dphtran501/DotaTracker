@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/overview_view_spacing"
-        android:text="@string/stats_scroll_label"
+        android:text="@string/average_stats_label"
         android:textColor="@android:color/white"
         />
 
@@ -257,11 +257,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/xppm_label"
+                    android:text="@string/xpm_label"
                     android:textColor="@android:color/darker_gray"/>
 
                 <TextView
-                    android:id="@+id/avgXPPMTextView"
+                    android:id="@+id/avgXPMTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_data"
@@ -328,7 +328,7 @@
                     android:textColor="@android:color/darker_gray"/>
 
                 <TextView
-                    android:id="@+id/avgHealTextView"
+                    android:id="@+id/avgHeroHealTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_data"
@@ -392,7 +392,10 @@
         android:textColor="@android:color/white"/>
 
     <ListView
+        android:id="@+id/recentMatchesListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="@dimen/listview_divider_height"/>
 
 </LinearLayout>
