@@ -2,25 +2,27 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 
 public class Hero {
-    private String mHeroName;
-    private short mID;
+    private String mLocalizedName;
+    private String mTokenName;
+    private int mID;
     private String mFileName;
 
-    public Hero(String heroName, short ID) {
-        mHeroName = heroName;
-        mID = ID;
-        mFileName = "hero_" + ID + ".png";
+    public Hero(String mLocalizedName, String mTokenName, int mID) {
+        this.mLocalizedName = mLocalizedName;
+        this.mTokenName = mTokenName;
+        this.mID = mID;
+        this.mFileName = "npc_dota_" + mTokenName + ".png";
     }
 
     public String getHeroName() {
-        return mHeroName;
+        return mLocalizedName;
     }
 
     public void setHeroName(String heroName) {
-        mHeroName = heroName;
+        mLocalizedName = heroName;
     }
 
-    public short getID() {
+    public int getID() {
         return mID;
     }
 
@@ -30,9 +32,5 @@ public class Hero {
 
     public String getFileName() {
         return mFileName;
-    }
-
-    public void setFileName(String fileName) {
-        mFileName = fileName;
     }
 }

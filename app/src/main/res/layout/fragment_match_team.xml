@@ -26,22 +26,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player1HeroImageView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/hero_73"/>
+                app:srcCompat="@drawable/abaddon"/>
 
             <TextView
                 android:id="@+id/player1UserNameTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="@string/default_data"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"/>
@@ -52,22 +53,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player2HeroImageView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/hero_73"/>
+                app:srcCompat="@drawable/abaddon"/>
 
             <TextView
                 android:id="@+id/player2UserNameTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="@string/default_data"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"/>
@@ -77,22 +79,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player3HeroImageView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/hero_73"/>
+                app:srcCompat="@drawable/abaddon"/>
 
             <TextView
                 android:id="@+id/player3UserNameTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="@string/default_data"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"/>
@@ -102,22 +105,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player4HeroImageView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/hero_73"/>
+                app:srcCompat="@drawable/abaddon"/>
 
             <TextView
                 android:id="@+id/player4UserNameTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="@string/default_data"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"/>
@@ -128,22 +132,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/player_list_item_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="@dimen/player_list_item_spacing">
 
             <ImageView
                 android:id="@+id/player5HeroImageView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/hero_73"/>
+                app:srcCompat="@drawable/abaddon"/>
 
             <TextView
                 android:id="@+id/player5UserNameTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="@string/default_data"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"/>

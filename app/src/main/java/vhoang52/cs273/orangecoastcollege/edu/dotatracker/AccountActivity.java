@@ -14,7 +14,7 @@ import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountActivity extends Fragment {
+public class AccountActivity extends Fragment{
 
     private CircleImageView profilePicture;
     private TextView userName;
@@ -28,7 +28,7 @@ public class AccountActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        TODO: populate with actual heros
-        mMMostPlayedHerbs.add(new Hero("Alchemist", (short) 73));
+        //mMMostPlayedHerbs.add(new Hero("Alchemist", 73));
 
         View view = inflater.inflate(R.layout.activity_seve_account, container, false);
         profilePicture = view.findViewById(R.id.profilePicture);

@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="vhoang52.cs273.orangecoastcollege.edu.dotatracker.LoginActivity"
-    android:animateLayoutChanges="true">
+    android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/loginViewPager"
+    <EditText
+        android:id="@+id/steamIDEditText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginStart="50dp"
+        android:background="@drawable/border_drawable_accent"
+        android:digits="0123456789"
+        android:hint="@string/login_steam_id"
+        android:inputType="number"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:textColor="@color/colorBlack"/>
 
-    </android.support.v4.view.ViewPager>
-
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/steamIDEditText"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:background="@drawable/border_drawable_darkaccent"
+        android:text="@string/login_sign_up"/>
 
 
 </RelativeLayout>

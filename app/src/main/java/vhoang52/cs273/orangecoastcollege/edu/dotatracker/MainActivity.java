@@ -25,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mViewPager = findViewById(R.id.viewPager);
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mMainActivityPagerAdapter = new MainActivityPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mMainActivityPagerAdapter);
-        mTabs = findViewById(R.id.tabLayout);
+        mTabs = (TabLayout) findViewById(R.id.tabLayout);
         mTabs.setupWithViewPager(mViewPager);
 
         mViewPager.setCurrentItem(1);

@@ -52,7 +52,9 @@
     <string name="login_password">Password: </string>
     <string name="login_no_account_hint">Don\'t have an account?</string>
     <string name="login_button">Log In!</string>
-    <string name="login_sign_up">Sign Up</string>
+    <string name="login_sign_up">Register</string>
+    <string name="login_steam_id">Input 64 bit Steam ID</string>
+
 
     <string name="faction_name">%1$s</string>
 
