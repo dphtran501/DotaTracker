@@ -3,32 +3,23 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
 /**
- * A class to unpack JSON files and load their information into the application's data models.
- *
- * @author Derek Tran
- * @version 1.0
- * @since December 2, 2017
+ * HTTPRequestService
+ * <p>
+ * Singleton class to send and receive asynchronous requests to and from a server.
+ * Also keeps track of the current User and their ID across all activities.
  */
-public class HTTPRequestService
-{
+public class HTTPRequestService {
     // TODO: Implementation of GSONLoader class
     private static final String TAG = "HTTPRequestService";
     private static Gson gson = new Gson();
@@ -39,8 +30,17 @@ public class HTTPRequestService
     private static User mCurrentUser;
     private static List<Match> mMatchesList;
 
-    public HTTPRequestService() {}
+    /**
+     * Not to be called outside of getInstance()
+     */
+    private HTTPRequestService() {
+    }
 
+    /**
+     * Gets the one and only instance of HTTPRequestService
+     *
+     * @return
+     */
     public static HTTPRequestService getInstance() {
         if (mService == null) {
             mService = new HTTPRequestService();
@@ -50,38 +50,69 @@ public class HTTPRequestService
         return mService;
     }
 
-    // User objects
+    /**
+     * I also realize after creating these interfaces that I didn't need to make 3, but these
+     * interfaces are used to provide ways to interacting with the information after the client
+     * receives a response from the server (for example, new users with no cached information
+     * will take at least 27 seconds (not accounting for latency and processing time) to
+     * receive a refresh of 25 match objects
+     */
     public interface UserRegistrationCallback {
         void onSuccess();
+
         void onFailure();
     }
 
+    /**
+     * Gets the current user's ID
+     */
     public long getmCurrentUserId() {
         return mCurrentUserId;
     }
 
+    /**
+     * Sets the current user ID
+     */
     public void setmCurrentUserId(long mCurrentUserId) {
         HTTPRequestService.mCurrentUserId = mCurrentUserId;
         Log.i(TAG, "mCurrentUserId is now set to->" + mCurrentUserId);
     }
 
+    /**
+     * Gets the current user
+     */
     public User getmCurrentUser() {
         return mCurrentUser;
     }
 
+    /**
+     * Sets the current user
+     */
     public void setmCurrentUser(User mCurrentUser) {
         HTTPRequestService.mCurrentUser = mCurrentUser;
         Log.i(TAG, "mCurrentUser is now set to->" + mCurrentUser.toString());
     }
 
+    /**
+     * Gets the most recently retrieved matches list
+     */
     public List<Match> getmMatchesList() {
         return mMatchesList;
     }
 
+    /**
+     * Sets the recently retrieved matches list
+     */
     public void setmMatchesList(List<Match> mMatchesList) {
         HTTPRequestService.mMatchesList = mMatchesList;
     }
 
+    /**
+     * Notifies the server to cache information for the new user (if not already exists)
+     *
+     * @param steamId64 the user's steamId. Server is capable of receiving both 32 and 64 bit format
+     *                  steam ids and convert automatically
+     */
     public static void postUserID(final long steamId64, final UserRegistrationCallback callback) {
         String url = BASE_URL + "register?steamId64=" + steamId64;
         Log.i(TAG, "POST url->" + url);
@@ -98,17 +129,30 @@ public class HTTPRequestService
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.d(TAG, "Failed to register id->" + steamId64 + "; Current user is still->" + mService.getmCurrentUserId());
+                Log.d(TAG, "Failed to register id->" + steamId64
+                        + "; Current user is still->" + mService.getmCurrentUserId());
                 callback.onFailure();
             }
         });
     }
 
+    /**
+     * Callback interface to handle async results for getUserSummaries
+     * <p>
+     * see UserRegistrationCallback interface
+     */
     public interface JSONStringCallback {
         void onSuccess();
+
         void onFailure();
     }
 
+    /**
+     * Retrieves user information after they register. Object is saved locally for faster recall.
+     * After service completes, user object will be available via static method getmCurrentUser();
+     *
+     * @param steamId64 User's steam id
+     */
     public static void getUserSummaries(long steamId64, final JSONStringCallback callback) {
         String url = BASE_URL + "fetch/playersummary?steamId64=" + steamId64;
         Log.i(TAG, "GET url->" + url);
@@ -117,7 +161,8 @@ public class HTTPRequestService
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String response = new String(bytes);
-                List<User> userList = gson.fromJson(response, new TypeToken<List<User>>() {}.getType());
+                List<User> userList = gson.fromJson(response, new TypeToken<List<User>>() {
+                }.getType());
                 mService.setmCurrentUser(userList.get(0));
                 Log.i(TAG, "Successfully retrieved a response; mCurrentUser->" + mCurrentUser.toString());
                 callback.onSuccess();
@@ -132,11 +177,25 @@ public class HTTPRequestService
     }
 
     // Match objects
+
+    /**
+     * Callback for handling the results from getMatchDetails()
+     * <p>
+     * See UserRegistrationCallback interface
+     */
     public interface MatchListCallback {
         void onSuccess();
+
         void onFailure();
     }
 
+    /**
+     * Retrieves the latest 25 matches for the user. Results will be available once the async request
+     * completes via static method getmMatchesList()
+     *
+     * @param steamId32 user's steam id. the API requests 32 bit steam id,
+     *                  but man-in-the-middle server can automatically convert 32<->64
+     */
     public static void getMatchDetails(long steamId32, final MatchListCallback callback) {
         String url = BASE_URL + "fetch/refresh?steamId32=" + steamId32;
         Log.i(TAG, "GET url->" + url);
@@ -145,7 +204,8 @@ public class HTTPRequestService
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                List<Match> tempList = gson.fromJson(new String(responseBody), new TypeToken<List<Match>>(){}.getType());
+                List<Match> tempList = gson.fromJson(new String(responseBody), new TypeToken<List<Match>>() {
+                }.getType());
                 mService.setmMatchesList(tempList);
 
                 Log.i(TAG, "Successfully retrieved match list from server; match list size->" + tempList.size());

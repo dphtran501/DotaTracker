@@ -23,8 +23,6 @@ public class LoginListAdapter extends ArrayAdapter<User> {
     private int mResourceId;
     private List<User> mUserList = new ArrayList<>();
 
-    private DBHelper mDBHelper;
-
     /**
      * Constructor
      *
@@ -38,7 +36,6 @@ public class LoginListAdapter extends ArrayAdapter<User> {
         mContext = context;
         mResourceId = resource;
         mUserList = objects;
-        mDBHelper = DBHelper.getInstance(context);
     }
 
     static class ViewHolder {
