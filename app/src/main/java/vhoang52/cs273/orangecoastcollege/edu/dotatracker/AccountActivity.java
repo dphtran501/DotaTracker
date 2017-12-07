@@ -1,6 +1,5 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
-import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,22 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.koushikdutta.ion.Ion;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 
 public class AccountActivity extends Fragment implements UpdateableFragment {
     private static final String TAG = "AccountActivityFragment";
@@ -40,7 +34,7 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
     private RingProgressBar winRingProgressBar;
     private TextView winPercentageTextView;
 
-    private ListView mostPlayedHeroesListView;
+    private LinearLayout mostPlayedHeroesListView;
     private MostPlayedHeroesListAdapter listAdapter;
     private List<Hero> mMostPlayedHeroes = new ArrayList<>();
 
@@ -141,7 +135,7 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
         df.setMaximumFractionDigits(1);
         double winPercent = 100 * mWins / mGamesPlayed, lossPercent = 100 - winPercent;
         winRingProgressBar.setProgress((int) winPercent);
-        winPercentageTextView.setText(df.format(winPercent / 100));
+        winPercentageTextView.setText(" " + df.format(winPercent / 100));
         try {
             for (Integer integer : heroFrequency.keySet()) {
                 mMostPlayedHeroes.add(Hero.getHeroFromID(getContext(), integer));
@@ -151,9 +145,40 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
         }
         listAdapter = new MostPlayedHeroesListAdapter(view.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
         listAdapter.setHash(heroFrequency);
-        mostPlayedHeroesListView.setAdapter(listAdapter);
+
+
+        Map<Hero, Double> sorted = new HashMap<>();
+        for (int index = 0; index < mMostPlayedHeroes.size(); index++) {
+            Hero hero = mMostPlayedHeroes.get(index);
+            double winPercentage = heroFrequency.get(hero.getId())[0] / (double) heroFrequency.get(hero.getId())[1];
+            sorted.put(hero, winPercentage);
+        }
+
+//        Log.i(TAG, "onCreateView: list size is: " + mMostPlayedHeroes.size());
+//        Log.i(TAG, "onCreateView: map size is: " + sorted.size());
+//        Log.i(TAG, "onCreateView: sortedset size is: " + entriesSortedByValues(sorted).size());
+//        for (Map.Entry<Hero, Double> hero : entriesSortedByValues(sorted)) {
+//            Log.i(TAG, "onCreateView: " + hero);
+//        }
+
+        for (Hero hero : sorted.keySet()) {
+            mostPlayedHeroesListView.addView(listAdapter.getView(mMostPlayedHeroes.indexOf(hero), view, mostPlayedHeroesListView));
+        }
+
 
 
         return view;
+    }
+    static <K,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
+                new Comparator<Map.Entry<K,V>>() {
+                    @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+                        int res = e1.getValue().compareTo(e2.getValue());
+                        return res != 0 ? res : 1; // Special fix to preserve items with equal values
+                    }
+                }
+        );
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
     }
 }

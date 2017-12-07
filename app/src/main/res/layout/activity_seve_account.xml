@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:app="http://schemas.android.com/apk/res-auto"
                   android:layout_width="match_parent"
@@ -8,10 +14,12 @@
 
         <!--<de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="24dp"
+            android:elevation="10dp"
+            android:onClick="secretTap"
             android:src="@drawable/steam_icon"
             app:civ_border_color="@color/seveBorder"
             app:civ_border_width="5dp"
@@ -48,8 +56,7 @@
             android:textColor="@color/seveText"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:typeface="monospace"
-            android:elevation="7dp"/>
+            android:typeface="monospace"/>
 
         <TextView
             android:id="@+id/textView"
@@ -63,46 +70,47 @@
             android:textAllCaps="false"
             android:typeface="monospace"/>
 
-        <RelativeLayout
+
+        <io.netopen.hotbitmapgg.library.view.RingProgressBar
+            android:id="@+id/winRingProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_centerVertical="true"
+            app:max="100"
+            app:ringColor="@color/red"
+            app:ringProgressColor="@color/green"
+            app:textIsShow="false"
+            app:ringWidth="7dp"
+            app:style="STROKE"/>
 
-            <io.netopen.hotbitmapgg.library.view.RingProgressBar
-                android:id="@+id/winRingProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                app:max="100"
-                app:ringColor="@color/red"
-                app:ringProgressColor="@color/green"
-                app:ringWidth="7dp"
-                app:style="STROKE"/>
+        <TextView
+            android:id="@+id/winPercentageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/win_percentage_data"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:layout_marginTop="-255dp"/>
 
-            <TextView
-                android:id="@+id/winPercentageTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/win_percentage_data"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:typeface="monospace"/>
-        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="45dp"
             android:text="@string/most_played_hero"
             />
 
-        <ListView
+        <LinearLayout
             android:id="@+id/mostPlayedHeroesListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="4dp"/>
+            android:orientation="vertical"
+            android:layout_marginTop="4dp"
+            android:isScrollContainer="false"
+            android:scrollbars="none"/>
 
 
     </LinearLayout>
+</ScrollView>

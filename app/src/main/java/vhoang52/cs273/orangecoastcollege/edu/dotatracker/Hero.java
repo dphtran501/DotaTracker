@@ -3,6 +3,7 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.content.Context;
 
+import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class Hero {
+public class Hero implements Comparable {
     private String mLocalizedName;
     private String mTokenName;
     private int mId;
@@ -91,5 +92,10 @@ public class Hero {
                 ", mId=" + mId +
                 ", mFileName='" + getFileName() + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        return 1;
     }
 }
