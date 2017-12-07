@@ -98,7 +98,9 @@ public class MatchDetailsActivity extends AppCompatActivity
     {
         int minutes = duration / 60;
         int seconds = duration % 60;
-        return String.valueOf(minutes) + ":" + String.valueOf(seconds);
+        String minutesString = (minutes < 10) ? ("0" + minutes) : String.valueOf(minutes);
+        String secondsString = (seconds < 10) ? ("0" + seconds) : String.valueOf(seconds);
+        return minutesString + ":" + secondsString;
     }
 
     // Get length of time since match start as a String
@@ -109,16 +111,16 @@ public class MatchDetailsActivity extends AppCompatActivity
         long secondsSinceLastPlay = System.currentTimeMillis() / 1000L - matchStartTime;
 
         if (secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) + " years";
+            lastPlay = secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) + " years ago";
         else if (secondsSinceLastPlay / (30L * 24L * 60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (30L * 24L * 60L * 60L) + " months";
+            lastPlay = secondsSinceLastPlay / (30L * 24L * 60L * 60L) + " months ago";
         else if (secondsSinceLastPlay / (24L * 60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (24L * 60L * 60L) + " days";
+            lastPlay = secondsSinceLastPlay / (24L * 60L * 60L) + " days ago";
         else if (secondsSinceLastPlay / (60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (60L * 60L) + " hours";
+            lastPlay = secondsSinceLastPlay / (60L * 60L) + " hours ago";
         else if (secondsSinceLastPlay / 60L >= 1L)
-            lastPlay = secondsSinceLastPlay / 60L + " minutes";
-        else lastPlay = secondsSinceLastPlay + " seconds";
+            lastPlay = secondsSinceLastPlay / 60L + " minutes ago";
+        else lastPlay = secondsSinceLastPlay + " seconds ago";
 
         return lastPlay;
     }
