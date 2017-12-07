@@ -92,7 +92,19 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
         MatchPlayer selectedPlayer = mMatchPlayerList.get(position);
         Match selectedMatch = getMatch(selectedPlayer.getMatchId());
         // Set widgets of list item based on selected item
-        // TODO: Get hero image and name
+//        // TODO: Get hero image and name
+//        try
+//        {
+//            Hero selectedPlayerHero = Hero.getHeroFromID(mContext, selectedPlayer.getHeroId());
+//            AssetManager manager = mContext.getAssets();
+//            InputStream inputStream = manager.open(selectedPlayerHero.getFileName());
+//            Drawable heroImage = Drawable.createFromStream(inputStream, selectedPlayerHero.getHeroName());
+//            viewHolder.matchListItemHeroImageView.setImageDrawable(heroImage);
+//        } catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
+
         viewHolder.matchListItemTeamTextView.setText((selectedPlayer.isDire() ? "Dire" : "Radiant"));
         if ((selectedMatch.isRadiantWin() && !selectedPlayer.isDire())
                 || (!selectedMatch.isRadiantWin() && selectedPlayer.isDire()))
@@ -158,16 +170,16 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
         long secondsSinceLastPlay = System.currentTimeMillis() / 1000L - matchStartTime;
 
         if (secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) + " years ago";
+            lastPlay = secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) + " yr ago";
         else if (secondsSinceLastPlay / (30L * 24L * 60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (30L * 24L * 60L * 60L) + " months ago";
+            lastPlay = secondsSinceLastPlay / (30L * 24L * 60L * 60L) + " mo ago";
         else if (secondsSinceLastPlay / (24L * 60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (24L * 60L * 60L) + " days ago";
+            lastPlay = secondsSinceLastPlay / (24L * 60L * 60L) + " d ago";
         else if (secondsSinceLastPlay / (60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (60L * 60L) + " hours ago";
+            lastPlay = secondsSinceLastPlay / (60L * 60L) + " h ago";
         else if (secondsSinceLastPlay / 60L >= 1L)
-            lastPlay = secondsSinceLastPlay / 60L + " minutes ago";
-        else lastPlay = secondsSinceLastPlay + " seconds ago";
+            lastPlay = secondsSinceLastPlay / 60L + " m ago";
+        else lastPlay = secondsSinceLastPlay + " s ago";
 
         return lastPlay;
     }

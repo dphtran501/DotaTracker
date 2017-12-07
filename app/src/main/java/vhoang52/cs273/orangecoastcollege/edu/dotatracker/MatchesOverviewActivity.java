@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -313,7 +311,9 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
     private String durationToString(int duration) {
         int minutes = duration / 60;
         int seconds = duration % 60;
-        return String.valueOf(minutes) + ":" + String.valueOf(seconds);
+        String minutesString = (minutes < 10) ? ("0" + minutes) : String.valueOf(minutes);
+        String secondsString = (seconds < 10) ? ("0" + seconds) : String.valueOf(seconds);
+        return minutesString + ":" + secondsString;
     }
 
     // Retrieves the match with the specified match ID from the database. Unlike the DBHelper version,
