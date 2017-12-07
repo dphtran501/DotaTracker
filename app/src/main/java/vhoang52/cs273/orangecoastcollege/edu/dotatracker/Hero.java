@@ -2,6 +2,7 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 
 import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,13 +13,13 @@ import java.util.List;
 public class Hero {
     private String mLocalizedName;
     private String mTokenName;
-    private int mID;
+    private int mId;
     private String mFileName;
 
-    public Hero(String mLocalizedName, String mTokenName, int mID) {
+    public Hero(String mLocalizedName, String mTokenName, int mId) {
         this.mLocalizedName = mLocalizedName;
         this.mTokenName = mTokenName;
-        this.mID = mID;
+        this.mId = mId;
         this.mFileName = "npc_dota_" + mTokenName + ".png";
     }
 
@@ -29,14 +30,16 @@ public class Hero {
         is.read(buffer);
         is.close();
         Gson gson = new Gson();
-        return gson.fromJson(new String(buffer),
+        List<Hero> heroList = gson.fromJson(new String(buffer),
                 new TypeToken<List<Hero>>() {
                 }.getType());
+
+        return heroList;
     }
 
     public static Hero getHeroFromID(Context context, int id) throws IOException {
         for (Hero hero : getAllHeroes(context)) {
-            if(hero.getID() == id) return hero;
+            if(hero.getId() == id) return hero;
         }
         return null;
     }
@@ -50,15 +53,29 @@ public class Hero {
         mLocalizedName = heroName;
     }
 
-    public int getID() {
-        return mID;
+    public int getId() {
+        return mId;
     }
 
-    public void setID(short ID) {
-        mID = ID;
+    public void setId(short Id) {
+        mId = Id;
     }
 
     public String getFileName() {
         return mFileName;
+    }
+
+    public void setFileName() {
+        mFileName = "npc_dota_" + mTokenName + ".png";
+    }
+
+    @Override
+    public String toString() {
+        return "Hero{" +
+                "mLocalizedName='" + mLocalizedName + '\'' +
+                ", mTokenName='" + mTokenName + '\'' +
+                ", mId=" + mId +
+                ", mFileName='" + mFileName + '\'' +
+                '}';
     }
 }
