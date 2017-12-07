@@ -91,18 +91,17 @@ public class LoginActivity extends Fragment {
                 Log.i(TAG, "Successfully retrieved match list from server; matchList size->" + matchList.size());
 
 
-
                 for (Match m : matchList) {
                     Log.i(TAG, m.toString());
                 }
 
-                //for (Match m : matchList) {
-                //    mDBHelper.addMatch(m);
+                for (Match m : matchList) {
+                    mDBHelper.addMatch(m);
 
-                //    for (MatchPlayer mp : m.getMatchPlayerList()) {
-                //        mDBHelper.addPlayer(mp);
-                //    }
-                //}
+                    for (MatchPlayer mp : m.getMatchPlayerList()) {
+                        mDBHelper.addPlayer(mp);
+                    }
+                }
 
                 Toast.makeText(getActivity(), "Refresh successful", Toast.LENGTH_SHORT).show();
             }

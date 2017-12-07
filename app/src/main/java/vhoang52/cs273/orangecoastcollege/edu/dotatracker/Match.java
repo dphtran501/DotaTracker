@@ -20,7 +20,7 @@ public class Match implements Parcelable
 {
     private long mMatchID;
     private long mMatchSeqNum;
-    private List<MatchPlayer> mMatchPlayerList;
+    private List<MatchPlayer> mMatchDetailPlayerList;
     private boolean mRadiantWin;
     private long mStartTime;
     private int mDuration;
@@ -70,7 +70,7 @@ public class Match implements Parcelable
     {
         mMatchID = matchID;
         mMatchSeqNum = matchSeqNum;
-        mMatchPlayerList = new ArrayList<>(matchPlayerList);    // defensive copy
+        mMatchDetailPlayerList = new ArrayList<>(matchPlayerList);    // defensive copy
         mRadiantWin = radiantWin;
         mStartTime = startTime;
         mDuration = duration;
@@ -93,7 +93,7 @@ public class Match implements Parcelable
     {
         mMatchID = matchID;
         mMatchSeqNum = matchSeqNum;
-        mMatchPlayerList = new ArrayList<>();
+        mMatchDetailPlayerList = new ArrayList<>();
         mRadiantWin = radiantWin;
         mStartTime = startTime;
         mDuration = duration;
@@ -110,8 +110,8 @@ public class Match implements Parcelable
         // ORDER MATTERS!
         mMatchID = parcel.readLong();
         mMatchSeqNum = parcel.readLong();
-        mMatchPlayerList = new ArrayList<>();
-        parcel.readTypedList(mMatchPlayerList, MatchPlayer.CREATOR);
+        mMatchDetailPlayerList = new ArrayList<>();
+        parcel.readTypedList(mMatchDetailPlayerList, MatchPlayer.CREATOR);
         mRadiantWin = parcel.readInt() == 1;
         mStartTime = parcel.readLong();
         mDuration = parcel.readInt();
@@ -175,7 +175,7 @@ public class Match implements Parcelable
      */
     public List<MatchPlayer> getMatchPlayerList()
     {
-        return mMatchPlayerList;               // defensive copy // not sure if this is working for us
+        return mMatchDetailPlayerList;               // defensive copy // not sure if this is working for us
     }
 
     /**
@@ -185,7 +185,7 @@ public class Match implements Parcelable
      */
     public void setMatchPlayerList(List<MatchPlayer> matchPlayerList)
     {
-        mMatchPlayerList = new ArrayList<>(matchPlayerList);    // defensive copy
+        mMatchDetailPlayerList = new ArrayList<>(matchPlayerList);    // defensive copy
     }
 
     /**
@@ -238,7 +238,7 @@ public class Match implements Parcelable
     public int getRadiantScore()
     {
         int score = 0;
-        for (MatchPlayer matchPlayer : mMatchPlayerList)
+        for (MatchPlayer matchPlayer : mMatchDetailPlayerList)
             if (!matchPlayer.isDire()) score += matchPlayer.getKills();
 
         return score;
@@ -252,7 +252,7 @@ public class Match implements Parcelable
     public int getDireScore()
     {
         int score = 0;
-        for (MatchPlayer matchPlayer : mMatchPlayerList)
+        for (MatchPlayer matchPlayer : mMatchDetailPlayerList)
             if (matchPlayer.isDire()) score += matchPlayer.getKills();
 
         return score;
@@ -280,7 +280,7 @@ public class Match implements Parcelable
     {
         parcel.writeLong(mMatchID);
         parcel.writeLong(mMatchSeqNum);
-        parcel.writeTypedList(mMatchPlayerList);
+        parcel.writeTypedList(mMatchDetailPlayerList);
         parcel.writeInt(mRadiantWin ? 1 : 0);
         parcel.writeLong(mStartTime);
         parcel.writeInt(mDuration);
@@ -292,7 +292,7 @@ public class Match implements Parcelable
         return "Match{" +
                 "mMatchID=" + mMatchID +
                 ", mMatchSeqNum=" + mMatchSeqNum +
-                ", mMatchPlayerList=" + mMatchPlayerList +
+                ", mMatchPlayerList=" + mMatchDetailPlayerList +
                 ", mRadiantWin=" + mRadiantWin +
                 ", mStartTime=" + mStartTime +
                 ", mDuration=" + mDuration +

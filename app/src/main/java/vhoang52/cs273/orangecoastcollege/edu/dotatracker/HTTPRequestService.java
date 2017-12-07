@@ -143,9 +143,9 @@ public class HTTPRequestService
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                List<Match> tempList = gson.fromJson(new String(responseBody), new TypeToken<List<Match>>() {}.getType());
-
+                List<Match> tempList = gson.fromJson(new String(responseBody), new TypeToken<List<Match>>(){}.getType());
                 mService.setmMatchesList(tempList);
+
                 Log.i(TAG, "Successfully retrieved match list from server; match list size->" + tempList.size());
                 callback.onSuccess();
             }

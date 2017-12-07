@@ -19,7 +19,7 @@ public class MatchPlayer implements Parcelable
     private long mAccountId;
     private int mPlayerSlot;
     private int mHeroId;
-    private int[] mItems;
+    //private int[] mItems;
     private int mKills;
     private int mDeaths;
     private int mAssists;
