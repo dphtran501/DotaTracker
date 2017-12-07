@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 
 public class MostPlayedHeroesListAdapter extends ArrayAdapter {
 
+    private static final String TAG = "MostPlayedHeroesListAdr";
     private Context mContext;
     private int mResourceID;
     private List<Hero> mHeroList = new ArrayList<>();
@@ -66,8 +67,14 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
         heroNameTextView.setText(selectedHero.getHeroName());
 
         //TODO: Add statistic data
-        int gamesPlayed = mHeroHashMap.get(selectedHero)[0];
-        int gamesWon = mHeroHashMap.get(selectedHero)[1];
+        int[] arr = mHeroHashMap.get(selectedHero);
+        int gamesPlayed = 100;
+        int gamesWon = 100;
+        if(arr == null) Log.e(TAG, "getView: NULL ARRAY" + selectedHero);
+        else {
+           gamesPlayed = arr[0];
+           gamesWon = arr[1];
+        }
 
         NumberFormat df = DecimalFormat.getPercentInstance();
         df.setMaximumFractionDigits(1);
