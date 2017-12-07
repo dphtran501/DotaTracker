@@ -132,8 +132,7 @@ public class MatchesOverviewActivity extends Fragment {
 
         matchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-            {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 LinearLayout selectedItem = (LinearLayout) view;
                 Match selectedMatch = (Match) selectedItem.getTag(R.id.match_tag);
 

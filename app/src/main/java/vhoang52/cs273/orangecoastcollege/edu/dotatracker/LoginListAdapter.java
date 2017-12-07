@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by vincenthoang on 12/7/17.
+ * Adapts a listview for the user to quickly switch between saved users
  */
 
 public class LoginListAdapter extends ArrayAdapter<User> {
@@ -38,12 +38,23 @@ public class LoginListAdapter extends ArrayAdapter<User> {
         mUserList = objects;
     }
 
+    /**
+     * Viewholder static class used to smooth out scrolling instead of recreating objects when they re-enter view
+     */
     static class ViewHolder {
         LinearLayout listItemLinearLayout;
         TextView userNameTextView;
         TextView steamIdTextView;
     }
 
+    /**
+     * Returns an adapted view to the user
+     *
+     * @param position    position of the item in the list
+     * @param convertView the view to adapt and return with converted values
+     * @param parent      container view
+     * @return converted view
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -60,7 +71,6 @@ public class LoginListAdapter extends ArrayAdapter<User> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag(R.id.viewholder_tag);
         }
-
         User selectedUser = mUserList.get(position);
 
         viewHolder.userNameTextView.setText(selectedUser.getPersonaName());
@@ -68,6 +78,7 @@ public class LoginListAdapter extends ArrayAdapter<User> {
         viewHolder.listItemLinearLayout.setTag(R.id.login_user_tag, selectedUser);
 
         convertView.setTag(selectedUser);
+
         return convertView;
     }
 }

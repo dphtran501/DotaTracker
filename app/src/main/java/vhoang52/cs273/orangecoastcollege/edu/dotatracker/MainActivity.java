@@ -13,11 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+/**
+ * MainActivity
+ *
+ * This application shows a recap of the user's latest matches. It will retrieve and display matches in batches of 25 their most recent matches.
+ * Basic stat calculations will also be provided to the user
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    TabLayout mTabs;
-    ViewPager mViewPager;
-    MainActivityPagerAdapter mMainActivityPagerAdapter;
+    private TabLayout mTabs;
+    private ViewPager mViewPager;
+    private MainActivityPagerAdapter mMainActivityPagerAdapter;
     private HTTPRequestService mService;
     private DBHelper mDBHelper;
     private long startMillis;
@@ -26,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
     private long mCurrentUserId;
     private User mCurrentUser;
 
+    /**
+     * URI loader from resource id.
+     * @param context The origin of the method call
+     * @param resID the resource to be retrieved
+     * @return a formatted Uri for the resource id
+     */
     public static Uri getUriFromResource(Context context, int resID) {
         Resources res = context.getResources();
         String uri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
@@ -35,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         return Uri.parse(uri);
     }
 
+    /**
+     * Initializes the application, it's services and singletons, views (viewpager and tabs).
+     *
+     * @param savedInstanceState the saved instance state, if exists and on resume from a previously open instance
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         checkCurrentUser();
-
-
 
         mTabs = (TabLayout) findViewById(R.id.tabLayout);
         mTabs.setupWithViewPager(mViewPager);
@@ -116,6 +131,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * How is this a secret if it's public!?!?!?
+     *
+     * Opens a secret menu if the view is tapped 5 times quickly.
+     * @param view the attached view
+     */
     public void secretTap(View view) {
         long time = System.currentTimeMillis();
 

@@ -18,26 +18,39 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 public class LoginActivity extends Fragment {
+    private static final String TAG = "LoginActivityFragment";
 
-    EditText mSteamIdEditText;
-    Button mRegisterButton;
-    Button mRefreshButton;
-    ListView mUserListView;
+    private EditText mSteamIdEditText;
+    private Button mRegisterButton;
+    private Button mRefreshButton;
+    private ListView mUserListView;
 
-    HTTPRequestService mService;
-    DBHelper mDBHelper;
+    private HTTPRequestService mService;
+    private DBHelper mDBHelper;
 
-    LoginListAdapter mLoginListAdapter;
-    List<User> mUserList;
+    private LoginListAdapter mLoginListAdapter;
+    private List<User> mUserList;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * This is optional, and non-graphical fragments can return null (which
+     * is the default implementation).  This will be called between
+     * {@link #onCreate(Bundle)} and {@link #onActivityCreated(Bundle)}.
+     * <p>
+     * <p>If you return a View from here, you will later be called in
+     * {@link #onDestroyView} when the view is being released.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate
+     *                           any views in the fragment,
+     * @param container          If non-null, this is the parent view that the fragment's
+     *                           UI should be attached to.  The fragment should not add the view itself,
+     *                           but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     *                           from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -131,6 +144,8 @@ public class LoginActivity extends Fragment {
                 }
 
                 Toast.makeText(getActivity(), "Refresh successful", Toast.LENGTH_SHORT).show();
+
+                mLoginListAdapter.notifyDataSetChanged();
             }
 
             @Override
