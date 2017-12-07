@@ -192,6 +192,9 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         playerImageURI = getURIFromResource(this, R.drawable.steam_icon);
         playerImageView.setImageURI(playerImageURI);
         */
+        if (HTTPRequestService.isNetworkAvailable(getActivity())) {
+            HTTPRequestService.loadProfileImage(user.getAvatarUrl(), playerImageView);
+        }
         playerNameTextView.setText(user.getPersonaName());
         setOverallStatsWidgets();
         setAverageStatsWidgets();

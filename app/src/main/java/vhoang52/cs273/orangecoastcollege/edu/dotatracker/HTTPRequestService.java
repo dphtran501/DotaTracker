@@ -1,9 +1,14 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.ion.Ion;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -218,6 +223,17 @@ public class HTTPRequestService {
                 callback.onFailure();
             }
         });
+    }
+
+    public static void loadProfileImage(String url, ImageView imageView) {
+        Ion.with(imageView).load(url);
+        Log.i(TAG, "Loading avatar image->" + url);
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return (activeNetworkInfo != null);
     }
 
 }

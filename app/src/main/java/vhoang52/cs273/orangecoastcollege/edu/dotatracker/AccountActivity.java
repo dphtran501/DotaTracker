@@ -7,8 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.koushikdutta.ion.Ion;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
@@ -46,6 +50,9 @@ public class AccountActivity extends Fragment implements UpdateableFragment  {
     public void update() {
         mUser = mService.getmCurrentUser();
         userName.setText(mUser.getPersonaName());
+        if (HTTPRequestService.isNetworkAvailable(getActivity())) {
+            HTTPRequestService.loadProfileImage(mUser.getAvatarUrl(), profilePicture);
+        }
     }
 
     @Nullable
