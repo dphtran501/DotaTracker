@@ -35,8 +35,6 @@ public class AccountActivity extends Fragment {
     private double mWins = 0;
     private double mGamesPlayed = 0;
 
-    private ViewGroup mContainer;
-
 
     @Nullable
     @Override

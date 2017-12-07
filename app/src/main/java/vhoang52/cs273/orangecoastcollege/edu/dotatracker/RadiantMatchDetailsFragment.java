@@ -22,8 +22,7 @@ import java.util.List;
  * @version 1.0
  * @since November 28, 2017
  */
-public class RadiantMatchDetailsFragment extends Fragment
-{
+public class RadiantMatchDetailsFragment extends Fragment {
 
     private Match match;
     private List<MatchPlayer> radiantPlayers;
@@ -53,8 +52,7 @@ public class RadiantMatchDetailsFragment extends Fragment
      *                           being previously shut down. Otherwise it is null.
      */
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Retrieve match from MatchDetailsActivity
@@ -88,16 +86,14 @@ public class RadiantMatchDetailsFragment extends Fragment
      */
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_match_team, container, false);
 
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // Hero Image
@@ -191,15 +187,25 @@ public class RadiantMatchDetailsFragment extends Fragment
         player4GTextView = (TextView) getView().findViewById(R.id.player4GoldTextView);
         player5GTextView = (TextView) getView().findViewById(R.id.player5GoldTextView);
 
-        setPlayer1(radiantPlayers.get(0));
-        setPlayer2(radiantPlayers.get(1));
-        setPlayer3(radiantPlayers.get(2));
-        setPlayer4(radiantPlayers.get(3));
-        setPlayer5(radiantPlayers.get(4));
+
+        if (radiantPlayers.size() >= 1) {
+            setPlayer1(radiantPlayers.get(0));
+        }
+        if (radiantPlayers.size() >= 2) {
+            setPlayer2(radiantPlayers.get(1));
+        }
+        if (radiantPlayers.size() >= 3) {
+            setPlayer3(radiantPlayers.get(2));
+        }
+        if (radiantPlayers.size() >= 4) {
+            setPlayer4(radiantPlayers.get(3));
+        }
+        if (radiantPlayers.size() >= 5) {
+            setPlayer5(radiantPlayers.get(4));
+        }
     }
 
-    private void setPlayer1(MatchPlayer player1)
-    {
+    private void setPlayer1(MatchPlayer player1) {
         // TODO: set image view and username properly
         //player1ImageView;
         player1UserNameTextView.setText(String.valueOf(player1.getAccountId()));
@@ -220,8 +226,7 @@ public class RadiantMatchDetailsFragment extends Fragment
         player1KDABar.setSecondaryProgress(player1.getKills() + player1.getDeaths());
     }
 
-    private void setPlayer2(MatchPlayer player2)
-    {
+    private void setPlayer2(MatchPlayer player2) {
         // TODO: set image view and username properly
         //player2ImageView;
         player2UserNameTextView.setText(String.valueOf(player2.getAccountId()));
@@ -242,8 +247,7 @@ public class RadiantMatchDetailsFragment extends Fragment
         player2KDABar.setSecondaryProgress(player2.getKills() + player2.getDeaths());
     }
 
-    private void setPlayer3(MatchPlayer player3)
-    {
+    private void setPlayer3(MatchPlayer player3) {
         // TODO: set image view and username properly
         //player1ImageView;
         player3UserNameTextView.setText(String.valueOf(player3.getAccountId()));
@@ -264,8 +268,7 @@ public class RadiantMatchDetailsFragment extends Fragment
         player3KDABar.setSecondaryProgress(player3.getKills() + player3.getDeaths());
     }
 
-    private void setPlayer4(MatchPlayer player4)
-    {
+    private void setPlayer4(MatchPlayer player4) {
         // TODO: set image view and username properly
         //player1ImageView;
         player4UserNameTextView.setText(String.valueOf(player4.getAccountId()));
@@ -286,8 +289,7 @@ public class RadiantMatchDetailsFragment extends Fragment
         player4KDABar.setSecondaryProgress(player4.getKills() + player4.getDeaths());
     }
 
-    private void setPlayer5(MatchPlayer player5)
-    {
+    private void setPlayer5(MatchPlayer player5) {
         // TODO: set image view and username properly
         //player1ImageView;
         player5UserNameTextView.setText(String.valueOf(player5.getAccountId()));

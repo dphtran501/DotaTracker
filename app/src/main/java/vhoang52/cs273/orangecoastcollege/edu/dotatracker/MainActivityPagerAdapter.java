@@ -69,8 +69,8 @@ public class MainActivityPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
 
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
+   // @Override
+   // public int getItemPosition(Object object) {
+   //     return POSITION_NONE;
+   // }
 }

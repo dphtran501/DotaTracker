@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mMainActivityPagerAdapter = new MainActivityPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mMainActivityPagerAdapter);
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
