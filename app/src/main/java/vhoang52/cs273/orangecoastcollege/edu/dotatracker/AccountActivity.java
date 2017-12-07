@@ -161,8 +161,9 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
 //            Log.i(TAG, "onCreateView: " + hero);
 //        }
 
-        for (Hero hero : sorted.keySet()) {
-            mostPlayedHeroesListView.addView(listAdapter.getView(mMostPlayedHeroes.indexOf(hero), view, mostPlayedHeroesListView));
+        for (Map.Entry<Hero,Double> heroDoubleEntry : entriesSortedByValues(sorted)) {
+
+            mostPlayedHeroesListView.addView(listAdapter.getView(mMostPlayedHeroes.indexOf(heroDoubleEntry.getKey()), view, mostPlayedHeroesListView));
         }
 
 
