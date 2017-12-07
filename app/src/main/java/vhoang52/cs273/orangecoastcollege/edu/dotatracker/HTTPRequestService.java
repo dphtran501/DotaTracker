@@ -1,13 +1,17 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.content.Context;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -226,7 +230,11 @@ public class HTTPRequestService {
     }
 
     public static void loadProfileImage(String url, ImageView imageView) {
-        Ion.with(imageView).load(url);
+        RotateAnimation ra = new RotateAnimation(0.0f,  360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ra.setDuration((long) 1000);
+        ra.setRepeatCount(0);
+
+        Ion.with(imageView).animateLoad(ra).animateIn(ra).load(url);
         Log.i(TAG, "Loading avatar image->" + url);
     }
 

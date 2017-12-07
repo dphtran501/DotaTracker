@@ -83,6 +83,13 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         }
     }
 
+    private void setProfilePicture() {
+        if (HTTPRequestService.isNetworkAvailable(getActivity())) {
+            playerImageView.setImageDrawable(null);
+            HTTPRequestService.loadProfileImage(user.getAvatarUrl(), playerImageView);
+        }
+    }
+
     // TODO: @derek: I didn't want to refactor your code too much. This is duplicated code so maybe you could cut down on it to reduce repetition - vincent
     private void generateView() {
         matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
@@ -113,6 +120,7 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         setAverageStatsWidgets();
         averagesLabelTextView.setText(getString(R.string.average_stats_label, numOfMatchesShown));
         recentMatchesTextView.setText(getString(R.string.recent_matches_label, numOfMatchesShown));
+        setProfilePicture();
     }
 
     @Nullable
@@ -190,9 +198,7 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         playerImageURI = getURIFromResource(this, R.drawable.steam_icon);
         playerImageView.setImageURI(playerImageURI);
         */
-        if (HTTPRequestService.isNetworkAvailable(getActivity())) {
-            HTTPRequestService.loadProfileImage(user.getAvatarUrl(), playerImageView);
-        }
+        setProfilePicture();
         playerNameTextView.setText(user.getPersonaName());
         setOverallStatsWidgets();
         setAverageStatsWidgets();

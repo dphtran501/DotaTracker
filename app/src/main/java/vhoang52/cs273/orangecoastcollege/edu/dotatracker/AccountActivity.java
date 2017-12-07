@@ -1,5 +1,7 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,14 +18,16 @@ import com.koushikdutta.ion.Ion;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AccountActivity extends Fragment implements UpdateableFragment  {
+public class AccountActivity extends Fragment implements UpdateableFragment {
     private static final String TAG = "AccountActivityFragment";
     HTTPRequestService mService;
 
@@ -48,10 +52,31 @@ public class AccountActivity extends Fragment implements UpdateableFragment  {
      */
     @Override
     public void update() {
-        mUser = mService.getmCurrentUser();
-        userName.setText(mUser.getPersonaName());
+
+        if (!mUser.equals(mService.getmCurrentUser())) {
+            mUser = mService.getmCurrentUser();
+
+            userName.setText(mUser.getPersonaName());
+            setProfilePicture();
+
+            // TODO: handle ui updates here
+
+
+        }
+    }
+
+    private void setProfilePicture() {
         if (HTTPRequestService.isNetworkAvailable(getActivity())) {
+            profilePicture.setImageDrawable(null);
             HTTPRequestService.loadProfileImage(mUser.getAvatarUrl(), profilePicture);
+        } else {
+            try {
+                InputStream stream = getActivity().getAssets().open("steam_icon.png");
+                Drawable drawable = Drawable.createFromStream(stream, null);
+                profilePicture.setImageDrawable(drawable);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -66,6 +91,8 @@ public class AccountActivity extends Fragment implements UpdateableFragment  {
         mDBHelper = DBHelper.getInstance(getContext());
 
         profilePicture = view.findViewById(R.id.profilePicture);
+        setProfilePicture();
+
         userName = view.findViewById(R.id.userName);
 
         winRingProgressBar = view.findViewById(R.id.winRingProgressBar);
@@ -74,7 +101,6 @@ public class AccountActivity extends Fragment implements UpdateableFragment  {
         mostPlayedHeroesListView = view.findViewById(R.id.mostPlayedHeroesListView);
 
         userName.setText(mUser.getPersonaName());
-
 
 
 //        Create a list of all the games the user has played in
@@ -119,6 +145,7 @@ public class AccountActivity extends Fragment implements UpdateableFragment  {
         listAdapter = new MostPlayedHeroesListAdapter(view.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
         listAdapter.setHash(heroFrequency);
         mostPlayedHeroesListView.setAdapter(listAdapter);
+
 
         return view;
     }
