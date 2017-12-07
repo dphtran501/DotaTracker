@@ -59,6 +59,9 @@
     <string name="login_steam_id">Input 64 bit Steam ID</string>
     <string name="login_refresh_matches">Refresh</string>
 
+    <item type="id" name="login_viewholder_tag" />
+    <item type="id" name="login_user_tag" />
+
 
     <string name="faction_name">%1$s</string>
 
