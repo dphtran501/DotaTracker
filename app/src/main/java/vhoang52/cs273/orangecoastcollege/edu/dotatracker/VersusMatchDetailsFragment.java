@@ -1,5 +1,6 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -125,11 +126,51 @@ public class VersusMatchDetailsFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_match_versus, container, false);
         return view;
-
-        // TODO: Link to widgets and populate fields
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
 
+        radiantLevelTextView = (TextView) getView().findViewById(R.id.radiantLevelTextView);
+        direLevelTextView = (TextView) getView().findViewById(R.id.direLevelTextView);
+        radiantKillsTextView = (TextView) getView().findViewById(R.id.radiantKillsTextView);
+        direKillsTextView = (TextView) getView().findViewById(R.id.direKillsTextView);
+        radiantDeathsTextView = (TextView) getView().findViewById(R.id.radiantDeathsTextView);
+        direDeathsTextView = (TextView) getView().findViewById(R.id.direDeathsTextView);
+        radiantAssistsTextView = (TextView) getView().findViewById(R.id.radiantAssistsTextView);
+        direAssistsTextView = (TextView) getView().findViewById(R.id.direAssistsTextView);
+        radiantGPMTextView = (TextView) getView().findViewById(R.id.radiantGPMTextView);
+        direGPMTextView = (TextView) getView().findViewById(R.id.direGPMTextView);
+        radiantXPMTextView = (TextView) getView().findViewById(R.id.radiantXPMTextView);
+        direXPMTextView = (TextView) getView().findViewById(R.id.direXPMTextView);
+        radiantLHTextView = (TextView) getView().findViewById(R.id.radiantLastHitsTextView);
+        direLHTextView = (TextView) getView().findViewById(R.id.direLastHitsTextView);
+        radiantDNTextView = (TextView) getView().findViewById(R.id.radiantDeniesTextView);
+        direDNTextView = (TextView) getView().findViewById(R.id.direDeniesTextView);
+        radiantHDTextView = (TextView) getView().findViewById(R.id.radiantHeroDMGTextView);
+        direHDTextView = (TextView) getView().findViewById(R.id.direHeroDMGTextView);
+        radiantHHTextView = (TextView) getView().findViewById(R.id.radiantHeroHealTextView);
+        direHHTextView = (TextView) getView().findViewById(R.id.direHeroHealTextView);
+        radiantTDTextView = (TextView) getView().findViewById(R.id.radiantTowerDMGTextView);
+        direTDTextView = (TextView) getView().findViewById(R.id.direTowerDMGTextView);
+        radiantGTextView = (TextView) getView().findViewById(R.id.radiantGoldTextView);
+        direGTextView = (TextView) getView().findViewById(R.id.direGoldTextView);
+
+        setStatWidget(radiantTotalLevel, radiantLevelTextView, direTotalLevel, direLevelTextView);
+        setStatWidget(radiantTotalKills, radiantKillsTextView, direTotalKills, direKillsTextView);
+        setStatWidget(radiantTotalDeaths, radiantDeathsTextView, direTotalDeaths, direDeathsTextView);
+        setStatWidget(radiantTotalAssists, radiantAssistsTextView, direTotalAssists, direAssistsTextView);
+        setStatWidget(radiantTotalGPM, radiantGPMTextView, direTotalGPM, direGPMTextView);
+        setStatWidget(radiantTotalXPM, radiantXPMTextView, direTotalXPM, direXPMTextView);
+        setStatWidget(radiantTotalLH, radiantLHTextView, direTotalLH, direLHTextView);
+        setStatWidget(radiantTotalDN, radiantDNTextView, direTotalDN, direDNTextView);
+        setStatWidget(radiantTotalHD, radiantHDTextView, direTotalHD, direHDTextView);
+        setStatWidget(radiantTotalHH, radiantHHTextView, direTotalHH, direHHTextView);
+        setStatWidget(radiantTotalTD, radiantTDTextView, direTotalTD, direTDTextView);
+        setStatWidget(radiantTotalG, radiantGTextView, direTotalG, direGTextView);
+    }
 
     // Convert value to String for TextViews (e.g. 13400 to 13.4k)
     private String statToString(int statValue) {
@@ -141,5 +182,14 @@ public class VersusMatchDetailsFragment extends Fragment
         } else textViewString = String.valueOf(statValue);
 
         return textViewString;
+    }
+
+    // Bold the hire stat and set the stat in widgets
+    private void setStatWidget(int radiantStat, TextView radiantView, int direStat, TextView direView)
+    {
+        radiantView.setText(statToString(radiantStat));
+        direView.setText(statToString(direStat));
+        if (radiantStat > direStat) radiantView.setTypeface(null, Typeface.BOLD);
+        else direView.setTypeface(null, Typeface.BOLD);
     }
 }
