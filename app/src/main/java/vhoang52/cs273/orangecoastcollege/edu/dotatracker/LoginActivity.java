@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -69,7 +70,8 @@ public class LoginActivity extends Fragment {
         mUserListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                User user = (User) view.getTag();
+                LinearLayout selectedItem = (LinearLayout) view;
+                User user = (User) selectedItem.getTag(R.id.login_user_tag);
                 mService.setmCurrentUserId(user.getSteamId32());
                 mService.setmCurrentUser(user);
                 Toast.makeText(getActivity(), "User profile set to " + user.getPersonaName(), Toast.LENGTH_SHORT).show();

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -125,10 +126,10 @@ public class MatchesOverviewActivity extends Fragment {
         //Log.i("match count: ", String.valueOf(db.getAllMatches().size()));
         //Log.i("player count: ", String.valueOf(db.getAllMatchPlayers().size()));
 
-        List<Long> testList = db.getPlayerMatchIDs(114611);
-        for (Long i : testList)
-            Log.i("Match ID: ", String.valueOf(i));
-        Log.i("Match ID count: ", String.valueOf(testList.size()));
+        // List<Long> testList = db.getPlayerMatchIDs(114611);
+        // for (Long i : testList)
+        //     Log.i("Match ID: ", String.valueOf(i));
+        // Log.i("Match ID count: ", String.valueOf(testList.size()));
 
         matchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

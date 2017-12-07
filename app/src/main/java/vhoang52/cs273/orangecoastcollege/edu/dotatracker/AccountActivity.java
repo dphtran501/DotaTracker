@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AccountActivity extends Fragment {
+public class AccountActivity extends Fragment implements UpdateableFragment  {
     private static final String TAG = "AccountActivityFragment";
     HTTPRequestService mService;
 
@@ -38,15 +38,25 @@ public class AccountActivity extends Fragment {
     private double mWins = 0;
     private double mGamesPlayed = 0;
 
+    /**
+     * Called whenever the adapter is notified.
+     * Updates to the fragment views will occur here
+     */
+    @Override
+    public void update() {
+        mUser = mService.getmCurrentUser();
+        userName.setText(mUser.getPersonaName());
+    }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 //        TODO: populate with actual heroes
         View view = inflater.inflate(R.layout.activity_seve_account, container, false);
 
         mService = HTTPRequestService.getInstance();
         mUser = mService.getmCurrentUser();
+        Log.e(TAG, "!!!!!!!!! mUser->" + mUser.toString());
         mDBHelper = DBHelper.getInstance(getContext());
 
         profilePicture = view.findViewById(R.id.profilePicture);
