@@ -4,6 +4,7 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -74,6 +75,8 @@ public class LoginActivity extends Fragment {
                 User user = (User) selectedItem.getTag(R.id.login_user_tag);
                 mService.setmCurrentUserId(user.getSteamId32());
                 mService.setmCurrentUser(user);
+
+                modifyUserIdSharedPrefs(user.getSteamId32());
                 Toast.makeText(getActivity(), "User profile set to " + user.getPersonaName(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -105,11 +108,7 @@ public class LoginActivity extends Fragment {
             HTTPRequestService.postUserID(steamId, new HTTPRequestService.UserRegistrationCallback() {
                 @Override
                 public void onSuccess() {
-                    SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("CurrentUserId", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    String currentUserId = String.valueOf(steamId);
-                    editor.putString("CurrentUserId", currentUserId);
-                    editor.commit();
+                    modifyUserIdSharedPrefs(steamId);
                     Toast.makeText(getActivity(), "User successfully registered", Toast.LENGTH_SHORT).show();
                 }
 
@@ -121,6 +120,14 @@ public class LoginActivity extends Fragment {
         } else {
             Toast.makeText(getActivity(), "Please enter a Steam ID", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void modifyUserIdSharedPrefs(long steamId) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String currentUserId = String.valueOf(steamId);
+        editor.putString("CurrentUserId", currentUserId);
+        editor.apply();
     }
 
 

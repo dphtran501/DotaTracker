@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         mService = HTTPRequestService.getInstance();
 
 
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("CurrentUserId", Context.MODE_PRIVATE);
-        mCurrentUserId = Long.parseLong(getResources().getString(R.string.currentUserId));
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mCurrentUserId = Long.parseLong(sharedPreferences.getString("CurrentUserId", "114611"));
         Log.i(TAG, "UserID from sharedPreferences->" + mCurrentUserId);
         mService.setmCurrentUserId(mCurrentUserId);
 

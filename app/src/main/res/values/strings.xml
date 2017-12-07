@@ -70,4 +70,6 @@
     <string name="title_activity_fluff">FluffActivity</string>
     <string name="title_activity_maps">Map</string>
 
+    <string name="CurrentUserId">114611</string>
+
 </resources>

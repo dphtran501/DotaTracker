@@ -117,7 +117,7 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
         HashMap<Integer, int[]> heroFrequency = new HashMap<>();// <Hero, {times played, wins}>
         for (MatchPlayer matchPlayer : matches) {
             int heroID = matchPlayer.getHeroId();
-            Log.i(TAG, "onCreateView: " + heroID);
+            //Log.i(TAG, "onCreateView: " + heroID);
             Match match = mDBHelper.getMatch(matchPlayer.getMatchId());
             int[] value = {1, 0};
 //            Check to see if hero has already been played

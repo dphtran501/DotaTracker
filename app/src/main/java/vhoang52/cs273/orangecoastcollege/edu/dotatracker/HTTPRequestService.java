@@ -1,6 +1,7 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.ConnectivityManager;
@@ -128,7 +129,6 @@ public class HTTPRequestService {
         Log.i(TAG, "POST url->" + url);
 
         AsyncHttpClient client = new AsyncHttpClient();
-        final List<Integer> whyAmIDoingItThisWay = new ArrayList<>();
         client.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
