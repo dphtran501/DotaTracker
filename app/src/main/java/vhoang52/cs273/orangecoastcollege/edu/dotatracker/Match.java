@@ -175,7 +175,7 @@ public class Match implements Parcelable
      */
     public List<MatchPlayer> getMatchPlayerList()
     {
-        return new ArrayList<>(mMatchPlayerList);               // defensive copy
+        return mMatchPlayerList;               // defensive copy // not sure if this is working for us
     }
 
     /**
@@ -285,5 +285,18 @@ public class Match implements Parcelable
         parcel.writeLong(mStartTime);
         parcel.writeInt(mDuration);
         parcel.writeInt(mGameMode);
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "mMatchID=" + mMatchID +
+                ", mMatchSeqNum=" + mMatchSeqNum +
+                ", mMatchPlayerList=" + mMatchPlayerList +
+                ", mRadiantWin=" + mRadiantWin +
+                ", mStartTime=" + mStartTime +
+                ", mDuration=" + mDuration +
+                ", mGameMode=" + mGameMode +
+                '}';
     }
 }

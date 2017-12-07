@@ -19,11 +19,11 @@ public class MatchPlayer implements Parcelable
     private long mAccountId;
     private int mPlayerSlot;
     private int mHeroId;
-    //private int[] mItems;
+    private int[] mItems;
     private int mKills;
     private int mDeaths;
     private int mAssists;
-    //private int mLeaverStatus;      // 0 - NONE - finished match, no abandon.
+    private int mLeaverStatus;      // 0 - NONE - finished match, no abandon.
     // 1 - DISCONNECTED - player DC, no abandon.
     // 2 - DISCONNECTED_TOO_LONG - player DC > 5min, abandoned.
     // 3 - ABANDONED - player DC, clicked leave, abandoned.
@@ -35,7 +35,7 @@ public class MatchPlayer implements Parcelable
     private int mDenies;
     private int mGPM; // gold per minute
     private int mXPM; // xp per minute
-    //private int mGoldSpent;
+    private int mGoldSpent;
     private int mHeroDamage;
     private int mTowerDamage;
     private int mHeroHealing;
@@ -372,5 +372,27 @@ public class MatchPlayer implements Parcelable
         parcel.writeInt(mTowerDamage);
         parcel.writeInt(mHeroHealing);
         parcel.writeInt(mLevel);
+    }
+
+    @Override
+    public String toString() {
+        return "MatchPlayer{" +
+                "mMatchId=" + mMatchId +
+                ", mAccountId=" + mAccountId +
+                ", mPlayerSlot=" + mPlayerSlot +
+                ", mHeroId=" + mHeroId +
+                ", mKills=" + mKills +
+                ", mDeaths=" + mDeaths +
+                ", mAssists=" + mAssists +
+                ", mGold=" + mGold +
+                ", mLastHits=" + mLastHits +
+                ", mDenies=" + mDenies +
+                ", mGPM=" + mGPM +
+                ", mXPM=" + mXPM +
+                ", mHeroDamage=" + mHeroDamage +
+                ", mTowerDamage=" + mTowerDamage +
+                ", mHeroHealing=" + mHeroHealing +
+                ", mLevel=" + mLevel +
+                '}';
     }
 }

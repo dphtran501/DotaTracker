@@ -116,28 +116,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "mMainActivityPagerAdapter notified");
     }
 
-    private void queryMatchesForCurrentPlayer() {
-        HTTPRequestService.getMatchDetails(mService.getmCurrentUserId(), new HTTPRequestService.MatchListCallback() {
-            @Override
-            public void onSuccess() {
-                List<Match> matchList = mService.getmMatchesList();
-                Log.i(TAG, "Successfully retrieved match list from server; matchList size->" + matchList.size());
-
-                for (Match m : matchList) {
-                    mDBHelper.addMatch(m);
-
-                    for (MatchPlayer mp : m.getMatchPlayerList()) {
-                        mDBHelper.addPlayer(mp);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure() {
-
-            }
-        });
-    }
 
     public void tapProfilePicture(View view) {
         long time = System.currentTimeMillis();

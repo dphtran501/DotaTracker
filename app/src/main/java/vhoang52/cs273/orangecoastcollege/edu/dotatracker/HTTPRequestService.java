@@ -3,11 +3,18 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,6 +144,7 @@ public class HTTPRequestService
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 List<Match> tempList = gson.fromJson(new String(responseBody), new TypeToken<List<Match>>() {}.getType());
+
                 mService.setmMatchesList(tempList);
                 Log.i(TAG, "Successfully retrieved match list from server; match list size->" + tempList.size());
                 callback.onSuccess();
@@ -148,6 +156,19 @@ public class HTTPRequestService
                 callback.onFailure();
             }
         });
+    }
+
+    private class MatchDeserializer implements JsonDeserializer<List<Match>> {
+        @Override
+        public List<Match> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            final JsonObject jsonObject = json.getAsJsonObject();
+
+            List<MatchPlayer> matchPlayerList = gson.fromJson(jsonObject, new TypeToken<List<MatchPlayer>>() {}.getType());
+            //JsonParser jsonParser = new JsonParser().parse("123");
+            //List<Match> matchList =
+
+            return null;
+        }
     }
 
 }

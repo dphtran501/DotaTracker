@@ -54,6 +54,7 @@
     <string name="login_button">Log In!</string>
     <string name="login_sign_up">Register</string>
     <string name="login_steam_id">Input 64 bit Steam ID</string>
+    <string name="login_refresh_matches">Refresh</string>
 
 
     <string name="faction_name">%1$s</string>
