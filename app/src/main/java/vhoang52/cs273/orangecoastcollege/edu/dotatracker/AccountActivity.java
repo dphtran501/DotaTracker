@@ -56,7 +56,6 @@ public class AccountActivity extends Fragment implements UpdateableFragment  {
 
         mService = HTTPRequestService.getInstance();
         mUser = mService.getmCurrentUser();
-        Log.e(TAG, "!!!!!!!!! mUser->" + mUser.toString());
         mDBHelper = DBHelper.getInstance(getContext());
 
         profilePicture = view.findViewById(R.id.profilePicture);

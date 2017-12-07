@@ -35,7 +35,7 @@ import java.util.List;
  * @version 1.0
  * @since November 27, 2017
  */
-public class MatchesOverviewActivity extends Fragment {
+public class MatchesOverviewActivity extends Fragment implements UpdateableFragment {
     // User and related matches lists
     private User user;
     private List<Long> matchIDList;
@@ -74,6 +74,48 @@ public class MatchesOverviewActivity extends Fragment {
     private MatchListAdapter matchListAdapter;
     private ListView matchListView;
 
+    /**
+     * Dummy method used to link instances of UpdateableFragment
+     */
+    @Override
+    public void update() {
+        if (!user.equals(mRequestService.getmCurrentUser())) {
+            user = mRequestService.getmCurrentUser();
+            generateView();
+        }
+    }
+
+    // TODO: @derek: I didn't want to refactor your code too much. This is duplicated code so maybe you could cut down on it to reduce repetition - vincent
+    private void generateView() {
+        matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
+        recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
+                matchIDList.size());
+        recentMatchList = new ArrayList<>();
+        recentMatchStatsList = new ArrayList<>();
+        for (Long matchID : recentMatchIDList) {
+            recentMatchList.add(getMatch(matchID));
+            recentMatchStatsList.add(db.getMatchPlayer(matchID, user.getSteamId32()));
+        }
+
+        matchListAdapter = new MatchListAdapter(getActivity(), R.layout.match_list_item, recentMatchStatsList);
+        matchListView.setAdapter(matchListAdapter);
+        matchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                LinearLayout selectedItem = (LinearLayout) view;
+                Match selectedMatch = (Match) selectedItem.getTag(R.id.match_tag);
+
+                Intent detailsIntent = new Intent(getActivity(), MatchDetailsActivity.class);
+                detailsIntent.putExtra("SelectedMatch", selectedMatch);
+                startActivity(detailsIntent);
+            }
+        });
+        playerNameTextView.setText(user.getPersonaName());
+        setOverallStatsWidgets();
+        setAverageStatsWidgets();
+        averagesLabelTextView.setText(getString(R.string.average_stats_label, numOfMatchesShown));
+        recentMatchesTextView.setText(getString(R.string.recent_matches_label, numOfMatchesShown));
+    }
 
     @Nullable
     @Override
