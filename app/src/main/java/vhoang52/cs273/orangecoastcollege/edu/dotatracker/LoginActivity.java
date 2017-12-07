@@ -58,6 +58,9 @@ public class LoginActivity extends Fragment {
         mService = HTTPRequestService.getInstance();
         mDBHelper = DBHelper.getInstance(getActivity());
 
+        mRefreshButton = (Button) view.findViewById(R.id.refreshButton);
+        mRegisterButton = (Button) view.findViewById(R.id.submitButton);
+        mSteamIdEditText = (EditText) view.findViewById(R.id.steamIDEditText);
         mUserListView = (ListView) view.findViewById(R.id.savedUsersListView);
         mUserList = mDBHelper.getAllUsers();
         mLoginListAdapter = new LoginListAdapter(getActivity(), R.layout.login_list_item, mUserList);
@@ -73,8 +76,6 @@ public class LoginActivity extends Fragment {
             }
         });
 
-        mSteamIdEditText = (EditText) view.findViewById(R.id.steamIDEditText);
-        mRegisterButton = (Button) view.findViewById(R.id.submitButton);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +83,7 @@ public class LoginActivity extends Fragment {
             }
         });
 
-        mRefreshButton = (Button) view.findViewById(R.id.refreshButton);
+
         mRefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

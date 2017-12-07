@@ -61,23 +61,28 @@ public class LoginListAdapter extends ArrayAdapter<User> {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         ViewHolder viewHolder;
+
+
+
         if (convertView == null) {
             convertView = inflater.inflate(mResourceId, null);
             viewHolder = new ViewHolder();
-            viewHolder.listItemLinearLayout = (LinearLayout) convertView.findViewById(R.id.login_list_item_layout);
-            viewHolder.userNameTextView = (TextView) convertView.findViewById(R.id.list_item_username);
-            viewHolder.steamIdTextView = (TextView) convertView.findViewById(R.id.list_item_steam_id);
             convertView.setTag(R.id.login_viewholder_tag);
         } else {
             viewHolder = (ViewHolder) convertView.getTag(R.id.viewholder_tag);
         }
+
+        viewHolder.listItemLinearLayout = (LinearLayout) convertView.findViewById(R.id.login_list_item_layout);
+        viewHolder.userNameTextView = (TextView) convertView.findViewById(R.id.list_item_username);
+        viewHolder.steamIdTextView = (TextView) convertView.findViewById(R.id.list_item_steam_id);
+
         User selectedUser = mUserList.get(position);
+        convertView.setTag(selectedUser);
 
         viewHolder.userNameTextView.setText(selectedUser.getPersonaName());
         viewHolder.steamIdTextView.setText(String.valueOf(selectedUser.getSteamId32()));
         viewHolder.listItemLinearLayout.setTag(R.id.login_user_tag, selectedUser);
 
-        convertView.setTag(selectedUser);
 
         return convertView;
     }
