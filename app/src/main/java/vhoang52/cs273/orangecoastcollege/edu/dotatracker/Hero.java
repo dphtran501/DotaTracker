@@ -59,9 +59,29 @@ public class Hero {
     }
 
     public String getFileName() {
-        return "npc_dota_" + mTokenName + ".png";
+        return mTokenName + ".png";
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Hero hero = (Hero) o;
+
+        if (mId != hero.mId) return false;
+        if (!mLocalizedName.equals(hero.mLocalizedName)) return false;
+        return mTokenName.equals(hero.mTokenName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mLocalizedName.hashCode();
+        result = 31 * result + mTokenName.hashCode();
+        result = 31 * result + mId;
+        return result;
+    }
 
     @Override
     public String toString() {
