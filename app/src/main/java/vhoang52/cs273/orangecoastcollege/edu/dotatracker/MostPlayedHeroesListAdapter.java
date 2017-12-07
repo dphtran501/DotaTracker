@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,8 +66,14 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
         heroNameTextView.setText(selectedHero.getHeroName());
 
         //TODO: Add statistic data
-        numGamesWonTextView.setText(mContext.getString(R.string.hero_games));
-        percentGamesWonTextView.setText(mContext.getString(R.string.hero_win_percentage));
+        int gamesPlayed = mHeroHashMap.get(selectedHero)[0];
+        int gamesWon = mHeroHashMap.get(selectedHero)[1];
+
+        NumberFormat df = DecimalFormat.getPercentInstance();
+        df.setMaximumFractionDigits(1);
+
+        numGamesWonTextView.setText(mContext.getString(R.string.hero_games, gamesPlayed));
+        percentGamesWonTextView.setText(df.format(gamesWon/gamesPlayed));
 
         return view;
     }
