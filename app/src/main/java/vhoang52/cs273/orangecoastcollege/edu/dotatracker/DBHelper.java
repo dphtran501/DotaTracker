@@ -87,8 +87,21 @@ public class DBHelper extends SQLiteOpenHelper
 //        db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES,
 //                MATCH_PLAYERS_FOREIGN_KEYS, MATCH_PLAYERS_PARENT_TABLES, MATCH_PLAYERS_CANDIDATE_KEYS,
 //                MATCH_PLAYERS_CASCADE_DELETE));
-        db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES));
+        db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES, " UNIQUE (match_id, steam_id"));
     }
+
+    @NonNull
+    private String createTable(String tableName, String[] fieldNames, String[] fieldTypes, String constraint)
+    {
+        StringBuilder createSQL = new StringBuilder("CREATE TABLE ");
+        createSQL.append(tableName).append("(");
+        for (int i = 0; i < fieldNames.length; i++)
+            createSQL.append(fieldNames[i]).append(" ")
+                    .append(fieldTypes[i]).append((i < fieldNames.length - 1) ? "," : ")");
+
+        return createSQL.toString();
+    }
+
 
     @NonNull
     private String createTable(String tableName, String[] fieldNames, String[] fieldTypes)

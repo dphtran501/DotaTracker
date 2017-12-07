@@ -29,14 +29,11 @@ public class AccountActivity extends Fragment {
     private MostPlayedHeroesListAdapter listAdapter;
     private List<Hero> mMMostPlayedHerbs = new ArrayList<>();
 
-    private ViewGroup mContainer;
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        TODO: populate with actual heros
-        //mMMostPlayedHerbs.add(new Hero("Alchemist", 73));
+        //  TODO: populate with actual heros
         View view = inflater.inflate(R.layout.activity_seve_account, container, false);
 
         mService = HTTPRequestService.getInstance();

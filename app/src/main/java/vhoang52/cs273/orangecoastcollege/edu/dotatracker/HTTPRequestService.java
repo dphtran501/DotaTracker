@@ -158,17 +158,4 @@ public class HTTPRequestService
         });
     }
 
-    private class MatchDeserializer implements JsonDeserializer<List<Match>> {
-        @Override
-        public List<Match> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            final JsonObject jsonObject = json.getAsJsonObject();
-
-            List<MatchPlayer> matchPlayerList = gson.fromJson(jsonObject, new TypeToken<List<MatchPlayer>>() {}.getType());
-            //JsonParser jsonParser = new JsonParser().parse("123");
-            //List<Match> matchList =
-
-            return null;
-        }
-    }
-
 }

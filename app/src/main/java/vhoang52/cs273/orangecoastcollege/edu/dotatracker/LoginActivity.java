@@ -103,6 +103,12 @@ public class LoginActivity extends Fragment {
                     }
                 }
 
+                List<MatchPlayer> matchPlayerList = mDBHelper.getMatchPlayers(2586393706L);
+
+                for (MatchPlayer m : matchPlayerList) {
+                    Log.i(TAG, "matchPlayer in list->" + m.toString());
+                }
+
                 Toast.makeText(getActivity(), "Refresh successful", Toast.LENGTH_SHORT).show();
             }
 
