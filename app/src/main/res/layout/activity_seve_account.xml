@@ -15,7 +15,8 @@
             android:src="@drawable/steam_icon"
             app:civ_border_color="@color/seveBorder"
             app:civ_border_width="5dp"
-            android:onClick="secretTap"/>
+            android:onClick="secretTap"
+            android:elevation="10dp"/>
 
         <TextView
             android:id="@+id/userName"
@@ -32,7 +33,8 @@
             android:textColor="@color/seveText"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:typeface="monospace"/>
+            android:typeface="monospace"
+            android:elevation="7dp"/>
 
         <TextView
             android:id="@+id/textView"
