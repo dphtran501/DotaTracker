@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.dvoiss.literallytoast.LitToast;
 
 import java.util.Timer;
@@ -22,12 +21,15 @@ public class FluffActivity extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 420;
 
     private Button locationButton;
+    private long startMillis;
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        findViewById(R.id.linearLayout).setTag(R.id.key1, this);
         setContentView(R.layout.activity_fluff);
+
+        findViewById(R.id.linearLayout).setTag(R.id.key1, getBaseContext());
         locationButton = (Button) findViewById(R.id.locationButton);
     }
 
@@ -73,7 +75,8 @@ public class FluffActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            locationButton.setText("Where Am I Now?");                        }
+                            locationButton.setText("Where Am I Now?");
+                        }
                     });
                 }
             }, 1 * 1000);
@@ -83,6 +86,22 @@ public class FluffActivity extends AppCompatActivity {
 
     public void toast(View view) {
         LitToast.create(this, "Toast!", 2 * 1000).setPlayToasterSound(true).show();
+    }
 
+    public void fluffSecret(View view) {
+        long time = System.currentTimeMillis();
+
+        if (startMillis == 0 || (time - startMillis > 3000)) {
+            startMillis = time;
+            count = 1;
+        } else {
+            count++;
+        }
+
+        if (count == 5) {
+//                TODO:Paulding animation
+            Toast.makeText(this, "Secret Tap initiated", Toast.LENGTH_SHORT).show();
+        }
     }
 }
+

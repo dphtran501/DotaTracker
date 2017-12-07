@@ -12,22 +12,28 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private HTTPRequestService mService;
-    private DBHelper mDBHelper;
     TabLayout mTabs;
     ViewPager mViewPager;
     MainActivityPagerAdapter mMainActivityPagerAdapter;
+    private HTTPRequestService mService;
+    private DBHelper mDBHelper;
     private long startMillis;
     private int count;
 
     private long mCurrentUserId;
     private User mCurrentUser;
+
+    public static Uri getUriFromResource(Context context, int resID) {
+        Resources res = context.getResources();
+        String uri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+                + res.getResourcePackageName(resID) + "/"
+                + res.getResourceTypeName(resID) + "/"
+                + res.getResourceEntryName(resID);
+        return Uri.parse(uri);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +78,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setCurrentItem(1);
     }
 
-    public static Uri getUriFromResource(Context context, int resID) {
-        Resources res = context.getResources();
-        String uri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
-                + res.getResourcePackageName(resID) + "/"
-                + res.getResourceTypeName(resID) + "/"
-                + res.getResourceEntryName(resID);
-        return Uri.parse(uri);
-    }
-
     private void checkCurrentUser() {
         mCurrentUserId = mService.getmCurrentUserId();
         mCurrentUser = mDBHelper.getUser(mCurrentUserId);
@@ -121,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
     public void secretTap(View view) {
         long time = System.currentTimeMillis();
 
-
         if (startMillis == 0 || (time - startMillis > 3000)) {
             startMillis = time;
             count = 1;
@@ -130,12 +126,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (count == 5) {
-            if (view.getTag(R.id.key1) instanceof AccountActivity)
-                startActivity(new Intent((Context) view.getTag(R.id.key1), (Class) view.getTag(R.id.key2)));
-            else if(view.getTag(R.id.key1) instanceof FluffActivity) {
-//                TODO:Paulding animation
-                Toast.makeText(this, "Secret Tap initiated", Toast.LENGTH_SHORT).show();
-            }
+            startActivity(new Intent(this, FluffActivity.class));
         }
     }
 }
+

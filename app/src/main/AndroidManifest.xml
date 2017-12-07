@@ -24,6 +24,7 @@
         </activity>
         <activity
             android:name=".FluffActivity"
+            android:parentActivityName=".MainActivity"
             android:label="@string/title_activity_fluff"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
