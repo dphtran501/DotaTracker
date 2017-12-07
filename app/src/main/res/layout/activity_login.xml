@@ -4,17 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ListView
+        android:id="@+id/savedUsersListView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/steamIDEditText"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/border_drawable_darkaccent"
+        android:elevation="7dp"
+        android:padding="20dp" />
+
     <EditText
         android:id="@+id/steamIDEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_centerInParent="true"
+        android:layout_above="@id/refreshButton"
+        android:layout_centerHorizontal="true"
         android:layout_marginEnd="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginStart="50dp"
         android:background="@drawable/border_drawable_accent"
         android:digits="0123456789"
+        android:elevation="7dp"
         android:hint="@string/login_steam_id"
         android:inputType="number"
         android:maxLines="1"
@@ -23,12 +35,14 @@
 
     <Button
         android:id="@+id/submitButton"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="40dp"
-        android:layout_below="@id/steamIDEditText"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@id/steamIDEditText"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/border_drawable_darkaccent"
+        android:elevation="7dp"
         android:text="@string/login_sign_up"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
@@ -37,12 +51,14 @@
 
     <Button
         android:id="@+id/refreshButton"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="40dp"
-        android:layout_alignStart="@id/submitButton"
-        android:layout_below="@id/submitButton"
+        android:layout_alignEnd="@id/steamIDEditText"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/border_drawable_accent"
+        android:elevation="7dp"
         android:text="@string/login_refresh_matches"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryDark"

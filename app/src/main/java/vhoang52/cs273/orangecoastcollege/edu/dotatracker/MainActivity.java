@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mMainActivityPagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

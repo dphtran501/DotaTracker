@@ -74,8 +74,6 @@ public class MatchesOverviewActivity extends Fragment {
     private ListView matchListView;
 
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

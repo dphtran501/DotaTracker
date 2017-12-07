@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -22,14 +23,18 @@ public class LoginActivity extends Fragment {
 
     EditText mSteamIdEditText;
     Button mRegisterButton;
+    Button mRefreshButton;
+    ListView mUserListView;
+
     HTTPRequestService mService;
     DBHelper mDBHelper;
-    Button mRefreshButton;
+
+    LoginListAdapter mLoginListAdapter;
+    List<User> mUserList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -38,6 +43,11 @@ public class LoginActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_login, container, false);
         mService = HTTPRequestService.getInstance();
         mDBHelper = DBHelper.getInstance(getActivity());
+
+        mUserListView = (ListView) view.findViewById(R.id.savedUsersListView);
+        mUserList = mDBHelper.getAllUsers();
+        mLoginListAdapter = new LoginListAdapter(getActivity(), R.layout.login_list_item, mUserList);
+        mUserListView.setAdapter(mLoginListAdapter);
 
         mSteamIdEditText = (EditText) view.findViewById(R.id.steamIDEditText);
         mRegisterButton = (Button) view.findViewById(R.id.submitButton);
