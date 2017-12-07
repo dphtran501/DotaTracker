@@ -34,7 +34,8 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
     private User mUser;
     private DBHelper mDBHelper;
 
-    private CircleImageView profilePicture;
+    //private CircleImageView profilePicture;
+    private ImageView profilePicture;
     private TextView userName;
     private RingProgressBar winRingProgressBar;
     private TextView winPercentageTextView;
@@ -67,8 +68,14 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
 
     private void setProfilePicture() {
         if (HTTPRequestService.isNetworkAvailable(getActivity())) {
-            profilePicture.setImageDrawable(null);
-            HTTPRequestService.loadProfileImage(mUser.getAvatarUrl(), profilePicture);
+            HTTPRequestService.loadProfileImage(mUser.getAvatarUrl(), profilePicture, new HTTPRequestService.ProfileImageCallback() {
+                @Override
+                public void onSuccess(Drawable drawable) {
+                    profilePicture.setImageDrawable(null);
+                    profilePicture.setImageDrawable(drawable);
+                    profilePicture.refreshDrawableState();
+                }
+            });
         } else {
             try {
                 InputStream stream = getActivity().getAssets().open("steam_icon.png");

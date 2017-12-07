@@ -1,6 +1,7 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -229,12 +230,13 @@ public class HTTPRequestService {
         });
     }
 
-    public static void loadProfileImage(String url, ImageView imageView) {
-        RotateAnimation ra = new RotateAnimation(0.0f,  360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        ra.setDuration((long) 1000);
-        ra.setRepeatCount(0);
-
-        Ion.with(imageView).animateLoad(ra).animateIn(ra).load(url);
+    public static void loadProfileImage(String url, final ImageView imageView, final ProfileImageCallback callback) {
+        Ion.with(imageView).load(url).setCallback(new FutureCallback<ImageView>() {
+            @Override
+            public void onCompleted(Exception e, ImageView result) {
+                callback.onSuccess(imageView.getDrawable());
+            }
+        });
         Log.i(TAG, "Loading avatar image->" + url);
     }
 
@@ -242,6 +244,10 @@ public class HTTPRequestService {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return (activeNetworkInfo != null);
+    }
+
+    public interface ProfileImageCallback {
+        public void onSuccess(Drawable drawable);
     }
 
 }

@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -85,8 +86,13 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
 
     private void setProfilePicture() {
         if (HTTPRequestService.isNetworkAvailable(getActivity())) {
-            playerImageView.setImageDrawable(null);
-            HTTPRequestService.loadProfileImage(user.getAvatarUrl(), playerImageView);
+            HTTPRequestService.loadProfileImage(user.getAvatarUrl(), playerImageView, new HTTPRequestService.ProfileImageCallback() {
+                @Override
+                public void onSuccess(Drawable drawable) {
+                    playerImageView.setImageDrawable(null);
+                    playerImageView.setImageDrawable(drawable);
+                }
+            });
         }
     }
 
