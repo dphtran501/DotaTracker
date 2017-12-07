@@ -67,9 +67,10 @@ public class LoginListAdapter extends ArrayAdapter<User> {
         User selectedUser = mUserList.get(position);
 
         viewHolder.userNameTextView.setText(selectedUser.getPersonaName());
-        viewHolder.steamIdTextView.setText(String.valueOf(selectedUser.getSteamId64()));
+        viewHolder.steamIdTextView.setText(String.valueOf(selectedUser.getSteamId32()));
         viewHolder.listItemLinearLayout.setTag(R.id.login_user_tag, selectedUser);
 
+        convertView.setTag(selectedUser);
         return convertView;
     }
 }

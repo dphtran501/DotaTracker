@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         checkCurrentUser();
 
 
+
         mTabs = (TabLayout) findViewById(R.id.tabLayout);
         mTabs.setupWithViewPager(mViewPager);
         mViewPager.setCurrentItem(1);

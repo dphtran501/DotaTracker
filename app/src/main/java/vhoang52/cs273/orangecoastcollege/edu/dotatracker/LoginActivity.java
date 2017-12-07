@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -48,6 +49,16 @@ public class LoginActivity extends Fragment {
         mUserList = mDBHelper.getAllUsers();
         mLoginListAdapter = new LoginListAdapter(getActivity(), R.layout.login_list_item, mUserList);
         mUserListView.setAdapter(mLoginListAdapter);
+
+        mUserListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = (User) view.getTag();
+                mService.setmCurrentUserId(user.getSteamId32());
+                mService.setmCurrentUser(user);
+                Toast.makeText(getActivity(), "User profile set to " + user.getPersonaName(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         mSteamIdEditText = (EditText) view.findViewById(R.id.steamIDEditText);
         mRegisterButton = (Button) view.findViewById(R.id.submitButton);

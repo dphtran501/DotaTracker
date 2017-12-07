@@ -62,6 +62,7 @@ public class HTTPRequestService
 
     public void setmCurrentUserId(long mCurrentUserId) {
         HTTPRequestService.mCurrentUserId = mCurrentUserId;
+        Log.i(TAG, "mCurrentUserId is now set to->" + mCurrentUserId);
     }
 
     public User getmCurrentUser() {
@@ -70,6 +71,7 @@ public class HTTPRequestService
 
     public void setmCurrentUser(User mCurrentUser) {
         HTTPRequestService.mCurrentUser = mCurrentUser;
+        Log.i(TAG, "mCurrentUser is now set to->" + mCurrentUser.toString());
     }
 
     public List<Match> getmMatchesList() {
