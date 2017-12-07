@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:gravity="center_horizontal"
-                  android:orientation="vertical">
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <!--<de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicture"
@@ -25,27 +23,29 @@
             app:civ_border_width="5dp"
             android:onClick="secretTap"
             android:elevation="10dp"/>-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:padding="5dp"
-        android:background="@drawable/border_profile_picture">
-        <ImageView
-            android:id="@+id/profilePicture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/steam_icon"
-            android:onClick="secretTap"
-            android:elevation="10dp"
-            />
+        <LinearLayout
+            android:id="@+id/profileImageBorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/border_profile_picture"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/profilePicture"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:elevation="10dp"
+                android:onClick="secretTap"
+                android:src="@drawable/steam_icon" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/circleImageView"
+            android:layout_below="@id/profileImageBorder"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"
             android:fontFamily="sans-serif"
@@ -56,61 +56,69 @@
             android:textColor="@color/seveText"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:typeface="monospace"/>
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/ringProgressBar"
+            android:layout_below="@id/userName"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:text="@string/win_percentage_title"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:typeface="monospace"/>
+            android:typeface="monospace" />
 
 
         <io.netopen.hotbitmapgg.library.view.RingProgressBar
             android:id="@+id/winRingProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
             app:max="100"
             app:ringColor="@color/red"
             app:ringProgressColor="@color/green"
-            app:textIsShow="false"
             app:ringWidth="7dp"
-            app:style="STROKE"/>
+            app:style="STROKE"
+            app:textIsShow="false" />
 
         <TextView
             android:id="@+id/winPercentageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textView"
+            android:layout_above="@id/mostPlayedHeroesText"
             android:text="@string/win_percentage_data"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:typeface="monospace"
-            android:layout_marginTop="-255dp"/>
+            android:typeface="monospace" />
 
 
         <TextView
+            android:id="@+id/mostPlayedHeroesText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/winRingProgressBar"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="45dp"
-            android:text="@string/most_played_hero"
-            />
+            android:text="@string/most_played_hero" />
 
         <LinearLayout
             android:id="@+id/mostPlayedHeroesListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_below="@id/mostPlayedHeroesText"
             android:layout_marginTop="4dp"
             android:isScrollContainer="false"
-            android:scrollbars="none"/>
+            android:orientation="vertical"
+            android:scrollbars="none" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>
