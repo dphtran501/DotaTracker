@@ -80,7 +80,7 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
         df.setMaximumFractionDigits(1);
 
         numGamesWonTextView.setText(mContext.getString(R.string.hero_games, gamesPlayed));
-        percentGamesWonTextView.setText(df.format(gamesWon/gamesPlayed));
+        percentGamesWonTextView.setText(df.format((double)gamesWon/gamesPlayed));
 
         return view;
     }
