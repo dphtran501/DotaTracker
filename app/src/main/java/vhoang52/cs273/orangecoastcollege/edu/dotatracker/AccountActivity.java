@@ -53,6 +53,9 @@ public class AccountActivity extends Fragment {
         listAdapter = new MostPlayedHeroesListAdapter(view.getContext(), R.layout.hero_list_item, mMMostPlayedHerbs);
         mostPlayedHeroesListView.setAdapter(listAdapter);
 
+        profilePicture.setTag(R.id.key1, this);
+        profilePicture.setTag(R.id.key2, FluffActivity.class);
+
         return view;
     }
 }

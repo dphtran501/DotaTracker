@@ -26,9 +26,11 @@ public class FluffActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        findViewById(R.id.linearLayout).setTag(R.id.key1, this);
         setContentView(R.layout.activity_fluff);
         locationButton = (Button) findViewById(R.id.locationButton);
     }
+
 
     public void checkEarthquake(View view) {
 
@@ -43,7 +45,6 @@ public class FluffActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this
                         , new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}
                         , LOCATION_REQUEST_CODE);
-                checkEarthquake(view);
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     LocationManager locationManager = ((LocationManager) getSystemService(LOCATION_SERVICE));

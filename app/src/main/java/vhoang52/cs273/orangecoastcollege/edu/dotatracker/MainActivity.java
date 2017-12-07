@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void tapProfilePicture(View view) {
+    public void secretTap(View view) {
         long time = System.currentTimeMillis();
 
 
@@ -129,7 +130,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (count == 5) {
-            startActivity(new Intent(this, FluffActivity.class));
+            if (view.getTag(R.id.key1) instanceof AccountActivity)
+                startActivity(new Intent((Context) view.getTag(R.id.key1), (Class) view.getTag(R.id.key2)));
+            else if(view.getTag(R.id.key1) instanceof FluffActivity) {
+//                TODO:Paulding animation
+                Toast.makeText(this, "Secret Tap initiated", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
