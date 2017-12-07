@@ -1,6 +1,5 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
-import android.support.v4.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +85,6 @@ public class MatchesOverviewActivity extends Fragment {
         mRequestService = HTTPRequestService.getInstance();
         user = mRequestService.getmCurrentUser();
 
-        // TODO: Need to retrieve selected user in order to populate data properly
         // Connect to player profile widgets
         playerImageView = (ImageView) view.findViewById(R.id.playerImageView);
         playerNameTextView = (TextView) view.findViewById(R.id.playerNameTextView);
@@ -167,7 +165,9 @@ public class MatchesOverviewActivity extends Fragment {
         // Set overall wins, losses, and winrate
         winsTextView.setText(statToString(numOfWins));
         lossesTextView.setText(statToString(numOfLosses));
-        winRateTextView.setText(percentToString((double) numOfWins / (numOfWins + numOfLosses), 2));
+        if (numOfWins + numOfLosses > 0)
+            winRateTextView.setText(percentToString((double) numOfWins / (numOfWins + numOfLosses), 2));
+        else winRateTextView.setText(percentToString(0.0, 2));
     }
 
     private void setAverageStatsWidgets() {
@@ -206,7 +206,9 @@ public class MatchesOverviewActivity extends Fragment {
         }
 
         // Calculate average stats and set textviews
-        avgWinRateTextView.setText(percentToString((double) totalWins / (totalWins + totalLosses), 2));
+        if (totalWins + totalLosses > 0)
+            avgWinRateTextView.setText(percentToString((double) totalWins / (totalWins + totalLosses), 2));
+        else avgWinRateTextView.setText(percentToString(0.0, 2));
         avgKillsTextView.setText(statToString(Math.round((float) totalKills / recentMatchList.size())));
         avgDeathsTextView.setText(statToString(Math.round((float) totalDeaths / recentMatchList.size())));
         avgAssistsTextView.setText(statToString(Math.round((float) totalAssists / recentMatchList.size())));

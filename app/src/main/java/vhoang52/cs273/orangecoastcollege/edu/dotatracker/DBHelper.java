@@ -261,7 +261,7 @@ public class DBHelper extends SQLiteOpenHelper
     //************** MATCH TABLE OPERATIONS ****************
 
     /**
-     * Adds a new <code>Match</code> to the database. Also adds the players in that match to the
+     * Adds a new <code>Match</code> to the database. Does not add players in that match to the
      * database.
      *
      * @param match The new <code>Match</code> to add to the database.
@@ -283,6 +283,18 @@ public class DBHelper extends SQLiteOpenHelper
         // To add MatchPlayers who played in match into database, call addPlayer outside of this class
 
         db.close();
+    }
+
+    /**
+     * Adds a new <code>Match</code> to the database. Also adds the players in that match to the
+     * database.
+     *
+     * @param match The new <code>Match</code> to add to the database.
+     */
+    public void addMatchWithPlayers(Match match)
+    {
+        addMatch(match);
+        for (MatchPlayer mp : match.getMatchPlayerList()) addPlayer(mp);
     }
 
     /**
@@ -341,6 +353,16 @@ public class DBHelper extends SQLiteOpenHelper
 
         return matchesList;
     }
+
+    // TODO: getPlayerMatches(long steamID32)
+//    public List<Match> getPlayerMatches(long steamID32)
+//    {
+//        List<Match> playerMatches = new ArrayList<>();
+//
+//        List<Long> playerMatchIDs = getPlayerMatchIDs(steamID32);
+//        for (Long matchID : playerMatchIDs) playerMatches.add()
+//
+//    }
 
     /**
      * Deletes all <code>Match</code>es in the database.
