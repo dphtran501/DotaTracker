@@ -109,7 +109,7 @@ public class LoginActivity extends Fragment {
                 @Override
                 public void onSuccess() {
                     modifyUserIdSharedPrefs(steamId);
-                    Toast.makeText(getActivity(), "User successfully registered", Toast.LENGTH_SHORT).show();
+                    getUserSummary();
                 }
 
                 @Override
@@ -120,6 +120,26 @@ public class LoginActivity extends Fragment {
         } else {
             Toast.makeText(getActivity(), "Please enter a Steam ID", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getUserSummary() {
+        long steamId = mService.getmCurrentUserId();
+        HTTPRequestService.getUserSummaries(steamId, new HTTPRequestService.JSONStringCallback() {
+            @Override
+            public void onSuccess() {
+                User currentUser = mService.getmCurrentUser();
+                mDBHelper.addUser(currentUser);
+                mUserList.add(currentUser);
+                mLoginListAdapter.notifyDataSetChanged();
+
+                Toast.makeText(getActivity(), "User successfully registered", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
     private void modifyUserIdSharedPrefs(long steamId) {

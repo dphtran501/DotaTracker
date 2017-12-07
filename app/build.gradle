@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
     buildToolsVersion '26.0.2'
 }
 
@@ -37,7 +42,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'com.koushikdutta.ion:ion:2.+'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+
+    testImplementation 'org.robolectric:robolectric:3.5.1'
+    androidTestImplementation 'org.robolectric:robolectric:3.5.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
