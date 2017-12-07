@@ -64,36 +64,37 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/userName"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:text="@string/win_percentage_title"
             android:textAlignment="center"
             android:textAllCaps="false"
+            android:textSize="16sp"
+            android:layout_marginBottom="10dp"
             android:typeface="monospace" />
 
 
         <io.netopen.hotbitmapgg.library.view.RingProgressBar
             android:id="@+id/winRingProgressBar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
             android:layout_below="@id/textView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
             app:max="100"
             app:ringColor="@color/red"
             app:ringProgressColor="@color/green"
-            app:ringWidth="7dp"
+            app:ringWidth="10dp"
             app:style="STROKE"
-            app:textIsShow="false" />
+            app:textIsShow="false"/>
 
         <TextView
             android:id="@+id/winPercentageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@id/mostPlayedHeroesText"
+            android:layout_below="@id/textView"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/textView"
-            android:layout_above="@id/mostPlayedHeroesText"
             android:text="@string/win_percentage_data"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -106,6 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/winRingProgressBar"
             android:layout_centerHorizontal="true"
+            android:textSize="16sp"
             android:layout_marginTop="45dp"
             android:text="@string/most_played_hero" />
 
