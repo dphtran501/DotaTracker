@@ -7,8 +7,7 @@
     <ListView
         android:id="@+id/savedUsersListView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@id/steamIDEditText"
+        android:layout_height="400dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/border_drawable_darkaccent"
         android:elevation="7dp"

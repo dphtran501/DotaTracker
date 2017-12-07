@@ -96,25 +96,29 @@ public class LoginActivity extends Fragment {
 
     private void submitButton() {
 
-        final long steamId = Long.parseLong(mSteamIdEditText.getText().toString());
-        Log.i(TAG, "steamId->" + steamId);
+        if (mSteamIdEditText.getText().toString().length() != 0) {
+            final long steamId = Long.parseLong(mSteamIdEditText.getText().toString());
+            Log.i(TAG, "steamId->" + steamId);
 
-        HTTPRequestService.postUserID(steamId, new HTTPRequestService.UserRegistrationCallback() {
-            @Override
-            public void onSuccess() {
-                SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("CurrentUserId", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                String currentUserId = String.valueOf(steamId);
-                editor.putString("CurrentUserId", currentUserId);
-                editor.commit();
-                Toast.makeText(getActivity(), "User successfully registered", Toast.LENGTH_SHORT).show();
-            }
+            HTTPRequestService.postUserID(steamId, new HTTPRequestService.UserRegistrationCallback() {
+                @Override
+                public void onSuccess() {
+                    SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("CurrentUserId", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    String currentUserId = String.valueOf(steamId);
+                    editor.putString("CurrentUserId", currentUserId);
+                    editor.commit();
+                    Toast.makeText(getActivity(), "User successfully registered", Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onFailure() {
-                Toast.makeText(getActivity(), "Failed to register user", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure() {
+                    Toast.makeText(getActivity(), "Failed to register user", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getActivity(), "Please enter a Steam ID", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

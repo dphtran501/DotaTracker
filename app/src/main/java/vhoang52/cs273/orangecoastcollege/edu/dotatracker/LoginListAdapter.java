@@ -62,22 +62,17 @@ public class LoginListAdapter extends ArrayAdapter<User> {
 
         ViewHolder viewHolder;
 
-
-
         if (convertView == null) {
             convertView = inflater.inflate(mResourceId, null);
             viewHolder = new ViewHolder();
-            convertView.setTag(R.id.login_viewholder_tag);
+            viewHolder.listItemLinearLayout = (LinearLayout) convertView.findViewById(R.id.login_list_item_layout);
+            viewHolder.userNameTextView = (TextView) convertView.findViewById(R.id.list_item_username);
+            viewHolder.steamIdTextView = (TextView) convertView.findViewById(R.id.list_item_steam_id);
+            convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag(R.id.viewholder_tag);
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        viewHolder.listItemLinearLayout = (LinearLayout) convertView.findViewById(R.id.login_list_item_layout);
-        viewHolder.userNameTextView = (TextView) convertView.findViewById(R.id.list_item_username);
-        viewHolder.steamIdTextView = (TextView) convertView.findViewById(R.id.list_item_steam_id);
-
         User selectedUser = mUserList.get(position);
-        convertView.setTag(selectedUser);
 
         viewHolder.userNameTextView.setText(selectedUser.getPersonaName());
         viewHolder.steamIdTextView.setText(String.valueOf(selectedUser.getSteamId32()));
