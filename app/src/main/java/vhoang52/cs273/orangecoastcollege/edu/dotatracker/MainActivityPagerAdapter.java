@@ -62,7 +62,7 @@ public class MainActivityPagerAdapter extends FragmentPagerAdapter {
             AccountActivity fragment = new AccountActivity();
             return fragment;
         } else if (position == 2) {
-            Fragment fragment = new FeedActivityFragment();
+            MatchesOverviewActivity fragment = new MatchesOverviewActivity();
             return fragment;
         }
 

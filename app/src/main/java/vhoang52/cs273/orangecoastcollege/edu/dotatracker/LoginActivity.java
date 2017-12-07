@@ -25,7 +25,6 @@ public class LoginActivity extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Nullable

@@ -1,5 +1,6 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.support.v4.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +8,11 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,8 +33,7 @@ import java.util.List;
  * @version 1.0
  * @since November 27, 2017
  */
-public class MatchesOverviewActivity extends AppCompatActivity
-{
+public class MatchesOverviewActivity extends Fragment {
     // User and related matches lists
     private User user;
     private List<Long> matchIDList;
@@ -40,6 +43,7 @@ public class MatchesOverviewActivity extends AppCompatActivity
 
     // Database
     private DBHelper db;
+    private HTTPRequestService mRequestService;
     // Player profile widgets
     private ImageView playerImageView;
     private Uri playerImageURI;
@@ -69,44 +73,41 @@ public class MatchesOverviewActivity extends AppCompatActivity
     private ListView matchListView;
 
 
-    /**
-     * Initializes <code>MatchesOverviewActivity</code> by inflating its UI.
-     *
-     * @param savedInstanceState Bundle containing the data it recently supplied in
-     *                           onSaveInstanceState(Bundle) if activity was reinitialized after
-     *                           being previously shut down. Otherwise it is null.
-     */
+
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_matches_overview);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_matches_overview, container, false);
+
 
         // Connect to database
-        db = DBHelper.getInstance(this);
+        db = DBHelper.getInstance(getActivity());
+        mRequestService = HTTPRequestService.getInstance();
+        user = mRequestService.getmCurrentUser();
 
         // TODO: Need to retrieve selected user in order to populate data properly
         // Connect to player profile widgets
-        playerImageView = (ImageView) findViewById(R.id.playerImageView);
-        playerNameTextView = (TextView) findViewById(R.id.playerNameTextView);
+        playerImageView = (ImageView) view.findViewById(R.id.playerImageView);
+        playerNameTextView = (TextView) view.findViewById(R.id.playerNameTextView);
         // Connect to player stats widgets
-        winsTextView = (TextView) findViewById(R.id.winsTextView);
-        lossesTextView = (TextView) findViewById(R.id.lossesTextView);
-        winRateTextView = (TextView) findViewById(R.id.winRateTextView);
-        avgWinRateTextView = (TextView) findViewById(R.id.avgWinRateTextView);
-        avgKillsTextView = (TextView) findViewById(R.id.avgKillsTextView);
-        avgDeathsTextView = (TextView) findViewById(R.id.avgDeathsTextView);
-        avgAssistsTextView = (TextView) findViewById(R.id.avgAssistsTextView);
-        avgGPMTextView = (TextView) findViewById(R.id.avgGPMTextView);
-        avgXPMTextView = (TextView) findViewById(R.id.avgXPMTextView);
-        avgLastHitsTextView = (TextView) findViewById(R.id.avgLastHitsTextView);
-        avgHeroDMGTextView = (TextView) findViewById(R.id.avgHeroDMGTextView);
-        avgHeroHealTextView = (TextView) findViewById(R.id.avgHeroHealTextView);
-        avgTowerDMGTextView = (TextView) findViewById(R.id.avgTowerDMGTextView);
-        avgDurationTextView = (TextView) findViewById(R.id.avgDurationTextView);
+        winsTextView = (TextView) view.findViewById(R.id.winsTextView);
+        lossesTextView = (TextView) view.findViewById(R.id.lossesTextView);
+        winRateTextView = (TextView) view.findViewById(R.id.winRateTextView);
+        avgWinRateTextView = (TextView) view.findViewById(R.id.avgWinRateTextView);
+        avgKillsTextView = (TextView) view.findViewById(R.id.avgKillsTextView);
+        avgDeathsTextView = (TextView) view.findViewById(R.id.avgDeathsTextView);
+        avgAssistsTextView = (TextView) view.findViewById(R.id.avgAssistsTextView);
+        avgGPMTextView = (TextView) view.findViewById(R.id.avgGPMTextView);
+        avgXPMTextView = (TextView) view.findViewById(R.id.avgXPMTextView);
+        avgLastHitsTextView = (TextView) view.findViewById(R.id.avgLastHitsTextView);
+        avgHeroDMGTextView = (TextView) view.findViewById(R.id.avgHeroDMGTextView);
+        avgHeroHealTextView = (TextView) view.findViewById(R.id.avgHeroHealTextView);
+        avgTowerDMGTextView = (TextView) view.findViewById(R.id.avgTowerDMGTextView);
+        avgDurationTextView = (TextView) view.findViewById(R.id.avgDurationTextView);
         // Connect to label widgets
-        averagesLabelTextView = (TextView) findViewById(R.id.averagesLabelTextView);
-        recentMatchesTextView = (TextView) findViewById(R.id.recentMatchesTextView);
+        averagesLabelTextView = (TextView) view.findViewById(R.id.averagesLabelTextView);
+        recentMatchesTextView = (TextView) view.findViewById(R.id.recentMatchesTextView);
 
         // Connect to ListView
         matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
@@ -114,13 +115,12 @@ public class MatchesOverviewActivity extends AppCompatActivity
                 matchIDList.size());
         recentMatchList = new ArrayList<>();
         recentMatchStatsList = new ArrayList<>();
-        for (Long matchID : recentMatchIDList)
-        {
+        for (Long matchID : recentMatchIDList) {
             recentMatchList.add(getMatch(matchID));
             recentMatchStatsList.add(db.getMatchPlayer(matchID, user.getSteamId32()));
         }
-        matchListAdapter = new MatchListAdapter(this, R.layout.match_list_item, recentMatchStatsList);
-        matchListView = (ListView) findViewById(R.id.recentMatchesListView);
+        matchListAdapter = new MatchListAdapter(getActivity(), R.layout.match_list_item, recentMatchStatsList);
+        matchListView = (ListView) view.findViewById(R.id.recentMatchesListView);
         matchListView.setAdapter(matchListAdapter);
 
         // Link widgets to stat data
@@ -136,10 +136,10 @@ public class MatchesOverviewActivity extends AppCompatActivity
         averagesLabelTextView.setText(getString(R.string.average_stats_label, numOfMatchesShown));
         recentMatchesTextView.setText(getString(R.string.recent_matches_label, numOfMatchesShown));
 
+        return view;
     }
 
-    private void setOverallStatsWidgets()
-    {
+    private void setOverallStatsWidgets() {
         // Get all user matches (not just recent)
         List<Match> matchList = new ArrayList<>();
         for (Long matchID : matchIDList) matchList.add(getMatch(matchID));
@@ -147,24 +147,20 @@ public class MatchesOverviewActivity extends AppCompatActivity
         // Find overall wins and losses
         int numOfWins = 0;
         int numOfLosses = 0;
-        for (Match match : matchList)
-        {
+        for (Match match : matchList) {
             int numOfMatchPlayers = match.getMatchPlayerList().size();
             boolean isUserFound = false;
             int i = 0;
             // Search for user in each match's list of players and check if they're part of winning team
-            while(!isUserFound && i < numOfMatchPlayers)
-            {
+            while (!isUserFound && i < numOfMatchPlayers) {
                 MatchPlayer matchPlayer = match.getMatchPlayerList().get(i);
-                if (matchPlayer.getAccountId() == user.getSteamId32())
-                {
+                if (matchPlayer.getAccountId() == user.getSteamId32()) {
                     isUserFound = true;
                     if ((match.isRadiantWin() && !matchPlayer.isDire()) ||
                             (!match.isRadiantWin() && matchPlayer.isDire()))
                         numOfWins++;
                     else numOfLosses++;
-                }
-                else i++;
+                } else i++;
             }
         }
 
@@ -174,26 +170,22 @@ public class MatchesOverviewActivity extends AppCompatActivity
         winRateTextView.setText(percentToString((double) numOfWins / (numOfWins + numOfLosses), 2));
     }
 
-    private void setAverageStatsWidgets()
-    {
+    private void setAverageStatsWidgets() {
         int totalWins = 0, totalLosses = 0, totalKills = 0, totalDeaths = 0, totalAssists = 0,
                 totalGPM = 0, totalXPM = 0, totalLH = 0, totalHD = 0, totalHH = 0, totalTD = 0,
                 totalDuration = 0;
 
         // Retrieve stat totals from all recent user matches
-        for (Match match : recentMatchList)
-        {
+        for (Match match : recentMatchList) {
             totalDuration += match.getDuration();
 
             int numOfMatchPlayers = match.getMatchPlayerList().size();
             boolean isUserFound = false;
             int i = 0;
             // Search for user in each match's list of players
-            while(!isUserFound && i < numOfMatchPlayers)
-            {
+            while (!isUserFound && i < numOfMatchPlayers) {
                 MatchPlayer matchPlayer = match.getMatchPlayerList().get(i);
-                if (matchPlayer.getAccountId() == user.getSteamId32())
-                {
+                if (matchPlayer.getAccountId() == user.getSteamId32()) {
                     isUserFound = true;
                     if ((match.isRadiantWin() && !matchPlayer.isDire()) ||
                             (!match.isRadiantWin() && matchPlayer.isDire()))
@@ -209,8 +201,7 @@ public class MatchesOverviewActivity extends AppCompatActivity
                     totalHD += matchPlayer.getHeroDamage();
                     totalHH += matchPlayer.getHeroHealing();
                     totalTD += matchPlayer.getTowerDamage();
-                }
-                else i++;
+                } else i++;
             }
         }
 
@@ -230,32 +221,27 @@ public class MatchesOverviewActivity extends AppCompatActivity
     }
 
     // Convert percent value to String for TextViews (e.g. 0.3158 to 31.58%)
-    private String percentToString(double fractionValue, int maxFractionDigits)
-    {
+    private String percentToString(double fractionValue, int maxFractionDigits) {
         NumberFormat percent = NumberFormat.getPercentInstance();
         percent.setMaximumFractionDigits(maxFractionDigits);
         return percent.format(fractionValue);
     }
 
     // Convert value to String for TextViews (e.g. 13400 to 13.4k)
-    private String statToString(int statValue)
-    {
+    private String statToString(int statValue) {
         String textViewString = null;
         // Converts values over 1000 to shorter strings (e.g. 13400 to 13.4k)
-        if (statValue >= 1000L)
-        {
+        if (statValue >= 1000L) {
             DecimalFormat oneDP = new DecimalFormat("#.#");
             textViewString = oneDP.format((double) statValue / 1000) + "k";
-        }
-        else textViewString = String.valueOf(statValue);
+        } else textViewString = String.valueOf(statValue);
 
         return textViewString;
     }
 
     // Convert duration values (in seconds) to String for TextViews (e.g. 1230 to 20:30)
     @NonNull
-    private String durationToString(int duration)
-    {
+    private String durationToString(int duration) {
         int minutes = duration / 60;
         int seconds = duration % 60;
         return String.valueOf(minutes) + ":" + String.valueOf(seconds);
@@ -263,8 +249,7 @@ public class MatchesOverviewActivity extends AppCompatActivity
 
     // Retrieves the match with the specified match ID from the database. Unlike the DBHelper version,
     // this method also sets the match's list of players to the list of all players who played in the match.
-    private Match getMatch(long matchID)
-    {
+    private Match getMatch(long matchID) {
         Match match = db.getMatch(matchID);
         match.setMatchPlayerList(db.getMatchPlayers(matchID));
         return match;
@@ -276,14 +261,12 @@ public class MatchesOverviewActivity extends AppCompatActivity
      *
      * @param v The view that was called this method.
      */
-    public void viewMatchDetails(View v)
-    {
-        if (v instanceof LinearLayout)
-        {
+    public void viewMatchDetails(View v) {
+        if (v instanceof LinearLayout) {
             LinearLayout selectedItem = (LinearLayout) v;
             Match selectedMatch = (Match) selectedItem.getTag();
 
-            Intent detailsIntent = new Intent(this, MatchDetailsActivity.class);
+            Intent detailsIntent = new Intent(getActivity(), MatchDetailsActivity.class);
             detailsIntent.putExtra("SelectedMatch", selectedMatch);
             startActivity(detailsIntent);
         }
@@ -300,8 +283,7 @@ public class MatchesOverviewActivity extends AppCompatActivity
      * @return Uri to resource by given ID
      * @throws Resources.NotFoundException If the given ID does not exist.
      */
-    public static Uri getURIFromResource(Context context, int resID) throws Resources.NotFoundException
-    {
+    public static Uri getURIFromResource(Context context, int resID) throws Resources.NotFoundException {
         Resources res = context.getResources();
         // Build a String in the form:
         // android.resource://edu.orangecoastcollege.cs273.petprotector/drawable/none
