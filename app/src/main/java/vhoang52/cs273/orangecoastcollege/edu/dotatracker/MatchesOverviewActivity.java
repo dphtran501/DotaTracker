@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -120,6 +122,23 @@ public class MatchesOverviewActivity extends Fragment {
         matchListAdapter = new MatchListAdapter(getActivity(), R.layout.match_list_item, recentMatchStatsList);
         matchListView = (ListView) view.findViewById(R.id.recentMatchesListView);
         matchListView.setAdapter(matchListAdapter);
+
+        Log.i("user count", String.valueOf(db.getAllUsers().size()));
+        Log.i("match count: ", String.valueOf(db.getAllMatches().size()));
+        Log.i("player count: ", String.valueOf(db.getAllMatchPlayers().size()));
+
+        matchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                LinearLayout selectedItem = (LinearLayout) view;
+                Match selectedMatch = (Match) selectedItem.getTag(R.id.match_tag);
+
+                Intent detailsIntent = new Intent(getActivity(), MatchDetailsActivity.class);
+                detailsIntent.putExtra("SelectedMatch", selectedMatch);
+                startActivity(detailsIntent);
+            }
+        });
 
         // Link widgets to stat data
         // TODO: Make functions to set image view
@@ -263,16 +282,16 @@ public class MatchesOverviewActivity extends Fragment {
      *
      * @param v The view that was called this method.
      */
-    public void viewMatchDetails(View v) {
-        if (v instanceof LinearLayout) {
-            LinearLayout selectedItem = (LinearLayout) v;
-            Match selectedMatch = (Match) selectedItem.getTag();
-
-            Intent detailsIntent = new Intent(getActivity(), MatchDetailsActivity.class);
-            detailsIntent.putExtra("SelectedMatch", selectedMatch);
-            startActivity(detailsIntent);
-        }
-    }
+//    public void viewMatchDetails(View v) {
+//        if (v instanceof LinearLayout) {
+//            LinearLayout selectedItem = (LinearLayout) v;
+//            Match selectedMatch = (Match) selectedItem.getTag(R.id.match_tag);
+//
+//            Intent detailsIntent = new Intent(getActivity(), MatchDetailsActivity.class);
+//            detailsIntent.putExtra("SelectedMatch", selectedMatch);
+//            startActivity(detailsIntent);
+//        }
+//    }
 
     // TODO: Update TextViews when new Matches added
 

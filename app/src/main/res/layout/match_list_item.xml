@@ -7,10 +7,13 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/match_list_item_margins"
     android:background="@color/derekPrimary"
+    android:orientation="horizontal">
+    <!--
     android:clickable="true"
     android:focusable="true"
     android:onClick="viewMatchDetails"
-    android:orientation="horizontal">
+    -->
+
 
     <ImageView
         android:id="@+id/matchListItemHeroImageView"

@@ -554,6 +554,33 @@ public class DBHelper extends SQLiteOpenHelper
         return userMatchIDList;
     }
 
+    public ArrayList<MatchPlayer> getAllMatchPlayers()
+    {
+        ArrayList<MatchPlayer> matchPlayersList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, null, null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+
+                MatchPlayer player = new MatchPlayer(cursor.getLong(0), cursor.getLong(1),
+                        cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5),
+                        cursor.getInt(6), cursor.getInt(7), cursor.getInt(8), cursor.getInt(9),
+                        cursor.getInt(10), cursor.getInt(11), cursor.getInt(12), cursor.getInt(13),
+                        cursor.getInt(14), cursor.getInt(15));
+                matchPlayersList.add(player);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return matchPlayersList;
+    }
+
     /**
      * Deletes all <code>Player</code>s in the database.
      */

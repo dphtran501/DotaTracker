@@ -46,6 +46,9 @@
     <string name="level_label">LVL</string>
     <string name="denies_label">DN</string>
     <string name="gold_label">G</string>
+    <!-- MatchListAdapter tag keys -->
+    <item type="id" name="viewholder_tag" />
+    <item type="id" name="match_tag" />
 
     <!-- Login Activity -->
     <string name="login_username">Username: </string>

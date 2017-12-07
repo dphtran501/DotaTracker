@@ -84,9 +84,9 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
             viewHolder.matchListItemDeathsTextView = (TextView) convertView.findViewById(R.id.matchListItemDeathsTextView);
             viewHolder.matchListItemAssistsTextView = (TextView) convertView.findViewById(R.id.matchListItemAssistsTextView);
             viewHolder.matchListItemKDAProgressBar = (ProgressBar) convertView.findViewById(R.id.matchListItemKDAProgressBar);
-            convertView.setTag(viewHolder);
+            convertView.setTag(R.id.viewholder_tag, viewHolder);
         }
-        else viewHolder = (ViewHolder) convertView.getTag();
+        else viewHolder = (ViewHolder) convertView.getTag(R.id.viewholder_tag);
 
         // Retrieve match played by MatchPlayer
         MatchPlayer selectedPlayer = mMatchPlayerList.get(position);
@@ -116,10 +116,7 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
         viewHolder.matchListItemKDAProgressBar.setSecondaryProgress(selectedPlayer.getKills() + selectedPlayer.getDeaths());
 
         // Set tag of list item layout to selected match
-        viewHolder.matchListItemLinearLayout.setTag(selectedMatch);
-
-        // TODO: use setTag with keys? Don't know how setting Tag for match and viewholder affects listview
-        // TODO: https://stackoverflow.com/questions/15911620/how-to-set-multiple-tags-to-a-button
+        viewHolder.matchListItemLinearLayout.setTag(R.id.match_tag, selectedMatch);
 
         return convertView;
     }

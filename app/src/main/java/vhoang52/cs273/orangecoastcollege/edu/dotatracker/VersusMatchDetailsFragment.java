@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.DecimalFormat;
+
 /**
  * This fragment displays the overall match statistics for Team Radiant and Team Dire, where the
  * match is specified in <code>MatchDetailsActivity</code>.
@@ -61,5 +63,17 @@ public class VersusMatchDetailsFragment extends Fragment
         return view;
 
         // TODO: Link to widgets and populate fields
+    }
+
+    // Convert value to String for TextViews (e.g. 13400 to 13.4k)
+    private String statToString(int statValue) {
+        String textViewString = null;
+        // Converts values over 1000 to shorter strings (e.g. 13400 to 13.4k)
+        if (statValue >= 1000L) {
+            DecimalFormat oneDP = new DecimalFormat("#.#");
+            textViewString = oneDP.format((double) statValue / 1000) + "k";
+        } else textViewString = String.valueOf(statValue);
+
+        return textViewString;
     }
 }
