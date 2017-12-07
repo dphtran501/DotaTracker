@@ -4,16 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +48,7 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
         TextView heroNameTextView = view.findViewById(R.id.heroNameTextView);
         TextView numGamesWonTextView = view.findViewById(R.id.numGamesWonTextView);
         TextView percentGamesWonTextView = view.findViewById(R.id.percentGamesWonTextView);
+        ProgressBar progressBar = view.findViewById(R.id.progressBar);
 
         Hero selectedHero = mHeroList.get(position);
 
@@ -79,8 +78,16 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
         NumberFormat df = DecimalFormat.getPercentInstance();
         df.setMaximumFractionDigits(1);
 
+        double winPercent  = (double) gamesWon / gamesPlayed;
+
         numGamesWonTextView.setText(mContext.getString(R.string.hero_games, gamesPlayed));
-        percentGamesWonTextView.setText(df.format((double)gamesWon/gamesPlayed));
+        percentGamesWonTextView.setText(df.format(winPercent));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            progressBar.setProgress((int)(winPercent * 100), true);
+            Log.i(TAG, "getView: " + (int)(winPercent * 100));
+        }
+        else
+            progressBar.setProgress((int)winPercent * 100);
 
         return view;
     }
