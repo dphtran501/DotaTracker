@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,6 +28,7 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
     private Context mContext;
     private int mResourceID;
     private List<Hero> mHeroList = new ArrayList<>();
+    private HashMap<Hero, int[]> mHeroHashMap = new HashMap<>();
 
     public MostPlayedHeroesListAdapter(@NonNull Context context, int resource, @NonNull List<Hero> heroes) {
         super(context, resource, heroes);
@@ -66,5 +68,15 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
         percentGamesWonTextView.setText(mContext.getString(R.string.hero_win_percentage));
 
         return view;
+    }
+
+    public void setHash(HashMap<Integer, int[]> hash) {
+        for (Integer integer : hash.keySet()) {
+            try {
+                mHeroHashMap.put(Hero.getHeroFromID(mContext, integer), hash.get(integer));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

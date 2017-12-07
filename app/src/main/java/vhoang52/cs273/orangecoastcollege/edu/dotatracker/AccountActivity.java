@@ -12,6 +12,7 @@ import android.widget.TextView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -58,8 +59,7 @@ public class AccountActivity extends Fragment {
 
         userName.setText(mUser.getPersonaName());
 
-        listAdapter = new MostPlayedHeroesListAdapter(view.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
-        mostPlayedHeroesListView.setAdapter(listAdapter);
+
 
 //        Create a list of all the games the user has played in
         List<MatchPlayer> matches = mDBHelper.getPlayerMatchStats(mUser.getSteamId32());
@@ -90,10 +90,20 @@ public class AccountActivity extends Fragment {
 
         NumberFormat df = DecimalFormat.getPercentInstance();
         df.setMaximumFractionDigits(1);
-        double winPercent =  100 * mWins / mGamesPlayed, lossPercent = 100 - winPercent;
-        Log.i(TAG, "onCreateView: winpercent = " + winPercent + " lossPercent = " + lossPercent);
+        double winPercent = 100 * mWins / mGamesPlayed, lossPercent = 100 - winPercent;
         winRingProgressBar.setProgress((int) winPercent);
         winPercentageTextView.setText(df.format(winPercent / 100));
+        try {
+            for (Integer integer : heroFrequency.keySet()) {
+                mMostPlayedHeroes.add(Hero.getHeroFromID(getContext(), integer));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        listAdapter = new MostPlayedHeroesListAdapter(view.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
+        listAdapter.setHash(heroFrequency);
+        mostPlayedHeroesListView.setAdapter(listAdapter);
+
         return view;
     }
 }
