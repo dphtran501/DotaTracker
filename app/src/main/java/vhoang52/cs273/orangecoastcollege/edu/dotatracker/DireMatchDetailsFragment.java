@@ -92,12 +92,6 @@ public class DireMatchDetailsFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_match_team, container, false);
 
-        setPlayer1(direPlayers.get(0));
-        setPlayer2(direPlayers.get(1));
-        setPlayer3(direPlayers.get(2));
-        setPlayer4(direPlayers.get(3));
-        setPlayer5(direPlayers.get(4));
-
         return view;
     }
 
@@ -196,6 +190,12 @@ public class DireMatchDetailsFragment extends Fragment
         player3GTextView = (TextView) getView().findViewById(R.id.player3GoldTextView);
         player4GTextView = (TextView) getView().findViewById(R.id.player4GoldTextView);
         player5GTextView = (TextView) getView().findViewById(R.id.player5GoldTextView);
+
+        setPlayer1(direPlayers.get(0));
+        setPlayer2(direPlayers.get(1));
+        setPlayer3(direPlayers.get(2));
+        setPlayer4(direPlayers.get(3));
+        setPlayer5(direPlayers.get(4));
     }
 
     private void setPlayer1(MatchPlayer player1)

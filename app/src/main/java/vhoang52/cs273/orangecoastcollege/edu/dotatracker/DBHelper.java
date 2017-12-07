@@ -48,11 +48,11 @@ public class DBHelper extends SQLiteOpenHelper
     private static final String[] PLAYERS_FIELD_TYPES = {"INTEGER", "INTEGER", "INTEGER", "INTEGER",
             "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER", "INTEGER",
             "INTEGER", "INTEGER", "INTEGER", "INTEGER"};
-    private static final String[] MATCH_PLAYERS_FOREIGN_KEYS = {MATCH_PLAYERS_FIELD_NAMES[0], MATCH_PLAYERS_FIELD_NAMES[1]};
-    private static final String[] MATCH_PLAYERS_PARENT_TABLES = {MATCHES_TABLE, USERS_TABLE};
-    private static final String[] MATCH_PLAYERS_CANDIDATE_KEYS = {MATCHES_FIELD_NAMES[0], USERS_FIELD_NAMES[0]};
+    //private static final String[] MATCH_PLAYERS_FOREIGN_KEYS = {MATCH_PLAYERS_FIELD_NAMES[0], MATCH_PLAYERS_FIELD_NAMES[1]};
+    //private static final String[] MATCH_PLAYERS_PARENT_TABLES = {MATCHES_TABLE, USERS_TABLE};
+    //private static final String[] MATCH_PLAYERS_CANDIDATE_KEYS = {MATCHES_FIELD_NAMES[0], USERS_FIELD_NAMES[0]};
     //TODO: Delete on cascade when user is deleted?
-    private static final boolean[] MATCH_PLAYERS_CASCADE_DELETE = {true, true}; // match, user
+    //private static final boolean[] MATCH_PLAYERS_CASCADE_DELETE = {true, true}; // match, user
 
     /**
      * Gets an instance of the <code>DBHelper</code>.
@@ -84,9 +84,10 @@ public class DBHelper extends SQLiteOpenHelper
     {
         db.execSQL(createTable(USERS_TABLE, USERS_FIELD_NAMES, USERS_FIELD_TYPES));
         db.execSQL(createTable(MATCHES_TABLE, MATCHES_FIELD_NAMES, MATCHES_FIELD_TYPES));
-        db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES,
-                MATCH_PLAYERS_FOREIGN_KEYS, MATCH_PLAYERS_PARENT_TABLES, MATCH_PLAYERS_CANDIDATE_KEYS,
-                MATCH_PLAYERS_CASCADE_DELETE));
+//        db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES,
+//                MATCH_PLAYERS_FOREIGN_KEYS, MATCH_PLAYERS_PARENT_TABLES, MATCH_PLAYERS_CANDIDATE_KEYS,
+//                MATCH_PLAYERS_CASCADE_DELETE));
+        db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES));
     }
 
     @NonNull
@@ -136,16 +137,16 @@ public class DBHelper extends SQLiteOpenHelper
         onCreate(db);
     }
 
-    /**
-     * Configures database connection to enable foreign key support.
-     * @param db The database.
-     */
-    @Override
-    public void onConfigure(SQLiteDatabase db)
-    {
-        super.onConfigure(db);
-        db.setForeignKeyConstraintsEnabled(true);
-    }
+//    /**
+//     * Configures database connection to enable foreign key support.
+//     * @param db The database.
+//     */
+//    @Override
+//    public void onConfigure(SQLiteDatabase db)
+//    {
+//        super.onConfigure(db);
+//        db.setForeignKeyConstraintsEnabled(true);
+//    }
 
     //************** USER TABLE OPERATIONS****************
 
@@ -558,8 +559,7 @@ public class DBHelper extends SQLiteOpenHelper
     {
         ArrayList<MatchPlayer> matchPlayersList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, null, null,
-                null, null, null, null);
+        Cursor cursor = db.query(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, null, null, null, null, null, null);
 
         if (cursor.moveToFirst())
         {

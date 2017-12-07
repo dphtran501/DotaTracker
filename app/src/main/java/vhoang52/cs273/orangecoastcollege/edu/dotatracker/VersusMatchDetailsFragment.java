@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
@@ -20,6 +21,33 @@ import java.text.DecimalFormat;
 
 public class VersusMatchDetailsFragment extends Fragment
 {
+    private Match match;
+    private int radiantTotalLevel = 0, direTotalLevel = 0;
+    private int radiantTotalKills = 0, direTotalKills = 0;
+    private int radiantTotalDeaths = 0, direTotalDeaths = 0;
+    private int radiantTotalAssists = 0, direTotalAssists = 0;
+    private int radiantTotalGPM = 0, direTotalGPM = 0;
+    private int radiantTotalXPM = 0, direTotalXPM = 0;
+    private int radiantTotalLH = 0, direTotalLH = 0;
+    private int radiantTotalDN = 0, direTotalDN = 0;
+    private int radiantTotalHD = 0, direTotalHD = 0;
+    private int radiantTotalHH = 0, direTotalHH = 0;
+    private int radiantTotalTD = 0, direTotalTD = 0;
+    private int radiantTotalG = 0, direTotalG = 0;
+
+    private TextView radiantLevelTextView, direLevelTextView;
+    private TextView radiantKillsTextView, direKillsTextView;
+    private TextView radiantDeathsTextView, direDeathsTextView;
+    private TextView radiantAssistsTextView, direAssistsTextView;
+    private TextView radiantGPMTextView, direGPMTextView;
+    private TextView radiantXPMTextView, direXPMTextView;
+    private TextView radiantLHTextView, direLHTextView;
+    private TextView radiantDNTextView, direDNTextView;
+    private TextView radiantHDTextView, direHDTextView;
+    private TextView radiantHHTextView, direHHTextView;
+    private TextView radiantTDTextView, direTDTextView;
+    private TextView radiantGTextView, direGTextView;
+
     /**
      * Initializes <code>VersusMatchDetailsFragment</code> and retrieves <code>Match</code> passed
      * from <code>MatchDetailsActivity</code>.
@@ -34,7 +62,43 @@ public class VersusMatchDetailsFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         // Retrieve match from MatchDetailsActivity
-        Match match = getArguments().getParcelable("Match");
+        match = getArguments().getParcelable("Match");
+
+        // Retrieve total stats for each team
+        for (MatchPlayer mp : match.getMatchPlayerList())
+        {
+            if (!mp.isDire())
+            {
+                radiantTotalLevel += mp.getLevel();
+                radiantTotalKills += mp.getKills();
+                radiantTotalDeaths += mp.getDeaths();
+                radiantTotalAssists += mp.getAssists();
+                radiantTotalGPM += mp.getGPM();
+                radiantTotalXPM += mp.getXPM();
+                radiantTotalLH += mp.getLastHits();
+                radiantTotalDN += mp.getDenies();
+                radiantTotalHD += mp.getHeroDamage();
+                radiantTotalHH += mp.getHeroHealing();
+                radiantTotalTD += mp.getTowerDamage();
+                radiantTotalG += mp.getGold();
+            }
+            else
+            {
+                direTotalLevel += mp.getLevel();
+                direTotalKills += mp.getKills();
+                direTotalDeaths += mp.getDeaths();
+                direTotalAssists += mp.getAssists();
+                direTotalGPM += mp.getGPM();
+                direTotalXPM += mp.getXPM();
+                direTotalLH += mp.getLastHits();
+                direTotalDN += mp.getDenies();
+                direTotalHD += mp.getHeroDamage();
+                direTotalHH += mp.getHeroHealing();
+                direTotalTD += mp.getTowerDamage();
+                direTotalG += mp.getGold();
+            }
+        }
+
     }
 
     /**
@@ -64,6 +128,8 @@ public class VersusMatchDetailsFragment extends Fragment
 
         // TODO: Link to widgets and populate fields
     }
+
+
 
     // Convert value to String for TextViews (e.g. 13400 to 13.4k)
     private String statToString(int statValue) {

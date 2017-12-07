@@ -92,12 +92,6 @@ public class RadiantMatchDetailsFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_match_team, container, false);
 
-        setPlayer1(radiantPlayers.get(0));
-        setPlayer2(radiantPlayers.get(1));
-        setPlayer3(radiantPlayers.get(2));
-        setPlayer4(radiantPlayers.get(3));
-        setPlayer5(radiantPlayers.get(4));
-
         return view;
     }
 
@@ -196,6 +190,12 @@ public class RadiantMatchDetailsFragment extends Fragment
         player3GTextView = (TextView) getView().findViewById(R.id.player3GoldTextView);
         player4GTextView = (TextView) getView().findViewById(R.id.player4GoldTextView);
         player5GTextView = (TextView) getView().findViewById(R.id.player5GoldTextView);
+
+        setPlayer1(radiantPlayers.get(0));
+        setPlayer2(radiantPlayers.get(1));
+        setPlayer3(radiantPlayers.get(2));
+        setPlayer4(radiantPlayers.get(3));
+        setPlayer5(radiantPlayers.get(4));
     }
 
     private void setPlayer1(MatchPlayer player1)

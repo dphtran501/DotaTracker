@@ -123,9 +123,14 @@ public class MatchesOverviewActivity extends Fragment {
         matchListView = (ListView) view.findViewById(R.id.recentMatchesListView);
         matchListView.setAdapter(matchListAdapter);
 
-        Log.i("user count", String.valueOf(db.getAllUsers().size()));
-        Log.i("match count: ", String.valueOf(db.getAllMatches().size()));
-        Log.i("player count: ", String.valueOf(db.getAllMatchPlayers().size()));
+        //Log.i("user count", String.valueOf(db.getAllUsers().size()));
+        //Log.i("match count: ", String.valueOf(db.getAllMatches().size()));
+        //Log.i("player count: ", String.valueOf(db.getAllMatchPlayers().size()));
+
+        List<Long> testList = db.getPlayerMatchIDs(114611);
+        for (Long i : testList)
+            Log.i("Match ID: ", String.valueOf(i));
+        Log.i("Match ID count: ", String.valueOf(testList.size()));
 
         matchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
