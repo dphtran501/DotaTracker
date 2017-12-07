@@ -34,6 +34,14 @@ public class Hero {
                 }.getType());
     }
 
+    public static Hero getHeroFromID(Context context, int id) throws IOException {
+        for (Hero hero : getAllHeroes(context)) {
+            if(hero.getID() == id) return hero;
+        }
+        return null;
+    }
+
+
     public String getHeroName() {
         return mLocalizedName;
     }
