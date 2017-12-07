@@ -12,10 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
@@ -88,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         mCurrentUserId = mService.getmCurrentUserId();
         mCurrentUser = mDBHelper.getUser(mCurrentUserId);
         Log.i(TAG, "is mCurrentUser null->" + (mCurrentUser == null));
+
+
         if (mCurrentUser != null) {
             mService.setmCurrentUserId(mCurrentUserId);
             mService.setmCurrentUser(mCurrentUser);
@@ -115,9 +113,30 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "mMainActivityPagerAdapter notified");
     }
 
+    private void queryMatchesForCurrentPlayer() {
+        HTTPRequestService.getMatchDetails(mService.getmCurrentUserId(), new HTTPRequestService.MatchListCallback() {
+            @Override
+            public void onSuccess() {
+                List<Match> matchList = mService.getmMatchesList();
+                Log.i(TAG, "Successfully retrieved match list from server; matchList size->" + matchList.size());
+
+                for (Match m : matchList) {
+                    mDBHelper.addMatch(m);
+
+                    for (MatchPlayer mp : m.getMatchPlayerList()) {
+                        mDBHelper.addPlayer(mp);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+    }
+
     public void tapProfilePicture(View view) {
-
-
         long time = System.currentTimeMillis();
 
 

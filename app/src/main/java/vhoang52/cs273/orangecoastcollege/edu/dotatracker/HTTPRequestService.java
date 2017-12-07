@@ -23,13 +23,14 @@ import cz.msebera.android.httpclient.Header;
 public class HTTPRequestService
 {
     // TODO: Implementation of GSONLoader class
-    private static final String TAG = "GSONLoader";
+    private static final String TAG = "HTTPRequestService";
     private static Gson gson = new Gson();
     private static String BASE_URL = "http://68.4.78.45:8080/dotaweb/";
 
     private static HTTPRequestService mService;
     private static long mCurrentUserId;
     private static User mCurrentUser;
+    private static List<Match> mMatchesList;
 
     public HTTPRequestService() {}
 
@@ -38,6 +39,7 @@ public class HTTPRequestService
             mService = new HTTPRequestService();
         }
 
+        mMatchesList = new ArrayList<>();
         return mService;
     }
 
@@ -61,6 +63,14 @@ public class HTTPRequestService
 
     public void setmCurrentUser(User mCurrentUser) {
         HTTPRequestService.mCurrentUser = mCurrentUser;
+    }
+
+    public List<Match> getmMatchesList() {
+        return mMatchesList;
+    }
+
+    public void setmMatchesList(List<Match> mMatchesList) {
+        HTTPRequestService.mMatchesList = mMatchesList;
     }
 
     public static void postUserID(final long steamId64, final UserRegistrationCallback callback) {
@@ -113,27 +123,31 @@ public class HTTPRequestService
     }
 
     // Match objects
+    public interface MatchListCallback {
+        void onSuccess();
+        void onFailure();
+    }
 
-    public static List<Match> getMatchDetails(long steamId32) {
+    public static void getMatchDetails(long steamId32, final MatchListCallback callback) {
         String url = BASE_URL + "fetch/refresh?steamId32=" + steamId32;
         Log.i(TAG, "GET url->" + url);
 
-        final List<Match> matchList = new ArrayList<>();
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 List<Match> tempList = gson.fromJson(new String(responseBody), new TypeToken<List<Match>>() {}.getType());
-                matchList.addAll(tempList);
+                mService.setmMatchesList(tempList);
+                Log.i(TAG, "Successfully retrieved match list from server; match list size->" + tempList.size());
+                callback.onSuccess();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.d(TAG, "Error retrieving match json", error);
+                Log.d(TAG, "Error retrieving match list", error);
+                callback.onFailure();
             }
         });
-
-        return matchList;
     }
 
 }
