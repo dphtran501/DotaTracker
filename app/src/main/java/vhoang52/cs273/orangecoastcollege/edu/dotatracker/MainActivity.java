@@ -85,12 +85,15 @@ public class MainActivity extends AppCompatActivity {
         mCurrentUser = mDBHelper.getUser(mCurrentUserId);
         Log.i(TAG, "is mCurrentUser null->" + (mCurrentUser == null));
 
-
         if (mCurrentUser != null) {
             mService.setmCurrentUserId(mCurrentUserId);
             mService.setmCurrentUser(mCurrentUser);
             Log.i(TAG, "mCurrentUserTest->" + mCurrentUser.toString());
         } else {
+            User user = new User(114611, 3, 1, "system", 0, "http://steamcommunity.com/id/system787/", "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/e5/e5b121b929c0d352264e2bb370f8a8fcc645acbc_full.jpg");
+            mService.setmCurrentUser(user);
+            mCurrentUser = user;
+
             HTTPRequestService.getUserSummaries(mCurrentUserId, new HTTPRequestService.JSONStringCallback() {
                 @Override
                 public void onSuccess() {
