@@ -57,17 +57,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 app:max="100"
+                app:ringColor="@color/red"
                 app:ringProgressColor="@color/green"
-                app:ringWidth="7dp"
-                app:style="STROKE"/>
-            <io.netopen.hotbitmapgg.library.view.RingProgressBar
-                android:id="@+id/lossRingProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                app:max="100"
-                app:ringColor="@color/colorPrimaryDark"
-                app:ringProgressColor="@color/red"
                 app:ringWidth="7dp"
                 app:style="STROKE"/>
 

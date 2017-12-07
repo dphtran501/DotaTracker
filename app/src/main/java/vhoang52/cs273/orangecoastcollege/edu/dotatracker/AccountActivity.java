@@ -3,6 +3,7 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,12 +28,11 @@ public class AccountActivity extends Fragment {
     private CircleImageView profilePicture;
     private TextView userName;
     private RingProgressBar winRingProgressBar;
-    private RingProgressBar lossRingProgressBar;
     private TextView winPercentageTextView;
 
     private ListView mostPlayedHeroesListView;
     private MostPlayedHeroesListAdapter listAdapter;
-    private List<Hero> mMMostPlayedHeroes = new ArrayList<>();
+    private List<Hero> mMostPlayedHeroes = new ArrayList<>();
 
     private double mWins = 0;
     private double mGamesPlayed = 0;
@@ -50,14 +52,13 @@ public class AccountActivity extends Fragment {
         userName = view.findViewById(R.id.userName);
 
         winRingProgressBar = view.findViewById(R.id.winRingProgressBar);
-        lossRingProgressBar = view.findViewById(R.id.lossRingProgressBar);
         winPercentageTextView = view.findViewById(R.id.winPercentageTextView);
 
         mostPlayedHeroesListView = view.findViewById(R.id.mostPlayedHeroesListView);
 
         userName.setText(mUser.getPersonaName());
 
-        listAdapter = new MostPlayedHeroesListAdapter(view.getContext(), R.layout.hero_list_item, mMMostPlayedHeroes);
+        listAdapter = new MostPlayedHeroesListAdapter(view.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
         mostPlayedHeroesListView.setAdapter(listAdapter);
 
 //        Create a list of all the games the user has played in
@@ -67,6 +68,7 @@ public class AccountActivity extends Fragment {
         HashMap<Integer, int[]> heroFrequency = new HashMap<>();// <Hero, {times played, wins}>
         for (MatchPlayer matchPlayer : matches) {
             int heroID = matchPlayer.getHeroId();
+            Log.i(TAG, "onCreateView: " + heroID);
             Match match = mDBHelper.getMatch(matchPlayer.getMatchId());
             int[] value = {1, 0};
 //            Check to see if hero has already been played
@@ -75,7 +77,6 @@ public class AccountActivity extends Fragment {
                 value = existingValue;
 //                Increase times played by 1
                 ++value[0];
-                ++mGamesPlayed;
             }
 //                Check to see if player won game
             if (!match.isRadiantWin() == matchPlayer.isDire()) {
@@ -83,13 +84,16 @@ public class AccountActivity extends Fragment {
                 ++value[1];
                 ++mWins;
             }
+            ++mGamesPlayed;
             heroFrequency.put(heroID, value);
         }
 
-        double winPercent = 100 * mWins / mGamesPlayed, lossPercent = 100 - winPercent;
+        NumberFormat df = DecimalFormat.getPercentInstance();
+        df.setMaximumFractionDigits(1);
+        double winPercent =  100 * mWins / mGamesPlayed, lossPercent = 100 - winPercent;
+        Log.i(TAG, "onCreateView: winpercent = " + winPercent + " lossPercent = " + lossPercent);
         winRingProgressBar.setProgress((int) winPercent);
-        lossRingProgressBar.setProgress((int) lossPercent);
-        winPercentageTextView.setText(getString(R.string.win_percentage_data, winPercent));
+        winPercentageTextView.setText(df.format(winPercent / 100));
         return view;
     }
 }
