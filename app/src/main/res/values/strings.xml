@@ -10,7 +10,7 @@
     <string name="win_percentage_data">%f%%</string>
     <string name="most_played_hero">Most Played Heroes</string>
     <string name="hero_name">Hero Name</string>
-    <string name="hero_games">%d games</string>
+    <string name="hero_games">%d game%s</string>
     <string name="hero_win_percentage">%f%% Games Won</string>
 
     <string name="tools_placeholder">PLACEHOLDER placeholder</string>

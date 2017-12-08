@@ -29,7 +29,7 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
     private Context mContext;
     private int mResourceID;
     private List<Hero> mHeroList = new ArrayList<>();
-    private HashMap<Hero, int[]> mHeroHashMap = new HashMap<>();
+    private HashMap<Hero, int[]> mHeroHashMap;
 
     public MostPlayedHeroesListAdapter(@NonNull Context context, int resource, @NonNull List<Hero> heroes) {
         super(context, resource, heroes);
@@ -78,21 +78,25 @@ public class MostPlayedHeroesListAdapter extends ArrayAdapter {
         NumberFormat df = DecimalFormat.getPercentInstance();
         df.setMaximumFractionDigits(1);
 
-        double winPercent  = (double) gamesWon / gamesPlayed;
+        progressBar.setMax(100);
+        progressBar.setProgress(0);
 
-        numGamesWonTextView.setText(mContext.getString(R.string.hero_games, gamesPlayed));
+        double winPercent = ((double) gamesWon) / gamesPlayed;
+
+        numGamesWonTextView.setText(mContext.getString(R.string.hero_games, gamesPlayed,(gamesPlayed == 1)? "" : "s"));
         percentGamesWonTextView.setText(df.format(winPercent));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             progressBar.setProgress((int)(winPercent * 100), true);
-            Log.i(TAG, "getView: " + (int)(winPercent * 100));
+//            Log.i(TAG, "getView: " + (int)(winPercent * 100));
         }
         else
-            progressBar.setProgress((int)winPercent * 100);
+            progressBar.setProgress((int) (winPercent * 100));
 
         return view;
     }
 
     public void setHash(HashMap<Integer, int[]> hash) {
+        mHeroHashMap = new HashMap<>();
         for (Integer integer : hash.keySet()) {
             try {
                 mHeroHashMap.put(Hero.getHeroFromID(mContext, integer), hash.get(integer));
