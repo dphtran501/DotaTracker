@@ -81,6 +81,17 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         if (!user.equals(mRequestService.getmCurrentUser())) {
             user = mRequestService.getmCurrentUser();
             generateView();
+
+            matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
+            recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
+                    matchIDList.size());
+            recentMatchList = new ArrayList<>();
+            recentMatchStatsList = new ArrayList<>();
+            for (Long matchID : recentMatchIDList) {
+                recentMatchList.add(getMatch(matchID));
+                recentMatchStatsList.add(db.getMatchPlayer(matchID, user.getSteamId32()));
+            }
+
         }
     }
 
