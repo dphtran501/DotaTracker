@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:onClick="fluffSecret"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
@@ -14,20 +14,20 @@
     tools:context="vhoang52.cs273.orangecoastcollege.edu.dotatracker.FluffActivity">
     <Button
         android:id="@+id/locationButton"
-        android:layout_width="match_parent"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:text="Where am I?"
         android:onClick="checkLocation"/>
     <Button
         android:id="@+id/earthquakeButton"
-        android:layout_width="wrap_content"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:text="Is there currently an earthquake?"
         android:onClick="checkEarthquake"
         />
     <Button
         android:id="@+id/toastButton"
-        android:layout_width="match_parent"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:text="Toast?"
         android:onClick="toast"

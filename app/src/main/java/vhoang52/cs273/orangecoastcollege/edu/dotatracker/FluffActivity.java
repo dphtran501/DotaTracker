@@ -4,18 +4,15 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,23 +21,20 @@ import com.dvoiss.literallytoast.LitToast;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.content.ContentValues.TAG;
-
 public class FluffActivity extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 420;
-
+    public static final int[] COLORS = {Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA};
     private static final String TAG = "FluffActivity";
-
-    private long shakeTimeStamp;
     ShakeListener mShakeListener;
-
+    private long shakeTimeStamp;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
 
 
     private Button locationButton;
     private long startMillis;
-    private int count;
+    private int count = 1;
+    private int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,17 +130,10 @@ public class FluffActivity extends AppCompatActivity {
 
     public void fluffSecret(View view) {
         long time = System.currentTimeMillis();
-
-        if (startMillis == 0 || (time - startMillis > 3000)) {
-            startMillis = time;
-            count = 1;
-        } else {
-            count++;
-        }
-
-        if (count == 5) {
-//                TODO:Paulding animation
-            Toast.makeText(this, "Secret Tap initiated", Toast.LENGTH_SHORT).show();
+        if (index == 4) index = 0;
+        view.setBackgroundColor(COLORS[index++]);
+        if (++count == 15) {
+            Toast.makeText(this, "Aloha Friday Mode", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, PauldingAnimation.class));
         }
     }
