@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <!--
+
         <ImageView
             android:id="@+id/playerImageView"
             android:layout_width="wrap_content"
@@ -25,6 +27,18 @@
             android:maxHeight="@dimen/overview_player_image_height"
             android:maxWidth="@dimen/overview_player_image_width"
             android:scaleType="fitCenter"
+            app:srcCompat="@drawable/steam_icon"/>
+
+            -->
+
+        <ImageView
+            android:id="@+id/playerImageView"
+            android:layout_width="@dimen/overview_player_image_width"
+            android:layout_height="@dimen/overview_player_image_height"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/overview_view_spacing"
+            android:layout_marginRight="@dimen/overview_view_spacing"
+            android:contentDescription="@string/player_image"
             app:srcCompat="@drawable/steam_icon"/>
 
         <LinearLayout

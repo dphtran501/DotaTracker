@@ -2,7 +2,9 @@ package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +79,7 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
             viewHolder = new ViewHolder();
             viewHolder.matchListItemLinearLayout = (LinearLayout) convertView.findViewById(R.id.matchListItemLinearLayout);
             viewHolder.matchListItemHeroImageView = (ImageView) convertView.findViewById(R.id.matchListItemHeroImageView);
-            viewHolder.matchListItemHeroTextView = (TextView) convertView.findViewById(R.id.heroNameTextView);
+            viewHolder.matchListItemHeroTextView = (TextView) convertView.findViewById(R.id.matchListHeroTextView);
             viewHolder.matchListItemTeamTextView = (TextView) convertView.findViewById(R.id.matchListItemTeamTextView);
             viewHolder.matchListItemResultTextView = (TextView) convertView.findViewById(R.id.matchListItemResultTextView);
             viewHolder.matchListItemDurationTextView = (TextView) convertView.findViewById(R.id.matchListItemDurationTextView);
@@ -92,18 +96,19 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
         MatchPlayer selectedPlayer = mMatchPlayerList.get(position);
         Match selectedMatch = getMatch(selectedPlayer.getMatchId());
         // Set widgets of list item based on selected item
-//        // TODO: Get hero image and name
-//        try
-//        {
-//            Hero selectedPlayerHero = Hero.getHeroFromID(mContext, selectedPlayer.getHeroId());
-//            AssetManager manager = mContext.getAssets();
-//            InputStream inputStream = manager.open(selectedPlayerHero.getFileName());
-//            Drawable heroImage = Drawable.createFromStream(inputStream, selectedPlayerHero.getHeroName());
-//            viewHolder.matchListItemHeroImageView.setImageDrawable(heroImage);
-//        } catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
+        // TODO: Get hero image and name
+        try
+        {
+            Hero selectedPlayerHero = Hero.getHeroFromID(mContext, selectedPlayer.getHeroId());
+            AssetManager manager = mContext.getAssets();
+            InputStream inputStream = manager.open(selectedPlayerHero.getFileName());
+            Drawable heroImage = Drawable.createFromStream(inputStream, selectedPlayerHero.getHeroName());
+            viewHolder.matchListItemHeroImageView.setImageDrawable(heroImage);
+            viewHolder.matchListItemHeroTextView.setText(selectedPlayerHero.getHeroName());
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
         viewHolder.matchListItemTeamTextView.setText((selectedPlayer.isDire() ? "Dire" : "Radiant"));
         if ((selectedMatch.isRadiantWin() && !selectedPlayer.isDire())
@@ -170,16 +175,16 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
         long secondsSinceLastPlay = System.currentTimeMillis() / 1000L - matchStartTime;
 
         if (secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) + " yr ago";
+            lastPlay = secondsSinceLastPlay / (12L * 30L * 24L * 60L * 60L) + " y.a.";
         else if (secondsSinceLastPlay / (30L * 24L * 60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (30L * 24L * 60L * 60L) + " mo ago";
+            lastPlay = secondsSinceLastPlay / (30L * 24L * 60L * 60L) + " mo.a.";
         else if (secondsSinceLastPlay / (24L * 60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (24L * 60L * 60L) + " d ago";
+            lastPlay = secondsSinceLastPlay / (24L * 60L * 60L) + " d.a.";
         else if (secondsSinceLastPlay / (60L * 60L) >= 1L)
-            lastPlay = secondsSinceLastPlay / (60L * 60L) + " h ago";
+            lastPlay = secondsSinceLastPlay / (60L * 60L) + " h.a.";
         else if (secondsSinceLastPlay / 60L >= 1L)
-            lastPlay = secondsSinceLastPlay / 60L + " m ago";
-        else lastPlay = secondsSinceLastPlay + " s ago";
+            lastPlay = secondsSinceLastPlay / 60L + " m.a.";
+        else lastPlay = secondsSinceLastPlay + " s.a.";
 
         return lastPlay;
     }

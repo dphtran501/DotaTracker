@@ -14,7 +14,7 @@
     android:onClick="viewMatchDetails"
     -->
 
-
+    <!--
     <ImageView
         android:id="@+id/matchListItemHeroImageView"
         android:layout_width="wrap_content"
@@ -27,6 +27,15 @@
         android:maxHeight="@dimen/hero_image_height"
         android:maxWidth="@dimen/hero_image_width"
         android:scaleType="fitCenter"
+        app:srcCompat="@drawable/steam_icon"/>
+        -->
+
+    <ImageView
+        android:id="@+id/matchListItemHeroImageView"
+        android:layout_width="@dimen/hero_image_width"
+        android:layout_height="@dimen/hero_image_height"
+        android:layout_gravity="center"
+        android:contentDescription="@string/hero_image"
         app:srcCompat="@drawable/steam_icon"/>
 
     <LinearLayout
