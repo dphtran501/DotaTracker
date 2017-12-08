@@ -34,6 +34,10 @@ public class FluffActivity extends AppCompatActivity {
     private long shakeTimeStamp;
     ShakeListener mShakeListener;
 
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+
+
     private Button locationButton;
     private long startMillis;
     private int count;
@@ -45,6 +49,10 @@ public class FluffActivity extends AppCompatActivity {
 
         findViewById(R.id.linearLayout).setTag(R.id.key1, getBaseContext());
         locationButton = (Button) findViewById(R.id.locationButton);
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
         mShakeListener = new ShakeListener(new ShakeListener.OnShakeListener() {
             @Override
             public void onShake() {
@@ -66,7 +74,7 @@ public class FluffActivity extends AppCompatActivity {
                     public void run() {
                         if (currentTime < shakeTimeStamp)
                             Toast.makeText(context, "There may be a earthquake currently", Toast.LENGTH_SHORT).show();
-                        else Toast.makeText(context, "No earthquake!", Toast.LENGTH_SHORT).show();
+                        else Toast.makeText(context, "Definitely no earthquake!", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -123,7 +131,7 @@ public class FluffActivity extends AppCompatActivity {
     }
 
     public void toast(View view) {
-        LitToast.create(this, "Toast!", 2 * 1000).setPlayToasterSound(true).show();
+        LitToast.create(this, "Toast!", 2250).setPlayToasterSound(true).show();
     }
 
     public void fluffSecret(View view) {
@@ -142,6 +150,10 @@ public class FluffActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mShakeListener, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
 }
 
