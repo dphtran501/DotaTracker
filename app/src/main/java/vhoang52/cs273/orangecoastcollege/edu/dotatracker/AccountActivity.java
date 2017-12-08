@@ -118,6 +118,9 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
 //        If the adapter already existed clear the elements
         if(listAdapter != null) listAdapter.clear();
 
+//        Remove any existing views in the LinearLayout from and previous users
+        mostPlayedHeroesListView.removeAllViews();
+
         mMostPlayedHeroes = new ArrayList<>();
 
         listAdapter = new MostPlayedHeroesListAdapter(mView.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
