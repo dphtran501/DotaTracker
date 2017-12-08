@@ -147,6 +147,7 @@ public class FluffActivity extends AppCompatActivity {
         if (count == 5) {
 //                TODO:Paulding animation
             Toast.makeText(this, "Secret Tap initiated", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, PauldingAnimation.class));
         }
     }
 
