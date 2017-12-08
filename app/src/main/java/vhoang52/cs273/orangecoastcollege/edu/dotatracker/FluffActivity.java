@@ -1,14 +1,21 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,8 +24,15 @@ import com.dvoiss.literallytoast.LitToast;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.content.ContentValues.TAG;
+
 public class FluffActivity extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 420;
+
+    private static final String TAG = "FluffActivity";
+
+    private long shakeTimeStamp;
+    ShakeListener mShakeListener;
 
     private Button locationButton;
     private long startMillis;
@@ -31,10 +45,34 @@ public class FluffActivity extends AppCompatActivity {
 
         findViewById(R.id.linearLayout).setTag(R.id.key1, getBaseContext());
         locationButton = (Button) findViewById(R.id.locationButton);
+        mShakeListener = new ShakeListener(new ShakeListener.OnShakeListener() {
+            @Override
+            public void onShake() {
+                shakeTimeStamp = System.currentTimeMillis();
+            }
+        });
     }
 
 
     public void checkEarthquake(View view) {
+        final long currentTime = System.currentTimeMillis();
+        final Context context = this;
+        Toast.makeText(context, "Checking for earthquake....", Toast.LENGTH_SHORT).show();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (currentTime < shakeTimeStamp)
+                            Toast.makeText(context, "There may be a earthquake currently", Toast.LENGTH_SHORT).show();
+                        else Toast.makeText(context, "No earthquake!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        }, 2 * 1000);
+
 
     }
 
@@ -103,5 +141,7 @@ public class FluffActivity extends AppCompatActivity {
             Toast.makeText(this, "Secret Tap initiated", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
 
