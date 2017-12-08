@@ -1,5 +1,7 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ public class RadiantMatchDetailsFragment extends Fragment {
 
     private Match match;
     private List<MatchPlayer> radiantPlayers;
+    private List<Hero> radiantHeroes;
 
     ImageView player1ImageView, player2ImageView, player3ImageView, player4ImageView, player5ImageView;
     TextView player1UserNameTextView, player2UserNameTextView, player3UserNameTextView, player4UserNameTextView, player5UserNameTextView;
@@ -58,10 +63,24 @@ public class RadiantMatchDetailsFragment extends Fragment {
         // Retrieve match from MatchDetailsActivity
         match = getArguments().getParcelable("Match");
 
-        // Retrieve Radiant Players
+        // Retrieve Radiant Players and Heroes
         radiantPlayers = new ArrayList<>();
+        radiantHeroes = new ArrayList<>();
         for (MatchPlayer mp : match.getMatchPlayerList())
-            if (!mp.isDire()) radiantPlayers.add(mp);
+        {
+            if (!mp.isDire())
+            {
+                radiantPlayers.add(mp);
+                try
+                {
+                    radiantHeroes.add(Hero.getHeroFromID(getContext(), mp.getHeroId()));
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+        }
 
 
     }
@@ -189,25 +208,34 @@ public class RadiantMatchDetailsFragment extends Fragment {
 
 
         if (radiantPlayers.size() >= 1) {
-            setPlayer1(radiantPlayers.get(0));
+            setPlayer1(radiantPlayers.get(0), radiantHeroes.get(0));
         }
         if (radiantPlayers.size() >= 2) {
-            setPlayer2(radiantPlayers.get(1));
+            setPlayer2(radiantPlayers.get(1), radiantHeroes.get(1));
         }
         if (radiantPlayers.size() >= 3) {
-            setPlayer3(radiantPlayers.get(2));
+            setPlayer3(radiantPlayers.get(2), radiantHeroes.get(2));
         }
         if (radiantPlayers.size() >= 4) {
-            setPlayer4(radiantPlayers.get(3));
+            setPlayer4(radiantPlayers.get(3), radiantHeroes.get(3));
         }
         if (radiantPlayers.size() >= 5) {
-            setPlayer5(radiantPlayers.get(4));
+            setPlayer5(radiantPlayers.get(4), radiantHeroes.get(4));
         }
     }
 
-    private void setPlayer1(MatchPlayer player1) {
-        // TODO: set image view and username properly
-        //player1ImageView;
+    private void setPlayer1(MatchPlayer player1, Hero hero1) {
+        AssetManager manager = getContext().getAssets();
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = manager.open(hero1.getFileName());
+            Drawable heroImage = Drawable.createFromStream(inputStream, hero1.getHeroName());
+            player1ImageView.setImageDrawable(heroImage);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         player1UserNameTextView.setText(String.valueOf(player1.getAccountId()));
         player1LevelTextView.setText(statToString(player1.getLevel()));
         player1KillsTextView.setText(statToString(player1.getKills()));
@@ -226,9 +254,18 @@ public class RadiantMatchDetailsFragment extends Fragment {
         player1KDABar.setSecondaryProgress(player1.getKills() + player1.getDeaths());
     }
 
-    private void setPlayer2(MatchPlayer player2) {
-        // TODO: set image view and username properly
-        //player2ImageView;
+    private void setPlayer2(MatchPlayer player2, Hero hero2) {
+        AssetManager manager = getContext().getAssets();
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = manager.open(hero2.getFileName());
+            Drawable heroImage = Drawable.createFromStream(inputStream, hero2.getHeroName());
+            player2ImageView.setImageDrawable(heroImage);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         player2UserNameTextView.setText(String.valueOf(player2.getAccountId()));
         player2LevelTextView.setText(statToString(player2.getLevel()));
         player2KillsTextView.setText(statToString(player2.getKills()));
@@ -247,9 +284,18 @@ public class RadiantMatchDetailsFragment extends Fragment {
         player2KDABar.setSecondaryProgress(player2.getKills() + player2.getDeaths());
     }
 
-    private void setPlayer3(MatchPlayer player3) {
-        // TODO: set image view and username properly
-        //player1ImageView;
+    private void setPlayer3(MatchPlayer player3, Hero hero3) {
+        AssetManager manager = getContext().getAssets();
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = manager.open(hero3.getFileName());
+            Drawable heroImage = Drawable.createFromStream(inputStream, hero3.getHeroName());
+            player3ImageView.setImageDrawable(heroImage);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         player3UserNameTextView.setText(String.valueOf(player3.getAccountId()));
         player3LevelTextView.setText(statToString(player3.getLevel()));
         player3KillsTextView.setText(statToString(player3.getKills()));
@@ -268,9 +314,18 @@ public class RadiantMatchDetailsFragment extends Fragment {
         player3KDABar.setSecondaryProgress(player3.getKills() + player3.getDeaths());
     }
 
-    private void setPlayer4(MatchPlayer player4) {
-        // TODO: set image view and username properly
-        //player1ImageView;
+    private void setPlayer4(MatchPlayer player4, Hero hero4) {
+        AssetManager manager = getContext().getAssets();
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = manager.open(hero4.getFileName());
+            Drawable heroImage = Drawable.createFromStream(inputStream, hero4.getHeroName());
+            player4ImageView.setImageDrawable(heroImage);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         player4UserNameTextView.setText(String.valueOf(player4.getAccountId()));
         player4LevelTextView.setText(statToString(player4.getLevel()));
         player4KillsTextView.setText(statToString(player4.getKills()));
@@ -289,9 +344,18 @@ public class RadiantMatchDetailsFragment extends Fragment {
         player4KDABar.setSecondaryProgress(player4.getKills() + player4.getDeaths());
     }
 
-    private void setPlayer5(MatchPlayer player5) {
-        // TODO: set image view and username properly
-        //player1ImageView;
+    private void setPlayer5(MatchPlayer player5, Hero hero5) {
+        AssetManager manager = getContext().getAssets();
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = manager.open(hero5.getFileName());
+            Drawable heroImage = Drawable.createFromStream(inputStream, hero5.getHeroName());
+            player5ImageView.setImageDrawable(heroImage);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         player5UserNameTextView.setText(String.valueOf(player5.getAccountId()));
         player5LevelTextView.setText(statToString(player5.getLevel()));
         player5KillsTextView.setText(statToString(player5.getKills()));

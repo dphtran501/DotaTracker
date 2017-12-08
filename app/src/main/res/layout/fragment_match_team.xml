@@ -36,7 +36,7 @@
                 android:layout_weight="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/abaddon"/>
+                app:srcCompat="@drawable/steam_icon"/>
 
             <TextView
                 android:id="@+id/player1UserNameTextView"
@@ -63,7 +63,7 @@
                 android:layout_weight="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/abaddon"/>
+                app:srcCompat="@drawable/steam_icon"/>
 
             <TextView
                 android:id="@+id/player2UserNameTextView"
@@ -89,7 +89,7 @@
                 android:layout_weight="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/abaddon"/>
+                app:srcCompat="@drawable/steam_icon"/>
 
             <TextView
                 android:id="@+id/player3UserNameTextView"
@@ -115,7 +115,7 @@
                 android:layout_weight="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/abaddon"/>
+                app:srcCompat="@drawable/steam_icon"/>
 
             <TextView
                 android:id="@+id/player4UserNameTextView"
@@ -142,7 +142,7 @@
                 android:layout_weight="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/default_hero_image_content"
-                app:srcCompat="@drawable/abaddon"/>
+                app:srcCompat="@drawable/steam_icon"/>
 
             <TextView
                 android:id="@+id/player5UserNameTextView"
