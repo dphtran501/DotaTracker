@@ -28,6 +28,8 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
     private User mUser;
     private DBHelper mDBHelper;
 
+    View mView;
+
     //private CircleImageView profilePicture;
     private ImageView profilePicture;
     private TextView userName;
@@ -36,7 +38,7 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
 
     private LinearLayout mostPlayedHeroesListView;
     private MostPlayedHeroesListAdapter listAdapter;
-    private List<Hero> mMostPlayedHeroes = new ArrayList<>();
+    private List<Hero> mMostPlayedHeroes;
 
     private double mWins = 0;
     private double mGamesPlayed = 0;
@@ -55,7 +57,7 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
             setProfilePicture();
 
             // TODO: handle ui updates here
-
+            findGameStats();
 
         }
     }
@@ -84,28 +86,41 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-//        TODO: populate with actual heroes
-        View view = inflater.inflate(R.layout.activity_seve_account, container, false);
+        mView = inflater.inflate(R.layout.activity_seve_account, container, false);
 
         mService = HTTPRequestService.getInstance();
         mUser = mService.getmCurrentUser();
         mDBHelper = DBHelper.getInstance(getContext());
 
-        profilePicture = view.findViewById(R.id.profilePicture);
+        profilePicture = mView.findViewById(R.id.profilePicture);
         setProfilePicture();
 
-        userName = view.findViewById(R.id.userName);
+        userName = mView.findViewById(R.id.userName);
 
-        winRingProgressBar = view.findViewById(R.id.winRingProgressBar);
-        winPercentageTextView = view.findViewById(R.id.winPercentageTextView);
+        winRingProgressBar = mView.findViewById(R.id.winRingProgressBar);
+        winPercentageTextView = mView.findViewById(R.id.winPercentageTextView);
 
-        mostPlayedHeroesListView = view.findViewById(R.id.mostPlayedHeroesListView);
+        mostPlayedHeroesListView = mView.findViewById(R.id.mostPlayedHeroesListView);
 
         userName.setText(mUser.getPersonaName());
 
+        findGameStats();
 
+
+
+
+        return mView;
+    }
+
+    private void findGameStats() {
 //        Create a list of all the games the user has played in
         List<MatchPlayer> matches = mDBHelper.getPlayerMatchStats(mUser.getSteamId32());
+//        If the adapter already existed clear the elements
+        if(listAdapter != null) listAdapter.clear();
+
+        mMostPlayedHeroes = new ArrayList<>();
+
+        listAdapter = new MostPlayedHeroesListAdapter(mView.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
 
 //        Find game statistics
         HashMap<Integer, int[]> heroFrequency = new HashMap<>();// <Hero, {times played, wins}>
@@ -131,11 +146,14 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
             heroFrequency.put(heroID, value);
         }
 
+//        Fill out progressbar and textview inside
         NumberFormat df = DecimalFormat.getPercentInstance();
         df.setMaximumFractionDigits(1);
-        double winPercent = 100 * mWins / mGamesPlayed, lossPercent = 100 - winPercent;
+        double winPercent = 100 * mWins / mGamesPlayed;
         winRingProgressBar.setProgress((int) winPercent);
         winPercentageTextView.setText(" " + df.format(winPercent / 100));
+
+//        Populate mMostPlayedHeroes with Heroes from heroFrequency
         try {
             for (Integer integer : heroFrequency.keySet()) {
                 mMostPlayedHeroes.add(Hero.getHeroFromID(getContext(), integer));
@@ -143,8 +161,11 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        listAdapter = new MostPlayedHeroesListAdapter(view.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
+
+
         listAdapter.setHash(heroFrequency);
+
+        listAdapter.notifyDataSetChanged();
 
 
         Map<Hero, Double> sorted = new HashMap<>();
@@ -154,22 +175,12 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
             sorted.put(hero, winPercentage);
         }
 
-//        Log.i(TAG, "onCreateView: list size is: " + mMostPlayedHeroes.size());
-//        Log.i(TAG, "onCreateView: map size is: " + sorted.size());
-//        Log.i(TAG, "onCreateView: sortedset size is: " + entriesSortedByValues(sorted).size());
-//        for (Map.Entry<Hero, Double> hero : entriesSortedByValues(sorted)) {
-//            Log.i(TAG, "onCreateView: " + hero);
-//        }
-
         for (Map.Entry<Hero,Double> heroDoubleEntry : entriesSortedByValues(sorted)) {
 
-            mostPlayedHeroesListView.addView(listAdapter.getView(mMostPlayedHeroes.indexOf(heroDoubleEntry.getKey()), view, mostPlayedHeroesListView));
+            mostPlayedHeroesListView.addView(listAdapter.getView(mMostPlayedHeroes.indexOf(heroDoubleEntry.getKey()), mView, mostPlayedHeroesListView));
         }
-
-
-
-        return view;
     }
+
     static <K,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
         SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
                 new Comparator<Map.Entry<K,V>>() {
