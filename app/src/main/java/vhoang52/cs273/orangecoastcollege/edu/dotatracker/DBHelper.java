@@ -87,7 +87,7 @@ public class DBHelper extends SQLiteOpenHelper
 //        db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES,
 //                MATCH_PLAYERS_FOREIGN_KEYS, MATCH_PLAYERS_PARENT_TABLES, MATCH_PLAYERS_CANDIDATE_KEYS,
 //                MATCH_PLAYERS_CASCADE_DELETE));
-        db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES, " UNIQUE (match_id, steam_id"));
+        db.execSQL(createTable(MATCH_PLAYERS_TABLE, MATCH_PLAYERS_FIELD_NAMES, PLAYERS_FIELD_TYPES, " UNIQUE (match_id, steam_id))"));
     }
 
     @NonNull
@@ -97,8 +97,9 @@ public class DBHelper extends SQLiteOpenHelper
         createSQL.append(tableName).append("(");
         for (int i = 0; i < fieldNames.length; i++)
             createSQL.append(fieldNames[i]).append(" ")
-                    .append(fieldTypes[i]).append((i < fieldNames.length - 1) ? "," : ")");
+                    .append(fieldTypes[i]).append(",");
 
+        createSQL.append(constraint);
         return createSQL.toString();
     }
 
