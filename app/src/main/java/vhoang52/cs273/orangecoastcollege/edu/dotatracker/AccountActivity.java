@@ -1,10 +1,11 @@
 package vhoang52.cs273.orangecoastcollege.edu.dotatracker;
 
+
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +41,6 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
     private MostPlayedHeroesListAdapter listAdapter;
     private List<Hero> mMostPlayedHeroes;
 
-    private double mWins = 0;
-    private double mGamesPlayed = 0;
 
     /**
      * Called whenever the adapter is notified.
@@ -49,17 +48,64 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
      */
     @Override
     public void update() {
-
-        if (!mUser.equals(mService.getmCurrentUser())) {
-            mUser = mService.getmCurrentUser();
+        User temp = mService.getmCurrentUser();
+        if (!mUser.equals(temp)) {
+            mUser = temp;
 
             userName.setText(mUser.getPersonaName());
+
+            listAdapter.clear();
+            mostPlayedHeroesListView.removeAllViews();
+
             setProfilePicture();
 
             // TODO: handle ui updates here
-            findGameStats();
-
+            handleUIUpdate();
         }
+    }
+
+    private void handleUIUpdate() {
+        UpdateUITask updateUITask = new UpdateUITask(new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(double wins, double gamesPlayed, HashMap<Integer, int[]> hashMap) {
+                //        Fill out progressbar and textview inside
+                NumberFormat df = DecimalFormat.getPercentInstance();
+                df.setMaximumFractionDigits(1);
+                double winPercent = 100 * wins / gamesPlayed;
+                winRingProgressBar.setProgress((int) winPercent);
+                String winPercentText = " " + df.format(winPercent / 100);
+                winPercentageTextView.setText(winPercentText);
+
+//        Populate mMostPlayedHeroes with Heroes from heroFrequency
+                try {
+                    for (Integer integer : hashMap.keySet()) {
+                        mMostPlayedHeroes.add(Hero.getHeroFromID(getContext(), integer));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                listAdapter.setHash(hashMap);
+
+                listAdapter.notifyDataSetChanged();
+
+
+                Map<Hero, Double> sorted = new HashMap<>();
+                for (int index = 0; index < mMostPlayedHeroes.size(); index++) {
+                    Hero hero = mMostPlayedHeroes.get(index);
+                    double winPercentage = hashMap.get(hero.getId())[0] / (double) hashMap.get(hero.getId())[1];
+                    sorted.put(hero, winPercentage);
+                }
+
+                for (Map.Entry<Hero, Double> heroDoubleEntry : entriesSortedByValues(sorted)) {
+
+                    mostPlayedHeroesListView.addView(listAdapter.getView(mMostPlayedHeroes.indexOf(heroDoubleEntry.getKey()), mView, mostPlayedHeroesListView));
+                }
+
+            }
+        });
+        updateUITask.execute();
     }
 
     private void setProfilePicture() {
@@ -102,28 +148,23 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
 
         mostPlayedHeroesListView = mView.findViewById(R.id.mostPlayedHeroesListView);
 
+        mMostPlayedHeroes = new ArrayList<>();
+
+        listAdapter = new MostPlayedHeroesListAdapter(mView.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
+
         userName.setText(mUser.getPersonaName());
 
-        findGameStats();
-
-
-
+        handleUIUpdate();
 
         return mView;
     }
 
-    private void findGameStats() {
+    private UpdateUITaskParams findGameStats() {
 //        Create a list of all the games the user has played in
         List<MatchPlayer> matches = mDBHelper.getPlayerMatchStats(mUser.getSteamId32());
-//        If the adapter already existed clear the elements
-        if(listAdapter != null) listAdapter.clear();
 
-//        Remove any existing views in the LinearLayout from and previous users
-        mostPlayedHeroesListView.removeAllViews();
-
-        mMostPlayedHeroes = new ArrayList<>();
-
-        listAdapter = new MostPlayedHeroesListAdapter(mView.getContext(), R.layout.hero_list_item, mMostPlayedHeroes);
+        double mWins = 0;
+        double mGamesPlayed = 0;
 
 //        Find game statistics
         HashMap<Integer, int[]> heroFrequency = new HashMap<>();// <Hero, {times played, wins}>
@@ -149,45 +190,14 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
             heroFrequency.put(heroID, value);
         }
 
-//        Fill out progressbar and textview inside
-        NumberFormat df = DecimalFormat.getPercentInstance();
-        df.setMaximumFractionDigits(1);
-        double winPercent = 100 * mWins / mGamesPlayed;
-        winRingProgressBar.setProgress((int) winPercent);
-        winPercentageTextView.setText(" " + df.format(winPercent / 100));
-
-//        Populate mMostPlayedHeroes with Heroes from heroFrequency
-        try {
-            for (Integer integer : heroFrequency.keySet()) {
-                mMostPlayedHeroes.add(Hero.getHeroFromID(getContext(), integer));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        listAdapter.setHash(heroFrequency);
-
-        listAdapter.notifyDataSetChanged();
-
-
-        Map<Hero, Double> sorted = new HashMap<>();
-        for (int index = 0; index < mMostPlayedHeroes.size(); index++) {
-            Hero hero = mMostPlayedHeroes.get(index);
-            double winPercentage = heroFrequency.get(hero.getId())[0] / (double) heroFrequency.get(hero.getId())[1];
-            sorted.put(hero, winPercentage);
-        }
-
-        for (Map.Entry<Hero,Double> heroDoubleEntry : entriesSortedByValues(sorted)) {
-
-            mostPlayedHeroesListView.addView(listAdapter.getView(mMostPlayedHeroes.indexOf(heroDoubleEntry.getKey()), mView, mostPlayedHeroesListView));
-        }
+        return new UpdateUITaskParams(mWins, mGamesPlayed, heroFrequency);
     }
 
-    static <K,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
-        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
-                new Comparator<Map.Entry<K,V>>() {
-                    @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+    static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
+        SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<Map.Entry<K, V>>(
+                new Comparator<Map.Entry<K, V>>() {
+                    @Override
+                    public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
                         int res = e1.getValue().compareTo(e2.getValue());
                         return res != 0 ? res : 1; // Special fix to preserve items with equal values
                     }
@@ -196,4 +206,58 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
         sortedEntries.addAll(map.entrySet());
         return sortedEntries;
     }
+
+    private static class UpdateUITaskParams {
+        double mWins;
+        double mGamesPlayed;
+        HashMap<Integer, int[]> mHashmap;
+
+        public UpdateUITaskParams(double mWins, double mGamesPlayed, HashMap<Integer, int[]> mHashmap) {
+            this.mWins = mWins;
+            this.mGamesPlayed = mGamesPlayed;
+            this.mHashmap = mHashmap;
+        }
+
+        public double getmWins() {
+            return mWins;
+        }
+
+        public double getmGamesPlayed() {
+            return mGamesPlayed;
+        }
+
+        public HashMap<Integer, int[]> getmHashmap() {
+            return mHashmap;
+        }
+    }
+
+    private class UpdateUITask extends AsyncTask<Void, Void, UpdateUITaskParams> {
+        private OnTaskCompleted mCallback;
+
+        public UpdateUITask(OnTaskCompleted callback) {
+            mCallback = callback;
+        }
+
+        protected UpdateUITaskParams doInBackground(Void... voids) {
+            return findGameStats();
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(UpdateUITaskParams result) {
+            super.onPostExecute(result);
+            mCallback.onTaskCompleted(result.getmWins(), result.getmGamesPlayed(), result.getmHashmap());
+            mDBHelper.close();
+        }
+    }
+
+    public interface OnTaskCompleted {
+        void onTaskCompleted(double wins, double gamesPlayed, HashMap<Integer, int[]> hashMap);
+    }
+
 }

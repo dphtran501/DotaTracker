@@ -183,8 +183,6 @@ public class DBHelper extends SQLiteOpenHelper
         values.put(USERS_FIELD_NAMES[6], user.getAvatarUrl());
 
         db.insert(USERS_TABLE, null, values);
-
-        db.close();
     }
 
     /**
@@ -208,7 +206,6 @@ public class DBHelper extends SQLiteOpenHelper
                     cursor.getString(6));
 
         cursor.close();
-        db.close();
 
         return user;
     }
@@ -237,7 +234,6 @@ public class DBHelper extends SQLiteOpenHelper
         }
 
         cursor.close();
-        db.close();
 
         return usersList;
     }
@@ -250,7 +246,6 @@ public class DBHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(USERS_TABLE, null, null);
-        db.close();
     }
 
     /**
@@ -297,7 +292,6 @@ public class DBHelper extends SQLiteOpenHelper
 
         // To add MatchPlayers who played in match into database, call addPlayer outside of this class
 
-        db.close();
     }
 
     /**
@@ -334,7 +328,6 @@ public class DBHelper extends SQLiteOpenHelper
                     cursor.getLong(3), cursor.getInt(4), cursor.getInt(5));
 
         cursor.close();
-        db.close();
 
         return match;
     }
@@ -364,7 +357,6 @@ public class DBHelper extends SQLiteOpenHelper
         }
 
         cursor.close();
-        db.close();
 
         return matchesList;
     }
@@ -386,7 +378,6 @@ public class DBHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MATCHES_TABLE, null, null);
-        db.close();
     }
 
     /**
@@ -439,7 +430,6 @@ public class DBHelper extends SQLiteOpenHelper
 
         db.insert(MATCH_PLAYERS_TABLE, null, values);
 
-        db.close();
     }
 
     /**
@@ -469,7 +459,6 @@ public class DBHelper extends SQLiteOpenHelper
                     cursor.getInt(14), cursor.getInt(15));
 
         cursor.close();
-        db.close();
 
         return player;
     }
@@ -504,7 +493,6 @@ public class DBHelper extends SQLiteOpenHelper
         }
 
         cursor.close();
-        db.close();
 
         return matchPlayersList;
     }
@@ -538,7 +526,6 @@ public class DBHelper extends SQLiteOpenHelper
             } while (cursor.moveToNext());
 
         cursor.close();
-        db.close();
 
         return playerMatchStatsList;
     }
@@ -564,8 +551,6 @@ public class DBHelper extends SQLiteOpenHelper
             } while (cursor.moveToNext());
 
         cursor.close();
-        db.close();
-
         return userMatchIDList;
     }
 
@@ -590,7 +575,6 @@ public class DBHelper extends SQLiteOpenHelper
         }
 
         cursor.close();
-        db.close();
 
         return matchPlayersList;
     }
@@ -602,7 +586,6 @@ public class DBHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MATCH_PLAYERS_TABLE, null, null);
-        db.close();
     }
 
     /**
