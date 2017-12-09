@@ -332,6 +332,11 @@ public class DBHelper extends SQLiteOpenHelper
         return match;
     }
 
+    public List<Match> getMatchList(long[] matchId) {
+
+        return null;
+    }
+
     /**
      * Gets a list of all <code>Match</code>es in the database.
      *
