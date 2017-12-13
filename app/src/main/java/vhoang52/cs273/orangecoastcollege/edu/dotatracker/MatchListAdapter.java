@@ -75,7 +75,7 @@ public class MatchListAdapter extends ArrayAdapter<MatchPlayer>
         ViewHolder viewHolder = null;
         if (convertView == null)
         {
-            convertView = inflater.inflate(mResourceID, null);
+            convertView = inflater.inflate(mResourceID, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.matchListItemLinearLayout = (LinearLayout) convertView.findViewById(R.id.matchListItemLinearLayout);
             viewHolder.matchListItemHeroImageView = (ImageView) convertView.findViewById(R.id.matchListItemHeroImageView);

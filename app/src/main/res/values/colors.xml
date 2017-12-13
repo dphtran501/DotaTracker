@@ -7,10 +7,10 @@
     <color name="colorBlack">#000000</color>
 
     <!--Seve's Colors-->
-    <color name="sevePrimary">#7B4BFF</color>
-    <color name="seveDark">#2C1D55</color>
-    <color name="seveBorder">#7039EE</color>
-    <color name="seveText">#1DCF9E</color>
+    <color name="sevePrimary">#7b4bff</color>
+    <color name="seveDark">#2c1d55</color>
+    <color name="seveBorder">#7039ee</color>
+    <color name="seveText">#1dcf9e</color>
     <color name="seveAlert">#FF4D11</color>
     <color name="green">#33cc33</color>
     <color name="red">#ff5050</color>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -85,13 +87,14 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
             matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
             recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
                     matchIDList.size());
+            Collections.reverse(recentMatchIDList); // Reverse so that most recent is at top of listview
             recentMatchList = new ArrayList<>();
             recentMatchStatsList = new ArrayList<>();
             for (Long matchID : recentMatchIDList) {
                 recentMatchList.add(getMatch(matchID));
                 recentMatchStatsList.add(db.getMatchPlayer(matchID, user.getSteamId32()));
             }
-
+            updateList(getActivity(), R.layout.match_list_item, recentMatchStatsList);
         }
     }
 
@@ -112,6 +115,7 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
         recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
                 matchIDList.size());
+        Collections.reverse(recentMatchIDList); // Reverse so that most recent is at top of listview
         recentMatchList = new ArrayList<>();
         recentMatchStatsList = new ArrayList<>();
         for (Long matchID : recentMatchIDList) {
@@ -177,15 +181,18 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
         recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
                 matchIDList.size());
+        Collections.reverse(recentMatchIDList); // Reverse so that most recent is at top of listview
         recentMatchList = new ArrayList<>();
         recentMatchStatsList = new ArrayList<>();
         for (Long matchID : recentMatchIDList) {
             recentMatchList.add(getMatch(matchID));
             recentMatchStatsList.add(db.getMatchPlayer(matchID, user.getSteamId32()));
         }
-        matchListAdapter = new MatchListAdapter(getActivity(), R.layout.match_list_item, recentMatchStatsList);
+
         matchListView = (ListView) view.findViewById(R.id.recentMatchesListView);
-        matchListView.setAdapter(matchListAdapter);
+
+        // TODO: INSERT HERE
+        updateList(getActivity(), R.layout.match_list_item, recentMatchStatsList);
 
         //Log.i("user count", String.valueOf(db.getAllUsers().size()));
         //Log.i("match count: ", String.valueOf(db.getAllMatches().size()));
@@ -223,6 +230,58 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         recentMatchesTextView.setText(getString(R.string.recent_matches_label, numOfMatchesShown));
 
         return view;
+    }
+
+    private static class MatchListAdapterParams {
+        Context context;
+        int resource;
+        List<MatchPlayer> matchPlayerList;
+
+        public MatchListAdapterParams(Context context, int resource, List<MatchPlayer> matchPlayerList) {
+            this.context = context;
+            this.resource = resource;
+            this.matchPlayerList = matchPlayerList;
+        }
+    }
+
+    private class MatchListAdapterTask extends AsyncTask<MatchListAdapterParams, Void, MatchListAdapter> {
+        private OnTaskComplete mTaskComplete;
+
+        public MatchListAdapterTask(OnTaskComplete taskComplete) {
+            mTaskComplete = taskComplete;
+        }
+
+        @Override
+        protected void onPostExecute(MatchListAdapter matchListAdapter) {
+            super.onPostExecute(matchListAdapter);
+            mTaskComplete.onTaskComplete(matchListAdapter);
+        }
+
+        @Override
+        protected MatchListAdapter doInBackground(MatchListAdapterParams... matchListAdapterParams) {
+            Context context = matchListAdapterParams[0].context;
+            int resourceId = matchListAdapterParams[0].resource;
+            List<MatchPlayer> matchPlayerList = matchListAdapterParams[0].matchPlayerList;
+
+            MatchListAdapter adapter = new MatchListAdapter(context, resourceId, matchPlayerList);
+
+            return adapter;
+        }
+    }
+
+    private void updateList(Context context, int resourceId, List<MatchPlayer> matchPlayerList) {
+        MatchListAdapterTask task = new MatchListAdapterTask(new OnTaskComplete() {
+            @Override
+            public void onTaskComplete(MatchListAdapter adapter) {
+                matchListAdapter = adapter;
+                matchListView.setAdapter(matchListAdapter);
+            }
+        });
+        task.execute(new MatchListAdapterParams(context, resourceId, matchPlayerList));
+    }
+
+    public interface OnTaskComplete {
+        void onTaskComplete(MatchListAdapter adapter);
     }
 
     private void setOverallStatsWidgets() {
