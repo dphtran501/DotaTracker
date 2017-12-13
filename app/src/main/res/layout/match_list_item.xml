@@ -5,8 +5,8 @@
     android:id="@+id/matchListItemLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/match_list_item_height"
-    android:layout_margin="@dimen/match_list_item_margins"
-    android:background="@color/derekPrimary"
+    android:padding="@dimen/match_list_item_margins"
+    android:background="@color/seveDark"
     android:orientation="horizontal">
 
     <de.hdodenhof.circleimageview.CircleImageView

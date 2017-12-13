@@ -4,13 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/derekPrimary"
-    android:orientation="vertical"
-    android:padding="@dimen/fab_margin">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -43,7 +46,7 @@
                 android:padding="@dimen/overview_view_spacing"
                 android:text="@string/default_data"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@color/seveText"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -61,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/wins_label"
                         android:textAlignment="center"
-                        android:textColor="@android:color/darker_gray"/>
+                        />
 
                     <TextView
                         android:id="@+id/winsTextView"
@@ -84,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/loses_label"
-                        android:textColor="@android:color/darker_gray"/>
+                        />
 
                     <TextView
                         android:id="@+id/lossesTextView"
@@ -106,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/win_rate_label"
-                        android:textColor="@android:color/darker_gray"/>
+                        />
 
                     <TextView
                         android:id="@+id/winRateTextView"
@@ -127,7 +130,12 @@
         android:id="@+id/averagesLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/overview_view_spacing"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/overview_view_spacing"
+        android:layout_marginBottom="@dimen/overview_view_spacing"
         android:text="@string/average_stats_label"
         android:textColor="@android:color/white"
         />
@@ -135,7 +143,11 @@
     <HorizontalScrollView
         android:id="@+id/averagesScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -152,7 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/win_rate_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgWinRateTextView"
@@ -174,7 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/kills_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgKillsTextView"
@@ -196,7 +208,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/deaths_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgDeathsTextView"
@@ -218,7 +230,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/assists_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgAssistsTextView"
@@ -240,7 +252,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/gpm_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgGPMTextView"
@@ -262,7 +274,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/xpm_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgXPMTextView"
@@ -285,7 +297,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/last_hits_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgLastHitsTextView"
@@ -307,7 +319,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hero_dmg_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgHeroDMGTextView"
@@ -329,7 +341,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/heal_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgHeroHealTextView"
@@ -351,7 +363,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tower_dmg_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgTowerDMGTextView"
@@ -373,7 +385,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/duration_label"
-                    android:textColor="@android:color/darker_gray"/>
+                    />
 
                 <TextView
                     android:id="@+id/avgDurationTextView"
@@ -391,7 +403,13 @@
         android:id="@+id/recentMatchesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/overview_view_spacing"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/overview_view_spacing"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/overview_view_spacing"
         android:text="@string/recent_matches_label"
         android:textColor="@android:color/white"/>
 
@@ -399,7 +417,7 @@
         android:id="@+id/recentMatchesListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/darker_gray"
+        android:divider="@color/seveBorder"
         android:dividerHeight="@dimen/listview_divider_height"/>
 
 </LinearLayout>
