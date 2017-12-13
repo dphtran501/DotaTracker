@@ -23,6 +23,7 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -86,6 +87,7 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
             matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
             recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
                     matchIDList.size());
+            Collections.reverse(recentMatchIDList); // Reverse so that most recent is at top of listview
             recentMatchList = new ArrayList<>();
             recentMatchStatsList = new ArrayList<>();
             for (Long matchID : recentMatchIDList) {
@@ -113,6 +115,7 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
         recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
                 matchIDList.size());
+        Collections.reverse(recentMatchIDList); // Reverse so that most recent is at top of listview
         recentMatchList = new ArrayList<>();
         recentMatchStatsList = new ArrayList<>();
         for (Long matchID : recentMatchIDList) {
@@ -178,6 +181,7 @@ public class MatchesOverviewActivity extends Fragment implements UpdateableFragm
         matchIDList = db.getPlayerMatchIDs(user.getSteamId32());
         recentMatchIDList = matchIDList.subList(Math.max(matchIDList.size() - numOfMatchesShown, 0),
                 matchIDList.size());
+        Collections.reverse(recentMatchIDList); // Reverse so that most recent is at top of listview
         recentMatchList = new ArrayList<>();
         recentMatchStatsList = new ArrayList<>();
         for (Long matchID : recentMatchIDList) {

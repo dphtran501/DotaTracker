@@ -9,18 +9,20 @@
     android:background="@color/derekPrimary"
     android:orientation="horizontal">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/matchListItemHeroImageView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:contentDescription="@string/hero_image"
-        android:paddingLeft="@dimen/player_list_item_spacing"
-        android:paddingStart="@dimen/player_list_item_spacing"
-        android:paddingRight="@dimen/player_list_item_spacing"
         android:paddingEnd="@dimen/player_list_item_spacing"
-        app:srcCompat="@drawable/steam_icon"/>
+        android:paddingLeft="@dimen/player_list_item_spacing"
+        android:paddingRight="@dimen/player_list_item_spacing"
+        android:paddingStart="@dimen/player_list_item_spacing"
+        android:scaleType="centerCrop"
+        android:src="@drawable/steam_icon"
+        app:civ_border_width="3dp"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -39,7 +41,8 @@
             android:paddingRight="@dimen/player_list_item_spacing"
             android:paddingStart="@dimen/player_list_item_spacing"
             android:text="@string/default_data"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,7 +87,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_data"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            />
 
         <TextView
             android:id="@+id/matchListItemLastPlayedTextView"
