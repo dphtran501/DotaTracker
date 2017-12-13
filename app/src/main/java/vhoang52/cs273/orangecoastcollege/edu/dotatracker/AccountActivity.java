@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
 import java.io.IOException;
@@ -196,4 +197,6 @@ public class AccountActivity extends Fragment implements UpdateableFragment {
         sortedEntries.addAll(map.entrySet());
         return sortedEntries;
     }
+
+
 }

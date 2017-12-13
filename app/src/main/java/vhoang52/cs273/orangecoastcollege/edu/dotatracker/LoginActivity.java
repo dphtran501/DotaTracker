@@ -89,13 +89,6 @@ public class LoginActivity extends Fragment {
         });
 
 
-        mRefreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshButton();
-            }
-        });
-
         return view;
     }
 
@@ -151,41 +144,5 @@ public class LoginActivity extends Fragment {
     }
 
 
-    private void refreshButton() {
-        HTTPRequestService.getMatchDetails(mService.getmCurrentUserId(), new HTTPRequestService.MatchListCallback() {
-            @Override
-            public void onSuccess() {
-                List<Match> matchList = mService.getmMatchesList();
-                Log.i(TAG, "Successfully retrieved match list from server; matchList size->" + matchList.size());
 
-
-                for (Match m : matchList) {
-                    Log.i(TAG, m.toString());
-                }
-
-                for (Match m : matchList) {
-                    mDBHelper.addMatch(m);
-
-                    for (MatchPlayer mp : m.getMatchPlayerList()) {
-                        mDBHelper.addPlayer(mp);
-                    }
-                }
-
-                List<MatchPlayer> matchPlayerList = mDBHelper.getMatchPlayers(2586393706L);
-
-                for (MatchPlayer m : matchPlayerList) {
-                    Log.i(TAG, "matchPlayer in list->" + m.toString());
-                }
-
-                Toast.makeText(getActivity(), "Refresh successful", Toast.LENGTH_SHORT).show();
-
-                mLoginListAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure() {
-
-            }
-        });
-    }
 }

@@ -13,6 +13,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import java.util.List;
 
 /**
  * MainActivity
@@ -152,6 +155,43 @@ public class MainActivity extends AppCompatActivity {
         if (count == 5) {
             startActivity(new Intent(this, FluffActivity.class));
         }
+    }
+
+    public void refreshButton(View v) {
+        HTTPRequestService.getMatchDetails(mService.getmCurrentUserId(), new HTTPRequestService.MatchListCallback() {
+            @Override
+            public void onSuccess() {
+                List<Match> matchList = mService.getmMatchesList();
+                Log.i(TAG, "Successfully retrieved match list from server; matchList size->" + matchList.size());
+
+
+                for (Match m : matchList) {
+                    Log.i(TAG, m.toString());
+                }
+
+                for (Match m : matchList) {
+                    mDBHelper.addMatch(m);
+
+                    for (MatchPlayer mp : m.getMatchPlayerList()) {
+                        mDBHelper.addPlayer(mp);
+                    }
+                }
+
+                List<MatchPlayer> matchPlayerList = mDBHelper.getMatchPlayers(2586393706L);
+
+                for (MatchPlayer m : matchPlayerList) {
+                    Log.i(TAG, "matchPlayer in list->" + m.toString());
+                }
+
+                Toast.makeText(getBaseContext(), "Refresh successful", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 }
 
