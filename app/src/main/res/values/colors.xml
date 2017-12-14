@@ -17,5 +17,6 @@
 
     <!-- Derek's Colors -->
     <color name="derekPrimary">#1B1E21</color>
+    <color name="derekDark">#160740</color>
 
 </resources>
